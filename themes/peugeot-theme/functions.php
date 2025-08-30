@@ -25,8 +25,10 @@ if (!function_exists('peugeut_theme_enqueue_assets')) {
         wp_enqueue_style('custom-google-fonts', '//fonts.googleapis.com/css?family=Roboto+Condensed:300,300i,400,400i,700,700i|Roboto:100,300,400,400i,700,700i');
         wp_enqueue_style('font-awesome', '//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
 
-       
-         wp_enqueue_style('peugeut-custom-css', get_template_directory_uri() . '/custom.css');
+        // JS (custom.js)
+        wp_enqueue_script('peugeot-slider-js', get_theme_file_uri('/custom.js'), array(), null, true);
+        // CSS (custom.css)
+        wp_enqueue_style('peugeot-custom-css', get_template_directory_uri() . '/custom.css');
     }
     add_action('wp_enqueue_scripts', 'peugeut_theme_enqueue_assets');
 }

@@ -8,7 +8,7 @@
 <body <?php body_class(); ?>>
 
 <header class="peugeot-header">
-    <div class="container">
+    <div class="container-fluid">
         <div class="row align-items-center">
             <!-- Logo chiếm 2 phần -->
             <div class="col-1 d-flex align-items-center">
