@@ -1,13 +1,13 @@
 <footer class="peugeot-footer">
     <div class="peugeot-footer-top">
-        <div class="container">
+        <div class="container-fluid">
             <div class="row g-0 text-center">
                 <div class="col-lg-3 col-6 peugeot-footer-top-item">
                     <span class="footer-icon"><i class="fa fa-map-marker"></i></span>
                     <span class="footer-label">TÌM ĐẠI LÝ GẦN NHẤT</span>
                 </div>
                 <div class="col-lg-3 col-6 peugeot-footer-top-item">
-                    <span class="footer-icon"><i class="fa fa-steering-wheel"></i></span>
+                    <span class="footer-icon"><i class="fa fa-car"></i></span>
                     <span class="footer-label">ĐẶT LỊCH LÁI THỬ</span>
                 </div>
                 <div class="col-lg-3 col-6 peugeot-footer-top-item">
@@ -22,7 +22,7 @@
         </div>
     </div>
     <div class="peugeot-footer-main">
-        <div class="container">
+        <div class="container-fluid">
             <div class="row peugeot-footer-main-row">
                 <div class="col-lg-3 col-md-6 mb-4">
                     <h5 class="footer-title">VỀ PEUGEOT VIỆT NAM</h5>
@@ -31,7 +31,7 @@
                         Ngày cấp 27/10/2010
                     </p>
                 </div>
-                <div class="col-lg-2 col-md-6 mb-4">
+                <div class="col-lg-3 col-md-6 mb-4">
                     <h5 class="footer-title">TRUY CẬP NHANH</h5>
                     <ul class="footer-links">
                         <li><a href="#">Yêu cầu báo giá</a></li>
@@ -44,7 +44,7 @@
                         <li><a href="#">Bảo dưỡng</a></li>
                     </ul>
                 </div>
-                <div class="col-lg-4 col-md-6 mb-4">
+                <div class="col-lg-3 col-md-6 mb-4">
                     <h5 class="footer-title">TÌM HIỂU THÊM VỀ PEUGEOT</h5>
                     <ul class="footer-links">
                         <li><a href="#">PEUGEOT Motocycles</a></li>
@@ -78,6 +78,9 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div class="peugeot-footer-bottom text-center py-3">
+        &copy; <?php echo date('Y'); ?> | Thiết kế & phát triển bởi <span class="fw-bold text-primary">MinhTris</span>
     </div>
 </footer>
 <?php wp_footer(); ?>

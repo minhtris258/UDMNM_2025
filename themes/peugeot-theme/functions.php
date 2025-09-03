@@ -37,14 +37,16 @@ if (!function_exists('peugeut_theme_enqueue_assets')) {
 // Register Menus
 // ==========================
 if (!function_exists('peugeut_theme_register_menus')) {
-    function peugeut_theme_register_menus() {
-        register_nav_menus([
-            'primary_menu'   => __('Menu chính', 'peugeut-theme'),
-            'footer_menu_1'  => __('Menu footer 1', 'peugeut-theme'),
-            'footer_menu_2'  => __('Menu footer 2', 'peugeut-theme'),
-        ]);
-    }
-    add_action('after_setup_theme', 'peugeut_theme_register_menus');
+   function peugeut_theme_register_menus() {
+    register_nav_menus([
+        'primary_menu'    => __('Menu chính', 'peugeut-theme'),
+        'footer_menu_1'   => __('Menu footer 1', 'peugeut-theme'),
+        'footer_menu_2'   => __('Menu footer 2', 'peugeut-theme'),
+        'extra_right_menu'=> __('Menu bên phải', 'peugeut-theme'), // thêm mới
+    ]);
+}
+add_action('after_setup_theme', 'peugeut_theme_register_menus');
+
 }
 
 // ==========================

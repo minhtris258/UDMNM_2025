@@ -76,3 +76,24 @@ document.addEventListener("DOMContentLoaded", function () {
     updateSlide(0);
     startAutoSlide();
 });
+document.addEventListener('DOMContentLoaded', function() {
+    var btn = document.getElementById('mobileMenuBtn');
+    var overlay = document.getElementById('mobileMenuOverlay');
+    var closeBtn = document.getElementById('closeMobileMenu');
+    if(btn && overlay && closeBtn) {
+        btn.onclick = function() {
+            overlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        };
+        closeBtn.onclick = function() {
+            overlay.classList.remove('active');
+            document.body.style.overflow = '';
+        };
+        overlay.onclick = function(e) {
+            if(e.target === overlay) {
+                overlay.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        };
+    }
+});
