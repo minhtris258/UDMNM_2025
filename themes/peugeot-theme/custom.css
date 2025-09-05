@@ -2,6 +2,30 @@ body{
     /* color: #fff; */
     font-family: 'Peugeot New', sans-serif;
 }
+.peugeot-menu-list .sub-menu {
+        display: none;
+        position: absolute;
+        left: 0;
+        top: 100%;
+        background: #222;
+        min-width: 220px;
+        z-index: 10;
+        box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+        border-radius: 0 0 8px 8px;
+        padding: 12px 0;
+    }
+    .peugeot-menu-list li.menu-item-has-children {
+        position: relative;
+    }
+    .peugeot-menu-list li.menu-item-has-children.open > .sub-menu {
+        display: block;
+    }
+    .peugeot-menu-list li.menu-item-has-children > a::after {
+        content: '\25BC';
+        font-size: 0.8em;
+        margin-left: 6px;
+        vertical-align: middle;
+    }
 .peugeot-header {
     position: fixed;
     top: 10px;
@@ -204,7 +228,7 @@ img.custom-logo {
     max-width: 100vw;
     height: 620px;
     position: relative;
-    background: #222;
+   
     overflow: hidden;
 }
 
@@ -606,4 +630,125 @@ img.custom-logo {
 @media (max-width: 900px){
     .peugeot-slider-content { width: 80vw; min-width:unset; padding:24px; }
     .peugeot-slider-nav { left:24px; gap:12px;}
+}
+
+
+
+
+/* ====== SLIDER 3 ====== */
+.peugeot-slider3 {
+    position: relative;
+    width: 100%;
+    height: 600px;
+    overflow: hidden;
+}
+
+/* Layout row 60/40 */
+.peugeot-slider-row {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 100%;
+}
+
+.peugeot-slider-col.image-col {
+    flex: 0 0 60%;
+    position: relative;
+    overflow: hidden;
+}
+
+.peugeot-slider-col.content-col {
+    flex: 0 0 40%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 30px;
+    
+    
+}
+
+/* Slide ảnh */
+.peugeot-slider3-slide {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    transition: opacity .6s ease;
+    background-size: cover;
+    background-position: center;
+}
+.peugeot-slider3-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+.peugeot-slider3-slide.active {
+    opacity: 1;
+    position: relative;
+    z-index: 1;
+}
+
+/* Nav */
+.peugeot-slider3-nav {
+    display: flex;
+    gap: 36px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+}
+.peugeot-slider3-nav-item {
+    font-size: 1.2rem;
+    /* color: #eee; */
+    cursor: pointer;
+    padding-bottom: 6px;
+    border-bottom: 2px solid transparent;
+    transition: color .3s, border-color .3s, opacity .3s;
+    opacity: 0.6;
+}
+.peugeot-slider3-nav-item.active {
+    color: #1476ff;
+    border-bottom-color: #1476ff;
+    opacity: 1;
+    font-weight: bold;
+}
+
+/* Content text + button */
+.peugeot-slider3-contents {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+.peugeot-slider3-content {
+    display: none;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+}
+.peugeot-slider3-content.active {
+    display: flex;
+}
+.peugeot-slider3-text {
+    margin-bottom: 32px;
+    width: 100%;
+    line-height: 1.5;
+    font-size: 1rem;
+}
+.peugeot-slider3-buttons {
+    display: flex;
+    gap: 18px;
+}
+.peugeot-slider-btn {
+    padding: 10px 20px;
+    background: #1476ff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background .3s;
+}
+.peugeot-slider-btn:hover {
+    background: #0f5fd1;
 }
