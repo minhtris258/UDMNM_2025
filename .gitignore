@@ -1,12 +1,17 @@
 # Ignore uploads (media files)
 wp-content/uploads/
 
-# Ignore cache, backup
+# Ignore cache, backup, upgrade
 wp-content/cache/
 wp-content/backups/
 wp-content/upgrade/
 
-# Ignore common system files
+# Ignore system files
 *.log
 .DS_Store
 Thumbs.db
+
+# Ignore node & build files nếu có
+node_modules/
+dist/
+build/
