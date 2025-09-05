@@ -97,3 +97,30 @@ document.addEventListener('DOMContentLoaded', function() {
         };
     }
 });
+(function(){
+    const slider = document.getElementById('peugeot-slider');
+    if (!slider) return;
+    const slides = slider.querySelectorAll('.peugeot-slider-slide');
+    const navItems = slider.querySelectorAll('.peugeot-slider-nav-item');
+    const leftBtn = slider.querySelector('.peugeot-slider-arrow.left');
+    const rightBtn = slider.querySelector('.peugeot-slider-arrow.right');
+    let current = 0;
+    function showSlide(n){
+        slides.forEach((s, i) => s.classList.toggle('active', i === n));
+        navItems.forEach((navi, i) => navi.classList.toggle('active', i === n));
+        current = n;
+    }
+    leftBtn.onclick = function(){
+        let n = (current - 1 + slides.length) % slides.length;
+        showSlide(n);
+    };
+    rightBtn.onclick = function(){
+        let n = (current + 1) % slides.length;
+        showSlide(n);
+    };
+    navItems.forEach((navi, i) => {
+        navi.onclick = () => showSlide(i);
+    });
+    // Optional: auto-play
+    // setInterval(() => rightBtn.click(), 8000);
+})();
