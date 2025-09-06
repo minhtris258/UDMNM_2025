@@ -761,3 +761,195 @@ img.custom-logo {
     background-size: cover;
     background-position: center;
 }
+/* ====== SLIDER 4 ====== */
+
+
+/* Slide ảnh */
+.peugeot-slider4-slide {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    transition: opacity .6s ease;
+    background-size: cover;
+    background-position: center;
+}
+.peugeot-slider4-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+.peugeot-slider4-slide.active {
+    opacity: 1;
+    position: relative;
+    z-index: 1;
+}
+
+.peugeot-slider4 {
+  position: relative;
+}
+.peugeot-slider4-slide {
+  display: none;
+}
+.peugeot-slider4-slide.active {
+  display: block;
+}
+.peugeot-slider4-content {
+  display: none;
+}
+.peugeot-slider4-content.active {
+  display: block;
+}
+.peugeot-slider-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0,0,0,0.5);
+  border: none;
+  color: white;
+  font-size: 24px;
+  padding: 10px;
+  cursor: pointer;
+}
+.peugeot-slider-arrow.prev { left: 10px; }
+.peugeot-slider-arrow.next { right: 10px; }
+.peugeot-slider4-counter {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+.peugeot-slider4-counter {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px; /* khoảng cách giữa các phần tử */
+    margin-top: 15px; /* cách nội dung phía trên */
+    font-size: 16px;
+    font-weight: 500;
+    color: #333;
+}
+
+.peugeot-slider4-counter span {
+    display: inline-block;
+    min-width: 40px;
+    text-align: center;
+}
+
+.peugeot-slider4-counter .peugeot-slider4-arrow.small {
+    background: #fff;
+    border: 1px solid #ccc;
+    color: #333;
+    font-size: 14px;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    line-height: 26px;
+    text-align: center;
+    padding: 0;
+}
+
+.peugeot-slider4-counter .peugeot-slider4-arrow.small:hover {
+    background: #333;
+    color: #fff;
+    border-color: #333;
+}
+.peugeot-slider6-img{
+    width: 500px;
+    height: auto;
+    object-fit: cover;
+    display: block ;
+}
+
+
+
+/* color  */
+.peugeot-product-main {
+
+  text-align: center;
+  margin: 30px 0;
+}
+.peugeot-product-main img {
+
+  max-width: 1000px;
+  width: 100%;
+  transition: transform 0.4s ease, opacity 0.4s ease;
+}
+
+.peugeot-product-colors-list {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.peugeot-product-color-item {
+    position: relative;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: transform 0.3s, border 0.3s;
+  
+}
+.peugeot-product-color-item::after{
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    border-radius: 100%;
+    background: linear-gradient(-40deg, transparent 35%, rgba(255, 255, 255, .25) 55%, transparent 75%);
+}
+
+.peugeot-product-color-item.active::after {
+    content: "";
+    position: absolute;
+    top: -7px;   /* tạo khoảng hở */
+    left: -7px;
+    right: -7px;
+    bottom: -7px;
+    border: 2px solid #007bff;
+    border-radius: 50%;
+}
+ 
+
+/* bao giá */
+.peugeot-btn {
+    display: inline-block;
+    padding: 12px 24px;
+    background: #0066ff;
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 4px;
+    transition: 0.3s;
+}
+.peugeot-btn:hover {
+    background: #004bb5;
+}
+.peugeot-register-boxes {
+
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+.peugeot-register-box {
+    flex: 0 0 48%;
+   
+    
+    transition: background 0.3s, box-shadow 0.3s;
+}
+.peugeot-baogia-img {
+    max-width: 650px;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    display: block ;
+    margin-bottom: 15px;
+}

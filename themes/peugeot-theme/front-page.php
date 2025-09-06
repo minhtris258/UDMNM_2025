@@ -147,5 +147,46 @@ for ($i = 1; $i <= 2; $i++) {
         </div>
     </div>
 </div>
+<?php 
+$args = array(
+    'post_type' => 'san-pham',
+    'posts_per_page' => -1, // lấy tất cả
+    'orderby' => 'date',
+    'order' => 'DESC',
+);
+$query = new WP_Query($args);
+
+if ($query->have_posts()) : ?>
+    <div class="bang-gia-xe">
+        <?php while ($query->have_posts()) : $query->the_post(); ?>
+            
+            <?php 
+            // Lấy field group từ ACF (ví dụ bạn đặt group là "thong_tin_xe")
+            $thong_tin = get_field('thong_tin_xe'); 
+            ?>
+
+            <div class="xe-item">
+                <?php if (!empty($thong_tin['hinh_anh'])) : ?>
+                    <div class="xe-thumb">
+                        <img src="<?php echo esc_url($thong_tin['hinh_anh']['url']); ?>" alt="<?php echo esc_attr(get_the_title()); ?>">
+                    </div>
+                <?php endif; ?>
+
+                <h3 class="xe-title"><?php echo esc_html(get_the_title()); ?></h3>
+
+                <?php if (!empty($thong_tin['gia'])) : ?>
+                    <p class="xe-gia">Từ <?php echo esc_html($thong_tin['gia']); ?> triệu đồng</p>
+                <?php endif; ?>
+
+                <?php if (!empty($thong_tin['link_chi_tiet'])) : ?>
+                    <a href="<?php echo esc_url($thong_tin['link_chi_tiet']); ?>" class="btn-xem">
+                        Xem chi tiết <?php echo esc_html(get_the_title()); ?>
+                    </a>
+                <?php endif; ?>
+            </div>
+
+        <?php endwhile; ?>
+    </div>
+<?php endif; wp_reset_postdata(); ?>
 
 <?php get_footer(); ?>

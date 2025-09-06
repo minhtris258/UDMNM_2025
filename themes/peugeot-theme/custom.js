@@ -149,6 +149,67 @@ document.querySelectorAll(".peugeot-slider3").forEach(function (slider) {
             }
         });
 
+  // Slider 4 (dạng .peugeot-slider4 với .peugeot-slider4-slide)
+document.querySelectorAll(".peugeot-slider4").forEach(function (slider) {
+    const slides = slider.querySelectorAll(".peugeot-slider4-slide");
+    const contents = slider.querySelectorAll(".peugeot-slider4-content");
+    const prevBtn = slider.querySelector(".peugeot-slider-arrow.prev");
+    const nextBtn = slider.querySelector(".peugeot-slider-arrow.next");
+    const prevBtnSmall = slider.querySelector(".peugeot-slider4-counter .peugeot-slider4-arrow.prev");
+    const nextBtnSmall = slider.querySelector(".peugeot-slider4-counter .peugeot-slider4-arrow.next");
+    const currentSlideEl = slider.querySelector("#current-slide");
+    const totalSlidesEl = slider.querySelector("#total-slides");
 
-    
+    if (!slides.length) return;
+
+    let currentIndex = 0;
+    const total = slides.length;
+    if (totalSlidesEl) totalSlidesEl.textContent = total;
+
+    function showSlide(index) {
+        slides.forEach((s, i) => s.classList.toggle("active", i === index));
+        contents.forEach((c, i) => c.classList.toggle("active", i === index));
+        if (currentSlideEl) currentSlideEl.textContent = index + 1;
+        currentIndex = index;
+    }
+
+    function goPrev() {
+        currentIndex = (currentIndex - 1 + total) % total;
+        showSlide(currentIndex);
+    }
+
+    function goNext() {
+        currentIndex = (currentIndex + 1) % total;
+        showSlide(currentIndex);
+    }
+
+    // gán sự kiện cho cả nút to + nhỏ
+    prevBtn?.addEventListener("click", goPrev);
+    nextBtn?.addEventListener("click", goNext);
+    prevBtnSmall?.addEventListener("click", goPrev);
+    nextBtnSmall?.addEventListener("click", goNext);
+
+    // init
+    showSlide(currentIndex);
+});
+const mainImg = document.getElementById("peugeot-main-img");
+    const colorItems = document.querySelectorAll(".peugeot-product-color-item");
+
+    colorItems.forEach(item => {
+        item.addEventListener("click", function () {
+            // đổi ảnh chính
+            const newImg = this.getAttribute("data-image");
+
+            // hiệu ứng fade
+            mainImg.style.opacity = 0;
+            setTimeout(() => {
+                mainImg.src = newImg;
+                mainImg.style.opacity = 1;
+            }, 300);
+
+            // active state
+            colorItems.forEach(el => el.classList.remove("active"));
+            this.classList.add("active");
+        });
+    });
 });
