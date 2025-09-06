@@ -90,3 +90,33 @@ if (!function_exists('peugeut_theme_custom_login_logo')) {
     }
     add_action('login_enqueue_scripts', 'peugeut_theme_custom_login_logo');
 }
+
+// Ẩn nút "Thêm vào giỏ" trên trang danh sách sản phẩm
+add_action('init', 'hide_add_to_cart_button');
+function hide_add_to_cart_button() {
+    remove_action('woocommerce_after_shop_loop_item', 'woocommerce_template_loop_add_to_cart');
+    remove_action('woocommerce_single_product_summary', 'woocommerce_template_single_add_to_cart', 30);
+}
+
+// Ẩn giỏ hàng và liên kết giỏ hàng
+add_filter('woocommerce_cart_enabled', '__return_false');
+add_filter('woocommerce_checkout_enabled', '__return_false');
+add_action('wp_enqueue_scripts', 'remove_cart_from_menu');
+function remove_cart_from_menu() {
+    remove_filter('wp_nav_menu_items', 'woocommerce_nav_cart_search', 10);
+    remove_filter('wp_nav_menu_items', 'woocommerce_widget_cart_button', 10);
+}
+
+// Ẩn trang giỏ hàng và thanh toán
+add_filter('woocommerce_register_shop_pages', 'disable_shop_pages');
+function disable_shop_pages($pages) {
+    unset($pages['cart']);
+    unset($pages['checkout']);
+    return $pages;
+}
+
+// Ẩn giá sản phẩm (tùy chọn)
+// add_filter('woocommerce_get_price_html', 'hide_product_price', 100, 2);
+// function hide_product_price($price, $product) {
+//     return ''; // Trả về chuỗi rỗng để ẩn giá
+// }

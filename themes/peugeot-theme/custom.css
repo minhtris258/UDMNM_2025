@@ -752,3 +752,12 @@ img.custom-logo {
 .peugeot-slider-btn:hover {
     background: #0f5fd1;
 }
+
+
+/* single-san-pham */
+.peugeot-banner {
+    width: 100%;
+    height: auto;
+    background-size: cover;
+    background-position: center;
+}
