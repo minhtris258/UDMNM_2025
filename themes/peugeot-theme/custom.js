@@ -129,25 +129,6 @@ document.querySelectorAll(".peugeot-slider3").forEach(function (slider) {
     showSlide(0); // init
 });
 
- document.querySelectorAll('.peugeot-menu-list li.menu-item-has-children > a').forEach(function(parentLink) {
-            parentLink.addEventListener('click', function(e) {
-                e.preventDefault();
-                var li = parentLink.parentElement;
-                var isOpen = li.classList.contains('open');
-                document.querySelectorAll('.peugeot-menu-list li.menu-item-has-children').forEach(function(item) {
-                    item.classList.remove('open');
-                });
-                if (!isOpen) li.classList.add('open');
-            });
-        });
-        // Đóng submenu khi click ra ngoài
-        document.addEventListener('click', function(e) {
-            if (!e.target.closest('.peugeot-menu-list li.menu-item-has-children')) {
-                document.querySelectorAll('.peugeot-menu-list li.menu-item-has-children').forEach(function(item) {
-                    item.classList.remove('open');
-                });
-            }
-        });
 
   // Slider 4 (dạng .peugeot-slider4 với .peugeot-slider4-slide)
 document.querySelectorAll(".peugeot-slider4").forEach(function (slider) {
@@ -212,4 +193,171 @@ const mainImg = document.getElementById("peugeot-main-img");
             this.classList.add("active");
         });
     });
+    // === XỬ LÝ MOBILE MENU (REPLACE) ===
+var btn = document.getElementById('mobileMenuBtn');
+var overlay = document.getElementById('mobileMenuOverlay');
+var closeBtn = document.getElementById('closeMobileMenu');
+var headerEl = document.getElementById('siteHeader') || document.querySelector('.peugeot-header');
+
+if (btn && overlay && closeBtn && headerEl) {
+  const THRESHOLD = 100;
+
+  btn.onclick = function () {
+    overlay.classList.add('active');
+    headerEl.classList.add('nav-open');     // cờ nav mở
+    headerEl.classList.add('header-dark');  // tối header khi mở menu
+    document.body.style.overflow = 'hidden';
+  };
+
+  function closeOverlay() {
+    overlay.classList.remove('active');
+    headerEl.classList.remove('nav-open');
+
+    // Nếu ở đầu trang & không còn submenu mobile mở -> bỏ dark
+    const hasAnyMobileOpen = !!overlay.querySelector('.peugeot-mobile-menu-list li.menu-item-has-children.open');
+    if (window.scrollY <= THRESHOLD && !hasAnyMobileOpen) {
+      headerEl.classList.remove('header-dark');
+    } else {
+      headerEl.classList.add('header-dark');
+    }
+    document.body.style.overflow = '';
+  }
+
+  closeBtn.onclick = closeOverlay;
+  overlay.onclick = function (e) { if (e.target === overlay) closeOverlay(); };
+}
+
+// === SUBMENU MOBILE (OVERLAY): ACCORDION (ADD) ===
+document.querySelectorAll('.peugeot-mobile-menu-list').forEach(function(menu){
+  menu.querySelectorAll('li.menu-item-has-children > a').forEach(function(a){
+    a.addEventListener('click', function(e){
+      e.preventDefault(); // nếu muốn <a> đi link, bỏ dòng này và gắn click vào caret riêng
+
+      const li = a.parentElement;
+      const willOpen = !li.classList.contains('open');
+
+      // đóng anh em cùng cấp
+      li.parentElement.querySelectorAll(':scope > li.menu-item-has-children.open').forEach(function(sib){
+        if (sib !== li) sib.classList.remove('open');
+      });
+
+      // toggle chính nó
+      li.classList.toggle('open', willOpen);
+
+      // đồng bộ header-dark khi overlay đang mở
+      const headerEl = document.getElementById('siteHeader') || document.querySelector('.peugeot-header');
+      if (headerEl) {
+        if (willOpen) {
+          headerEl.classList.add('header-dark');
+        } else {
+          const hasAnyOpen = !!menu.querySelector('li.menu-item-has-children.open');
+          if (window.scrollY <= 100 && !hasAnyOpen && !headerEl.classList.contains('nav-open')) {
+            headerEl.classList.remove('header-dark');
+          }
+        }
+      }
+    });
+  });
+});
+
+    // ===== Header states: scroll (desktop & mobile), submenu (desktop), hamburger (mobile) =====
+(function () {
+  const header  = document.getElementById('siteHeader') || document.querySelector('.peugeot-header');
+  const overlay = document.getElementById('mobileMenuOverlay');
+  const btnOpen = document.getElementById('mobileMenuBtn');
+  const btnClose= document.getElementById('closeMobileMenu');
+  const mainNav = document.querySelector('.peugeot-main-nav');
+  if (!header) return;
+
+  // ====== Cấu hình ======
+  const THRESHOLD = 100; // px - coi như "đầu trang" nếu scrollY <= THRESHOLD
+
+  // ====== Helpers ======
+  const atTop   = () => window.scrollY <= THRESHOLD;
+  const anyOpen = () => !!mainNav?.querySelector('li.menu-item-has-children.open');
+  const navOpen = () => header.classList.contains('nav-open');
+
+  function updateHeaderDark() {
+    // Bật dark nếu: đã cuộn qua ngưỡng  || có submenu đang mở || nav mobile đang mở
+    const shouldDark = !atTop() || anyOpen() || navOpen();
+    header.classList.toggle('header-dark', shouldDark);
+  }
+
+  // ====== Scroll (giữ hành vi cũ) ======
+  function onScroll() {
+    updateHeaderDark();
+  }
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  // ====== Submenu: bấm để mở/đóng; đóng & đang ở đầu trang -> tắt header-dark ======
+  if (mainNav) {
+    const parents = mainNav.querySelectorAll('li.menu-item-has-children');
+
+    parents.forEach(li => {
+      const a = li.querySelector(':scope > a');
+      if (!a) return;
+
+      a.addEventListener('click', (e) => {
+        // Nếu muốn anchor đi link, bỏ dòng này và gán click vào nút caret riêng.
+        e.preventDefault();
+
+        const willOpen = !li.classList.contains('open');
+
+        // (Tuỳ chọn) đóng các submenu khác:
+        parents.forEach(x => x !== li && x.classList.remove('open'));
+
+        // Toggle submenu hiện tại
+        li.classList.toggle('open', willOpen);
+
+        // Cập nhật màu header theo đúng luật:
+        // - Nếu submenu vừa đóng và đang ở đầu trang + không mở nav -> tắt dark.
+        // - Ngược lại (đang mở submenu / đã cuộn / đang mở nav) -> bật dark.
+        updateHeaderDark();
+      });
+    });
+
+    // Click ra ngoài: đóng tất cả submenu, rồi về trạng thái theo scroll/hamburger
+    document.addEventListener('click', (e) => {
+      if (!mainNav.contains(e.target)) {
+        mainNav.querySelectorAll('li.menu-item-has-children.open').forEach(li => li.classList.remove('open'));
+        updateHeaderDark();
+      }
+    });
+
+    // Nhấn ESC: đóng submenu
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        mainNav.querySelectorAll('li.menu-item-has-children.open').forEach(li => li.classList.remove('open'));
+        updateHeaderDark();
+      }
+    });
+  }
+
+  // ====== Hamburger (mobile) ======
+  if (btnOpen) {
+    btnOpen.addEventListener('click', () => {
+      header.classList.add('nav-open');
+      updateHeaderDark();
+    });
+  }
+  if (btnClose) {
+    btnClose.addEventListener('click', () => {
+      header.classList.remove('nav-open');
+      updateHeaderDark();
+    });
+  }
+
+  // (Tuỳ chọn) Click overlay để đóng nav
+  if (overlay) {
+    overlay.addEventListener('click', (e) => {
+      if (e.target === overlay) {
+        header.classList.remove('nav-open');
+        updateHeaderDark();
+      }
+    });
+  }
+})();
+
+
 });

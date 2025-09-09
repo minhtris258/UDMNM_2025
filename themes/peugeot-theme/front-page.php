@@ -85,8 +85,8 @@ if ($content2) : ?>
         <?php endif; ?>
 
         <?php if (!empty($content2['youtube_url'])): ?>
-            <div class="video-wrapper" style="max-width:800px;margin:0 auto;">
-                <iframe width="100%" height="450" 
+            <div class="video-wrapper" style="max-width:1200px;margin:0 auto;">
+                <iframe width="100%" height="700" 
                         src="<?php echo esc_url($content2['youtube_url']); ?>" 
                         title="YouTube video" frameborder="0" allowfullscreen>
                 </iframe>

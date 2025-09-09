@@ -7,28 +7,21 @@
 </head>
 <body <?php body_class(); ?>>
 
-<header class="peugeot-header">
+<header class="peugeot-header" id="siteHeader">
     <div class="container-fluid">
-        <div class="d-flex align-items-center position-relative w-100 peugeot-header-inner" style="height: 80px;">
-            <!-- Hamburger sát mép trái, chỉ hiện mobile/tablet -->
+        <div class="d-flex align-items-center position-relative w-100 peugeot-header-inner" style="width: 80px;">
+            <!-- Hamburger -->
             <button class="peugeot-hamburger d-block d-md-none" aria-label="Menu" id="mobileMenuBtn">
-                <span></span>
-                <span></span>
-                <span></span>
+                <span></span><span></span><span></span>
             </button>
-            <!-- Gạch ngang trái -->
+
             <div class="peugeot-mobile-divider divider-left d-block d-md-none"></div>
-            <!-- Logo giữa -->
+
+            <!-- Logo giữa: 2 phiên bản -->
             <a class="peugeot-logo" href="<?php echo esc_url(home_url('/')); ?>">
-                <?php
-                if (function_exists('the_custom_logo') && has_custom_logo()) {
-                    the_custom_logo();
-                } else {
-                    echo '<span class="site-title">' . esc_html(get_bloginfo('name')) . '</span>';
-                }
-                ?>
+                <?php peugeot_print_dual_logo(); ?>
             </a>
-            <!-- Gạch ngang phải -->
+
             <div class="peugeot-mobile-divider divider-right d-block d-md-none"></div>
             <!-- Menu desktop -->
             <!-- Nav chung cho 2 menu -->

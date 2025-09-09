@@ -5,14 +5,15 @@ body{
 .peugeot-menu-list .sub-menu {
         display: none;
         position: absolute;
-        left: 0;
+        left: -28px;
+        margin-top: 8px;
         top: 100%;
         background: #222;
         min-width: 220px;
         z-index: 10;
         box-shadow: 0 4px 16px rgba(0,0,0,0.12);
         border-radius: 0 0 8px 8px;
-        padding: 12px 0;
+        padding: 12px 8px;
     }
     .peugeot-menu-list li.menu-item-has-children {
         position: relative;
@@ -28,12 +29,12 @@ body{
     }
 .peugeot-header {
     position: fixed;
-    top: 10px;
+   
     left: 0;
     width: 100%;
     z-index: 100;
     background: transparent;
-    padding: 12px 16px;
+    padding: 24px 16px;
 }
 
 .peugeot-header-inner {
@@ -60,12 +61,56 @@ img.custom-logo {
     height: auto;
     max-width: none;
 }
+/* ====== LOGO hiển thị ====== */
+.peugeot-logo .logo-alt { display: none; }      /* mặc định: logo 1 */
+/* .peugeot-header.header-dark .logo-default { display: none !important; }
+.peugeot-header.header-dark .logo-alt     { display: inline-block !important; } */
+
+/* ====== Trạng thái header đen (desktop & mobile) ====== */
+/* header-dark được JS thêm khi: lướt xuống (desktop/mobile), mở submenu (desktop), mở hamburger (mobile) */
+.peugeot-header.header-dark {
+  background: #000 !important;
+}
+
+/* Giảm chiều cao header khi header-dark (desktop) */
+@media (min-width: 992px) {
+  .peugeot-header.header-dark .peugeot-header-inner { height: 64px !important; }
+}
+
+/* Mobile: khi header-dark (mở hamburger hoặc lướt) logo thu nhỏ nhẹ */
+@media (max-width: 991px) {
+    .peugeot-header.header-dark .logo-default { display: none !important; }
+.peugeot-header.header-dark .logo-alt     { display: inline-block !important; }
+
+    img.custom-logo {
+        max-height: 73px;
+    }
+    .peugeot-header.header-dark {
+        height: 70px !important;
+    }
+    .peugeot-header.header-dark .peugeot-logo .custom-logo {
+        width: 50px;
+        transform: scale(.9);
+        transform-origin: center;
+        transition: transform .2s ease;
+        margin-top: -15px;
+        
+  }
+  .peugeot-header.header-dark .peugeot-mobile-divider {
+      background: #000000;
+  }
+  .peugeot-header {
+     padding: 2px 0px 0px 0px;
+ }
+ 
+ 
+}
 
 /* Hamburger icon (mobile/tablet) */
 .peugeot-hamburger {
     position: absolute;
     left: 0;
-    top: 18px;
+    top: 10px;
     z-index: 2;
     background: none;
     border: none;
@@ -80,7 +125,7 @@ img.custom-logo {
 .peugeot-hamburger span {
     display: block;
     width: 28px;
-    height: 3px;
+    height: 2px;
     background: #fff;
     margin: 4px 0;
     border-radius: 2px;
@@ -130,6 +175,34 @@ img.custom-logo {
 .peugeot-menu-list a:hover {
     color: #dadada;
 }
+/* Anchor có submenu: thêm khoảng trống cho caret */
+.peugeot-menu-list li.menu-item-has-children > a{
+  display: inline-flex;         /* để canh giữa dọc icon và chữ */
+  align-items: center;
+  gap: 8px;                     /* khoảng cách chữ ↔ caret */
+  position: relative;
+}
+
+/* Caret mặc định: chỉ xuống */
+.peugeot-menu-list li.menu-item-has-children > a::after{
+  content: "";
+  width: 0; height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 6px solid currentColor; /* dùng màu chữ hiện tại */
+  transition: transform .2s ease;
+  transform-origin: 50% 45%;
+}
+
+/* Khi li đang mở (.open) → xoay caret lên */
+.peugeot-menu-list li.menu-item-has-children.open > a::after{
+  transform: rotate(180deg);
+}
+
+/* (tuỳ chọn) hiệu ứng hover đổi màu chữ sẽ kéo caret đổi theo vì dùng currentColor */
+.peugeot-menu-list a:hover{
+  color: #dadada;
+}
 
 /* --- EXTRA MENU DESKTOP (phải) --- */
 .extra-menu-list {
@@ -170,6 +243,68 @@ img.custom-logo {
     .extra-menu-list {
         display: none !important;
     }
+    .peugeot-mobile-menu-list,
+  .peugeot-mobile-menu-list ul,
+  .peugeot-mobile-menu-list li {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* Item có submenu: chừa chỗ cho mũi tên bên phải */
+  .peugeot-mobile-menu-list li.menu-item-has-children > a {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;   /* chữ trái, mũi tên phải */
+    padding: 12px 40px 12px 4px;      /* chừa 40px bên phải cho caret */
+    color: #fff;                      /* điều chỉnh theo theme */
+    text-decoration: none;
+  }
+
+  /* Mũi tên (caret) mặc định chỉ xuống */
+  .peugeot-mobile-menu-list li.menu-item-has-children > a::after {
+    content: "";
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%) rotate(0deg);
+    width: 0; height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 6px solid currentColor; /* dùng màu chữ hiện tại */
+    transition: transform .2s ease;
+    pointer-events: none;
+  }
+
+  /* Khi mở submenu -> caret xoay lên */
+  .peugeot-mobile-menu-list li.menu-item-has-children.open > a::after {
+    transform: translateY(-50%) rotate(180deg);
+  }
+
+  /* Submenu accordion: ẩn mặc định */
+  .peugeot-mobile-menu-list li > .sub-menu {
+    display: block;            /* để dùng max-height transition */
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height .25s ease, opacity .2s ease;
+  }
+
+  /* Khi .open -> hiện submenu */
+  .peugeot-mobile-menu-list li.open > .sub-menu {
+    max-height: 1000px;        /* đủ lớn cho nội dung; tăng nếu submenu dài */
+    opacity: 1;
+  }
+
+  /* Link trong submenu */
+  .peugeot-mobile-menu-list .sub-menu > li > a {
+    display: block;
+    padding: 10px 12px 10px 24px; /* thụt vào nhẹ cho cấp con */
+    color: #fff;                  /* điều chỉnh theo theme */
+    text-decoration: none;
+    border-top: 1px solid rgba(255,255,255,.08);
+  }
     .peugeot-hamburger {
         display: flex !important;
     }
@@ -188,15 +323,23 @@ img.custom-logo {
 
 /* --- DESKTOP --- */
 @media (min-width: 992px) {
+    .peugeot-header.header-dark img.custom-logo { max-height: 80px; }
     .peugeot-header-inner {
         display: flex;
         align-items: center;
         justify-content: flex-start;
     }
     .peugeot-logo {
+        width: 72px;
+        margin-right: 40px;
         margin-left: 0 !important;
         margin-right: 40px !important;
         justify-content: flex-start !important;
+        z-index: 3;
+        background: transparent;
+        display: flex;
+
+        align-items: center;
     }
     .peugeot-main-nav {
         display: flex !important;
@@ -223,14 +366,6 @@ img.custom-logo {
 }
 
 
-.peugeot-slider {
-    width: 100%;
-    max-width: 100vw;
-    height: 620px;
-    position: relative;
-   
-    overflow: hidden;
-}
 
 .peugeot-slider-wrapper {
     display: flex;
@@ -318,8 +453,8 @@ img.custom-logo {
     color: #fff;
     font-size: 36px;
     position: absolute;
-    top: 18px;
-    right: 24px;
+    top: 10px;
+    left: 24px;
     cursor: pointer;
     z-index: 10001;
 }
@@ -337,12 +472,6 @@ img.custom-logo {
         display: flex;
         align-items: center;
     }
-
-    /* Logo bên trái, không bị gạch */
-    .peugeot-logo {
-        margin-right: 40px;
-    }
-
     /* Nav chung cho 2 menu */
     .peugeot-main-nav {
         flex: 1;
@@ -630,6 +759,51 @@ img.custom-logo {
 @media (max-width: 900px){
     .peugeot-slider-content { width: 80vw; min-width:unset; padding:24px; }
     .peugeot-slider-nav { left:24px; gap:12px;}
+}
+/* Tối ưu phần tử cho GPU & redraw mượt */
+.peugeot-slider { contain: paint; }
+.peugeot-slider-slide { will-change: opacity, transform; pointer-events: none; }
+.peugeot-slider-slide.active { pointer-events: auto; }
+
+/* Ảnh: Ken Burns nhẹ khi vào slide (giảm giật) */
+.peugeot-slider-img{
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transform: scale(1.03) translateZ(0);          /* bắt đầu hơi zoom in */
+  transition: transform 900ms cubic-bezier(.22,.61,.36,1),
+              opacity 600ms ease;
+  backface-visibility: hidden;
+}
+.peugeot-slider-slide.active .peugeot-slider-img{
+  transform: scale(1) translateZ(0);             /* về 1.0 -> cảm giác “nở ra” mượt */
+}
+
+/* Nội dung: trượt lên + fade */
+.peugeot-slider-content{
+  opacity: 0;
+  transform: translateY(10px) translateZ(0);
+  transition: opacity 520ms ease, 
+              transform 520ms cubic-bezier(.22,.61,.36,1);
+  transition-delay: 80ms;                        /* hiện sau ảnh một nhịp */
+}
+.peugeot-slider-slide.active .peugeot-slider-content{
+  opacity: 1; transform: translateY(0) translateZ(0);
+}
+
+/* Nút điều hướng: hover mượt hơn */
+.peugeot-slider-arrow{
+  transition: background .28s ease, transform .28s ease;
+}
+.peugeot-slider-arrow:hover{ transform: translateY(-50%) scale(1.04); }
+
+/* Tabs nav: đổi mượt màu/underline đã có — thêm blur nhẹ khi inactive */
+.peugeot-slider-nav-item{ filter: saturate(.9); }
+.peugeot-slider-nav-item.active{ filter: none; }
+
+/* Mobile điều chỉnh (tuỳ chọn) */
+@media (max-width: 900px){
+  .peugeot-slider-content{ transition-duration: 420ms; }
+  .peugeot-slider-img{ transition-duration: 720ms, 520ms; }
 }
 
 
@@ -953,3 +1127,16 @@ img.custom-logo {
     display: block ;
     margin-bottom: 15px;
 }
+
+.thumb-wrapper {
+  width: 150px;
+  height: 150px;
+  overflow: hidden;
+}
+.thumb-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
