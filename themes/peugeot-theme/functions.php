@@ -72,6 +72,7 @@ add_action('wp_enqueue_scripts', function () {
 
   // JS lọc trang đại lý
   if (is_page_template('page-tim-dai-ly.php')) {
+    wp_enqueue_style('agency-filter-css', get_template_directory_uri().'/assets/css/agency-filter.css', [], null);
     wp_enqueue_script('agency-filter', get_stylesheet_directory_uri().'/assets/js/agency-filter.js', ['jquery'], '1.0', true);
     wp_localize_script('agency-filter', 'AGENCY_AJAX', [
       'ajax_url' => admin_url('admin-ajax.php'),
@@ -119,28 +120,19 @@ function handle_filter_agencies() {
 
   $q = new WP_Query($args);
 
-  ob_start();
-  if ($q->have_posts()) {
-    echo '<div class="agency-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;">';
-    while ($q->have_posts()) { $q->the_post();
-      echo '<article class="agency-card" style="border:1px solid #eee;border-radius:8px;padding:16px;">';
-      echo   '<h3 style="margin:0 0 8px;"><a href="'.esc_url(get_permalink()).'">'.esc_html(get_the_title()).'</a></h3>';
-      echo   '<div style="font-size:14px;color:#666;margin-bottom:6px;">';
-      $mien_links = get_the_term_list(get_the_ID(), 'mien', '<strong>Miền:</strong> ', ', ', '');
-      $tinh_links = get_the_term_list(get_the_ID(), 'tinhthanh', '<strong>Tỉnh/Thành:</strong> ', ', ', '');
-      echo     wp_kses_post($mien_links ?: '');
-      echo     ($mien_links && $tinh_links) ? '<br>' : '';
-      echo     wp_kses_post($tinh_links ?: '');
-      echo   '</div>';
-      echo   '<div style="font-size:14px;color:#444;">'.wp_kses_post(get_the_excerpt()).'</div>';
-      echo '</article>';
-    }
-    echo '</div>';
-  } else {
-    echo '<p>Không có bài nào.</p>';
-  }
-  wp_reset_postdata();
-  $html_list = ob_get_clean();
+ob_start();
+
+if ($q->have_posts()) {
+  echo '<div class="agency-grid">';
+  while ($q->have_posts()) { $q->the_post(); pg_render_agency_card(get_the_ID()); }
+  echo '</div>';
+} else {
+  echo '<p>Không có bài nào.</p>';
+}
+wp_reset_postdata();
+
+$html_list = ob_get_clean();
+
 
   $pagination = paginate_links([
     'total'=>$q->max_num_pages, 'current'=>$paged, 'type'=>'array',
@@ -158,3 +150,7 @@ function handle_filter_agencies() {
     'current'     => (int) $paged,
   ]);
 }
+add_action('after_setup_theme', function () {
+  $file = get_stylesheet_directory() . '/inc/agency-card.php'; // dùng child theme nếu có
+  if (file_exists($file)) require_once $file;
+});

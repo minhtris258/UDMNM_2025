@@ -1,6 +1,6 @@
 (function ($) {
-  const $form = $('.agency-filter-form'); // nhớ class này trong template
-  const $results = $('#agency-results');  // vùng kết quả
+  const $form = $('.agency-filter, .agency-filter-form').first();
+  const $results = $('#agency-results');
   let typingTimer;
   const DEBOUNCE = 300;
 
@@ -16,7 +16,6 @@
   }
 
   function pushState(paged) {
-    // Cập nhật URL để share được trạng thái lọc
     const url = new URL(window.location.href);
     const p = params();
     url.searchParams.set('keyword', p.keyword);
@@ -39,6 +38,7 @@
           $results.html(res.data.html);
           pushState(paged);
           attachPaginationHandlers();
+          $('.agency-count').text('Có ' + res.data.found_posts + ' Đại lý / Chi Nhánh / Workshop');
         } else {
           $results.html('<p>Lỗi tải dữ liệu.</p>');
         }
@@ -52,10 +52,8 @@
   }
 
   function attachPaginationHandlers() {
-    // Bắt click vào các link phân trang (đều nằm trong #agency-results)
     $results.find('.agency-pagination a').on('click', function (e) {
       e.preventDefault();
-      // Tìm ?paged=n trong href
       const href = $(this).attr('href') || '';
       const url = new URL(href, window.location.origin);
       const paged = parseInt(url.searchParams.get('paged') || '1', 10);
@@ -64,27 +62,12 @@
   }
 
   // Sự kiện form
-  $form.on('submit', function (e) {
-    e.preventDefault();
-    fetchResults(1);
-  });
-
-  $form.on('change', 'select', function () {
-    fetchResults(1);
-  });
-
+  $form.on('submit', function (e) { e.preventDefault(); fetchResults(1); });
+  $form.on('change', 'select', function () { fetchResults(1); });
   $form.on('input', 'input[name="keyword"]', function () {
     clearTimeout(typingTimer);
-    typingTimer = setTimeout(function () {
-      fetchResults(1);
-    }, DEBOUNCE);
+    typingTimer = setTimeout(function () { fetchResults(1); }, DEBOUNCE);
   });
 
-  // Lần đầu vào trang: load theo URL hiện tại (nếu có query) hoặc hiển thị sẵn server-side
-  // Nếu muốn luôn load AJAX ngay khi vào trang:
-  // fetchResults(parseInt(new URL(window.location.href).searchParams.get('paged') || '1', 10));
-
-  // Sau mỗi lần AJAX xong, pagination handlers được gắn lại
   attachPaginationHandlers();
-
 })(jQuery);
