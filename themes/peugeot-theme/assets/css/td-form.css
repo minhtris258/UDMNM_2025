@@ -1,0 +1,207 @@
+/* Layout chung */
+.td-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 16px;
+}
+
+.td-title {
+    text-transform: uppercase;
+    font-size: 40px;
+    margin: 0 0 8px;
+    font-weight: 800;
+    padding: 20px;
+    -webkit-text-fill-color: transparent;
+    background: linear-gradient(142.06deg, #6e8cc8 -51.7%, #245d75 -.35%, #a4e1ff 41.8%, #3a508e 78.54%, #39588b 123.96%);
+   
+    background-clip: text;
+    line-height: 1.8;
+}
+
+.td-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    align-items: start;
+}
+
+@media(max-width:1024px) {
+    .td-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Accordion */
+.td-acc {
+    overflow: hidden;
+    background: #fff;
+    padding: 4px;
+}
+
+.td-acc-head {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 14px;
+    border: none;
+    background: #fff;
+    cursor: pointer;
+    font-weight: 800;
+    text-transform: uppercase;
+    font-size: 16px;
+    border-top: 4px solid #1066d7;
+}
+
+.td-acc-icon {
+    width: 22px;
+    height: 22px;
+    position: relative;
+    flex: 0 0 22px;
+}
+
+.td-acc-icon:before,
+.td-acc-icon:after {
+    content: "";
+    position: absolute;
+    background: #444;
+    left: 4px;
+    right: 4px;
+    top: 10px;
+    height: 2px;
+}
+
+.td-acc:not(.td-open) .td-acc-icon:after {
+    transform: rotate(90deg);
+}
+
+/* dấu + */
+.td-acc.td-open .td-acc-icon:after {
+    display: none;
+}
+
+.td-acc-content {
+    padding: 14px;
+    display: none;
+}
+
+.td-acc.td-open>.td-acc-content {
+    display: block;
+}
+
+.td-policy {
+    font-size: 14px;
+    line-height: 1.5;
+    color: #222;
+    margin: 8px 0 12px;
+}
+
+.td-actions {
+    text-align: right;
+    margin-top: 8px;
+}
+
+.td-submit {
+    background: #1066d7;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 14px 22px;
+    font-weight: 800;
+    letter-spacing: .3px;
+    cursor: pointer;
+}
+
+.td-submit:hover {
+    filter: brightness(1.05);
+}
+
+/* ACF inputs */
+.acf-form .acf-input input[type="text"],
+.acf-form .acf-input input[type="email"],
+.acf-form .acf-input select,
+.acf-form .acf-input textarea {
+    width: 100%;
+    height: 44px;
+    padding: 10px 12px;
+    font-size: 15px;
+}
+
+.acf-form .acf-input textarea {
+    height: auto;
+    min-height: 100px;
+}
+
+.select2-container.-acf {
+    z-index: 0;
+}
+
+/* Errors realtime */
+.acf-field.pg-error .acf-input input,
+.acf-field.pg-error .acf-input select,
+.acf-field.pg-error .acf-input textarea {
+    border-color: #dc3545 !important;
+    box-shadow: 0 0 0 .2rem rgba(220, 53, 69, .18);
+}
+
+.acf-field.pg-error .acf-label label {
+    color: #dc3545;
+}
+
+.pg-error-text {
+    color: #dc3545;
+    font-size: 13px;
+    margin-top: 6px;
+}
+
+.td-success {
+    margin-top: 12px;
+    color: #065f46;
+    background: #d1fae5;
+    padding: 10px 12px;
+    border-radius: 6px;
+}
+
+.td-missing {
+    color: #b91c1c;
+    background: #fee2e2;
+    padding: 8px 10px;
+    border-radius: 6px;
+}
+.select2-container.-acf {
+    z-index: 0 !important;
+}
+span {
+    text-align: justify;
+}
+p {
+   font-size: medium;
+}
+label {
+    font-size: medium;
+}
+/* 1) Chỉ tô đen dấu * khi KHÔNG lỗi */
+.acf-field:not(.pg-error) .acf-label .acf-required { 
+  color:#000 !important;
+}
+
+/* 2) Khi LỖI: label + dấu * đều đỏ (đè lại !important trước đó) */
+.acf-field.pg-error .acf-label label,
+.acf-field.pg-error .acf-label .acf-required,
+.acf-field.-error .acf-label label,
+.acf-field.-error .acf-label .acf-required {
+  color:#dc3545 !important;
+}
+
+/* 3) Khi LỖI: viền input/select/textarea + select2 đỏ */
+.acf-field.pg-error .acf-input input,
+.acf-field.pg-error .acf-input select,
+.acf-field.pg-error .acf-input textarea,
+.acf-field.pg-error .acf-input .select2-selection,
+.acf-field.-error  .acf-input .select2-selection {
+  border-color:#dc3545 !important;
+  box-shadow:0 0 0 .2rem rgba(220,53,69,.18);
+}
+
+/* Text báo lỗi (nếu JS của bạn có chèn) */
+.pg-error-text { color:#dc3545; font-size:13px; margin-top:6px; }
+

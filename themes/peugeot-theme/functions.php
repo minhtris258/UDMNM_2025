@@ -73,7 +73,8 @@ add_action('wp_enqueue_scripts', function () {
   // JS lọc trang đại lý
   if (is_page_template('page-tim-dai-ly.php')) {
     wp_enqueue_style('agency-filter-css', get_template_directory_uri().'/assets/css/agency-filter.css', [], null);
-    wp_enqueue_script('agency-filter', get_stylesheet_directory_uri().'/assets/js/agency-filter.js', ['jquery'], '1.0', true);
+  wp_enqueue_script('agency-filter', get_template_directory_uri().'/assets/js/agency-filter.js', ['jquery'], '1.0', true);
+
     wp_localize_script('agency-filter', 'AGENCY_AJAX', [
       'ajax_url' => admin_url('admin-ajax.php'),
       'nonce'    => wp_create_nonce('agency_filter_nonce'),
@@ -151,6 +152,109 @@ $html_list = ob_get_clean();
   ]);
 }
 add_action('after_setup_theme', function () {
-  $file = get_stylesheet_directory() . '/inc/agency-card.php'; // dùng child theme nếu có
+  $file = get_template_directory() . '/inc/agency-card.php'; // dùng child theme nếu có
   if (file_exists($file)) require_once $file;
 });
+// CPT: lich_lai_thu
+add_action('init', function () {
+  register_post_type('lich_lai_thu', [
+    'label' => 'Đăng ký lái thử',
+    'public' => false,
+    'show_ui' => true,
+    'menu_icon' => 'dashicons-calendar-alt',
+    'supports' => ['title'],
+  ]);
+});
+// functions.php
+add_action('acf/save_post', function ($post_id) {
+  if (get_post_type($post_id) !== 'lich_lai_thu') return;
+
+  $car_id  = (int) get_field('car', $post_id);
+  $car     = $car_id ? get_the_title($car_id) : '';
+  $salute  = (string) get_field('salutation', $post_id);
+  $fname   = (string) get_field('first_name', $post_id);
+  $lname   = (string) get_field('last_name', $post_id);
+
+  $title = sprintf('[Lái thử] %s %s – %s – %s',
+    $salute,
+    trim($lname.' '.$fname),
+    $car ?: 'Không rõ xe',
+    wp_date('d/m/Y H:i')
+  );
+
+  remove_action('acf/save_post', __FUNCTION__);
+  wp_update_post(['ID' => $post_id, 'post_title' => $title]);
+  add_action('acf/save_post', __FUNCTION__);
+}, 20);
+// Enqueue cho trang Đặt lịch lái thử
+add_action('wp_enqueue_scripts', function () {
+  if (is_page_template('page-dat-lich-lai-thu.php')) {
+    wp_enqueue_style('td-form', get_template_directory_uri().'/assets/css/td-form.css', [], '1.0');
+    wp_enqueue_script('td-form', get_template_directory_uri().'/assets/js/td-form.js', ['jquery'], '1.0', true);
+    wp_localize_script('td-form', 'TD_AJAX', [
+      'url'   => admin_url('admin-ajax.php'),
+      'nonce' => wp_create_nonce('td_val_nonce'),
+    ]);
+  }
+});
+
+// AJAX validate realtime
+add_action('wp_ajax_td_validate_field', 'td_validate_field');
+add_action('wp_ajax_nopriv_td_validate_field', 'td_validate_field');
+
+function td_validate_field() {
+  check_ajax_referer('td_val_nonce', 'nonce');
+
+  $key   = isset($_POST['key'])   ? sanitize_text_field(wp_unslash($_POST['key']))   : '';
+  $value = isset($_POST['value']) ? wp_unslash($_POST['value']) : '';
+  $value = is_string($value) ? trim($value) : $value;
+
+  $ok = true; $msg = '';
+
+  // Các field bắt buộc
+  $required = [
+    'field_68c2380eeb74f', // car
+    'field_68c239ebeb750', // dai_ly
+    'field_68c23a85eb757', // salutation
+    'field_68c23a0eeb751', // first_name
+    'field_68c23a1feb752', // last_name
+    'field_68c23a2eeb753', // phone
+    'field_68c23a3ceb754', // email
+  ];
+  if (in_array($key, $required, true)) {
+    if ($value === '' || $value === '0' || $value === '---') {
+      wp_send_json_success(['ok'=>false, 'message'=>'Trường này bắt buộc.']);
+    }
+  }
+
+  // Kiểm tra riêng từng loại
+  if ($key === 'field_68c23a2eeb753') { // phone
+    $digits = preg_replace('/\D+/', '', $value);
+    if (!preg_match('/^(0\d{9,10}|84\d{9,10})$/', $digits)) {
+      $ok=false; $msg='Số điện thoại không hợp lệ.';
+    }
+  }
+
+  if ($key === 'field_68c23a3ceb754') { // email
+    if (!is_email($value)) { $ok=false; $msg='Email không hợp lệ.'; }
+    else {
+      // (tuỳ chọn) chống trùng email đã đăng ký
+      $dupe = new WP_Query([
+        'post_type' => 'lich_lai_thu',
+        'post_status' => 'any',
+        'posts_per_page' => 1,
+        'meta_query' => [['key'=>'email','value'=>$value,'compare'=>'=']],
+        'no_found_rows' => true,
+      ]);
+      if ($dupe->have_posts()) { $ok=false; $msg='Email này đã có đăng ký trước đó.'; }
+      wp_reset_postdata();
+    }
+  }
+
+  wp_send_json_success(['ok'=>$ok, 'message'=>$msg]);
+}
+add_action('acf/save_post', function($post_id){
+    if(get_post_type($post_id) === 'lich_lai_thu') {
+        // Xử lý sau khi tạo post mới, ví dụ gửi mail, đổi title, v.v.
+    }
+}, 20);
