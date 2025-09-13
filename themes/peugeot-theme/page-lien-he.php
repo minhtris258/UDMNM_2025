@@ -1,30 +1,29 @@
 <?php
 /**
- * Template Name: Đặt lịch lái thử
+ * Template Name: liên hệ
  */
 acf_form_head();
 get_header();
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['acf'])) {
     // Lấy xưng hô, họ, tên
-    $salutation = isset($_POST['acf']['field_68c23a85eb757']) ? trim($_POST['acf']['field_68c23a85eb757']) : '';
-    $last_name = isset($_POST['acf']['field_68c23a1feb752']) ? trim($_POST['acf']['field_68c23a1feb752']) : '';
-    $first_name = isset($_POST['acf']['field_68c23a0eeb751']) ? trim($_POST['acf']['field_68c23a0eeb751']) : '';
+    $salutation = isset($_POST['acf']['field_68c45ac49ae86']) ? trim($_POST['acf']['field_68c45ac49ae86']) : '';
+    $last_name = isset($_POST['acf']['field_68c45ac4a2397']) ? trim($_POST['acf']['field_68c45ac4a2397']) : '';
+    $first_name = isset($_POST['acf']['field_68c45ac49e9fa']) ? trim($_POST['acf']['field_68c45ac49e9fa']) : '';
     $full_name = trim($last_name . ' ' . $first_name);
 
     // Lấy loại xe
-    $car_id = isset($_POST['acf']['field_68c2380eeb74f']) ? intval($_POST['acf']['field_68c2380eeb74f']) : 0;
-    $car_name = $car_id ? get_the_title($car_id) : '';
+  $yeu_cau_value = isset($_POST['acf']['field_68c45ac49373b']) ? trim($_POST['acf']['field_68c45ac49373b']) : '';
 
     // Ngày giờ tạo
     date_default_timezone_set('Asia/Ho_Chi_Minh');
     $datetime = date('d/m/Y H:i:s');
 
     // Ghép title: "Xưng hô Họ Tên - Loại xe - Ngày giờ"
-    $post_title = trim($salutation . ' ' . $full_name . ' - ' . $car_name . ' - ' . $datetime);
+    $post_title = trim($salutation . ' ' . $full_name . ' - ' . $yeu_cau_value . ' - ' . $datetime);
 
     // Tạo post mới
     $post_id = wp_insert_post([
-        'post_type' => 'lich_lai_thu',
+        'post_type' => 'lien_he',
         'post_status' => 'publish',
         'post_title' => $post_title,
     ]);
@@ -40,18 +39,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['acf'])) {
     }
 }
 $TD_KEYS = [
-  'car'            => 'field_68c2380eeb74f',
-  'dai_ly'         => 'field_68c239ebeb750',
-  'salutation'     => 'field_68c23a85eb757',
-  'first_name'     => 'field_68c23a0eeb751',
-  'last_name'      => 'field_68c23a1feb752',
-  'phone'          => 'field_68c23a2eeb753',
-  'email'          => 'field_68c23a3ceb754',
-  'optin_channels' => 'field_68c23a4eeb755',
+  'yeu_cau'            => 'field_68c45ac49373b',
+  'note'               => 'field_68c45c2f19a70',
+  'dai_ly'             => 'field_68c45ac49715a',
+  'salutation'         => 'field_68c45ac49ae86',
+  'first_name'         => 'field_68c45ac49e9fa',
+  'last_name'          => 'field_68c45ac4a2397',
+  'phone'              => 'field_68c45ac4a5eca',
+  'email'              => 'field_68c45ac4a9aa1',
+  'optin_channels'     => 'field_68c45ac4ad730',
 ];
 
 $TD_LABELS = [
-  'car'            => 'Vui lòng chọn dòng xe bạn quan tâm:',
+  'yeu_cau'        => 'Vui lòng chọn dòng xe bạn quan tâm:',
+  'note'         => 'Chi tiết/Ghi chú:',
   'dai_ly'         => 'Chọn đại lý',
   'salutation'     => 'Danh xưng',
   'first_name'     => 'Tên',
@@ -60,7 +61,6 @@ $TD_LABELS = [
   'email'          => 'Email',
   'optin_channels' => 'Tôi muốn nhận thêm thông tin về các sản phẩm và dịch vụ của Peugeot Việt Nam bằng cách',
 ];
-
 
 ?>
 <?php 
@@ -104,10 +104,13 @@ if ($slider) : ?>
     <div class="td-row-2">
       <section class="td-acc td-open td-acc--half">
         <button class="td-acc-head" type="button">
-          <span>HÃY CHỌN MẪU PEUGEOT PHÙ HỢP VỚI BẠN NHẤT</span><i class="td-acc-icon"></i>
+          <span>NHẬP YÊU CẦU CỦA BẠN</span><i class="td-acc-icon"></i>
         </button>
         <div class="td-acc-content">
-          <?php td_render($TD_KEYS['car'], $TD_LABELS['car'], 'Chọn dòng xe'); ?>
+          <?php td_render($TD_KEYS['yeu_cau'], $TD_LABELS['yeu_cau'], 'Chọn dòng xe'); ?>
+        </div>
+        <div class="td-acc-content">
+          <?php td_render($TD_KEYS['note'], $TD_LABELS['note'], 'Chọn dòng xe'); ?>
         </div>
       </section>
 

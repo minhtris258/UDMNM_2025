@@ -1,85 +1,129 @@
+<?php
+/**
+ * Footer template
+ */
+?>
 <footer class="peugeot-footer">
-    <div class="peugeot-footer-top">
-        <div class="container-fluid">
-            <div class="row g-0 text-center">
-                <div class="col-lg-3 col-6 peugeot-footer-top-item">
-                    <span class="footer-icon"><i class="fa fa-map-marker"></i></span>
-                    <span class="footer-label">TÌM ĐẠI LÝ GẦN NHẤT</span>
-                </div>
-                <div class="col-lg-3 col-6 peugeot-footer-top-item">
-                    <span class="footer-icon"><i class="fa fa-car"></i></span>
-                    <span class="footer-label">ĐẶT LỊCH LÁI THỬ</span>
-                </div>
-                <div class="col-lg-3 col-6 peugeot-footer-top-item">
-                    <span class="footer-icon"><i class="fa fa-question"></i></span>
-                    <span class="footer-label">TRỢ GIÚP</span>
-                </div>
-                <div class="col-lg-3 col-6 peugeot-footer-top-item">
-                    <span class="footer-icon"><i class="fa fa-envelope"></i></span>
-                    <span class="footer-label">LIÊN HỆ</span>
-                </div>
-            </div>
-        </div>
+
+  <!-- ===== HÀNG CTA (menu 4 ô) ===== -->
+  <div class="peugeot-footer-top">
+    <div class="container-fluid text-center">
+      <?php
+      if (has_nav_menu('footer_cta')) {
+        wp_nav_menu([
+          'theme_location' => 'footer_cta',
+          'container'      => 'nav',
+          'container_class'=> 'footer-cta',
+          'menu_class'     => 'footer-cta-menu',
+          'depth'          => 1,
+          'fallback_cb'    => '__return_empty_string',
+        ]);
+      } elseif (is_active_sidebar('footer_cta_widgets')) {
+        dynamic_sidebar('footer_cta_widgets');
+      }
+      ?>
     </div>
-    <div class="peugeot-footer-main">
-        <div class="container-fluid">
-            <div class="row peugeot-footer-main-row">
-                <div class="col-lg-3 col-md-6 mb-4">
-                    <h5 class="footer-title">VỀ PEUGEOT VIỆT NAM</h5>
-                    <p class="footer-desc">
-                        CÔNG TY TNHH PHÂN PHỐI THACO AUTO Giấy CNĐKDN: 400077880<br>
-                        Ngày cấp 27/10/2010
-                    </p>
-                </div>
-                <div class="col-lg-3 col-md-6 mb-4">
-                    <h5 class="footer-title">TRUY CẬP NHANH</h5>
-                    <ul class="footer-links">
-                        <li><a href="#">Yêu cầu báo giá</a></li>
-                        <li><a href="#">Đăng ký lái thử</a></li>
-                    </ul>
-                </div>
-                <div class="col-lg-3 col-md-6 mb-4">
-                    <h5 class="footer-title">DÀNH CHO CHỦ XE PEUGEOT</h5>
-                    <ul class="footer-links">
-                        <li><a href="#">Bảo dưỡng</a></li>
-                    </ul>
-                </div>
-                <div class="col-lg-3 col-md-6 mb-4">
-                    <h5 class="footer-title">TÌM HIỂU THÊM VỀ PEUGEOT</h5>
-                    <ul class="footer-links">
-                        <li><a href="#">PEUGEOT Motocycles</a></li>
-                        <li><a href="#">Thông báo Pháp lý</a></li>
-                        <li><a href="#">Chính sách Bảo mật Thông tin Cá nhân</a></li>
-                    </ul>
-                    <div class="footer-hotline mt-3 fw-bold">HOTLINE: 1900 1101</div>
-                    <div class="footer-social mt-3">
-                        <a href="#" class="footer-social-icon"><i class="fa fa-facebook"></i></a>
-                        <a href="#" class="footer-social-icon"><i class="fa fa-instagram"></i></a>
-                        <a href="#" class="footer-social-icon"><i class="fa fa-youtube"></i></a>
-                        <a href="#" class="footer-social-icon"><i class="fa fa-linkedin"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="row peugeot-footer-bottom-row text-center">
-                <div class="col-12 mt-4">
-                    <div class="footer-logo">
-                        <?php
-                        if (function_exists('the_custom_logo') && has_custom_logo()) {
-                            the_custom_logo();
-                        }
-                        ?>
-                    </div>
-                </div>
-                <div class="col-12 mt-2">
-                    <div class="footer-policy-links">
-                        <a href="#">Chính sách & Quy định chung</a> |
-                        <a href="#">Chính sách Bảo mật Thông tin</a>
-                    </div>
-                </div>
-            </div>
+  </div>
+
+  <!-- ===== 4 CỘT CHÍNH ===== -->
+  <div class="peugeot-footer-main">
+    <div class="container">
+      <div class="row peugeot-footer-main-row">
+        <div class="col-12 col-md-6 col-lg-3">
+          <?php if (is_active_sidebar('footer_col_1')) { dynamic_sidebar('footer_col_1'); }
+          else { ?>
+            <h4 class="footer-title">Về Peugeot Việt Nam</h4>
+            <p class="footer-desc">Kéo widget “Text/Custom HTML” vào khu vực này để thêm mô tả, địa chỉ, giấy phép…</p>
+          <?php } ?>
         </div>
+
+        <div class="col-12 col-md-6 col-lg-3">
+          <?php if (is_active_sidebar('footer_col_2')) { dynamic_sidebar('footer_col_2'); }
+          else { ?>
+            <h4 class="footer-title">Truy cập nhanh</h4>
+            <p class="footer-desc">Kéo widget “Navigation Menu” (trỏ tới 1 menu link).</p>
+          <?php } ?>
+        </div>
+
+        <div class="col-12 col-md-6 col-lg-3">
+          <?php if (is_active_sidebar('footer_col_3')) { dynamic_sidebar('footer_col_3'); }
+          else { ?>
+            <h4 class="footer-title">Dành cho chủ xe Peugeot</h4>
+            <p class="footer-desc">Kéo widget “Navigation Menu”.</p>
+          <?php } ?>
+        </div>
+
+        <div class="col-12 col-md-6 col-lg-3">
+          <?php if (is_active_sidebar('footer_col_4')) { dynamic_sidebar('footer_col_4'); }
+          else { ?>
+            <h4 class="footer-title">Tìm hiểu thêm</h4>
+            <p class="footer-desc">Kéo widget “Navigation Menu”.</p>
+          <?php } ?>
+        </div>
+      </div>
     </div>
-    <div class="peugeot-footer-bottom text-center py-3">
+  </div>
+
+  <!-- ===== HÀNG DƯỚI: policies | logo | hotline+social ===== -->
+  <div class="peugeot-footer-bottom">
+    <div class="container">
+      <div class="footer-bottom-grid">
+
+        <div class="fb-left">
+          <?php
+          if (is_active_sidebar('footer_bottom_left')) {
+            dynamic_sidebar('footer_bottom_left');
+          } elseif (has_nav_menu('footer_policies')) {
+            wp_nav_menu([
+              'theme_location' => 'footer_policies',
+              'container'      => 'nav',
+              'container_class'=> 'footer-policies',
+              'menu_class'     => 'footer-policy-links',
+              'depth'          => 1,
+              'fallback_cb'    => '__return_empty_string',
+            ]);
+          } else {
+            echo '';
+          }
+          ?>
+        </div>
+
+        <div class="fb-center">
+          <?php
+          if (is_active_sidebar('footer_bottom_center')) {
+            dynamic_sidebar('footer_bottom_center');
+          } else {
+            // fallback: logo thương hiệu
+            if (function_exists('the_custom_logo') && has_custom_logo()) {
+              the_custom_logo();
+            } else {
+              echo '<span class="footer-logo-text">'.esc_html(get_bloginfo('name')).'</span>';
+            }
+          }
+          ?>
+        </div>
+
+        <div class="fb-right">
+          <?php
+          if (is_active_sidebar('footer_bottom_right')) {
+            dynamic_sidebar('footer_bottom_right');
+          } else {
+            echo '<div class="footer-hotline">HOTLINE: 1900 1101</div>
+                  <div class="footer-social">
+                    <a class="footer-social-icon" href="#" aria-label="Facebook"><i class="fa fa-facebook"></i></a>
+                    <a class="footer-social-icon" href="#" aria-label="Instagram"><i class="fa fa-instagram"></i></a>
+                    <a class="footer-social-icon" href="#" aria-label="YouTube"><i class="fa fa-youtube-play"></i></a>
+                    <a class="footer-social-icon" href="#" aria-label="LinkedIn"><i class="fa fa-linkedin"></i></a>
+                  </div>';
+          }
+          ?>
+        </div>
+
+      </div>
+    </div>
+    
+  </div>
+  <div class="peugeot-footer-bottom text-center py-3">
         &copy; <?php echo date('Y'); ?> | Thiết kế & phát triển bởi <span class="fw-bold text-primary">MinhTris</span>
     </div>
 </footer>

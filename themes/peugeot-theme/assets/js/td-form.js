@@ -41,7 +41,7 @@
     var $inp = $field.find('select:visible, input[type="text"]:visible, input[type="email"]:visible, textarea:visible').first();
     var v = ($inp.val()||'').toString().trim();
 
-    return $.post(TD_AJAX.url, { action:'td_validate_field', nonce:TD_AJAX.nonce, key:key, value:v })
+    return $.post(TD_AJAX.url, { action:'td_validate_field', nonce:TD_AJAX.nonce, context: TD_AJAX.context, key:key, value:v })
       .then(function(res){
         if(res && res.success && res.data){
           if(res.data.ok){ clearError($field); return true; }

@@ -15,6 +15,82 @@ add_action('after_setup_theme', function () {
     'footer_menu_1'    => __('Menu footer 1', 'peugeot-theme'),
     'footer_menu_2'    => __('Menu footer 2', 'peugeot-theme'),
     'extra_right_menu' => __('Menu bên phải', 'peugeot-theme'),
+    'footer_cta'      => __('Footer CTA (4 ô trên cùng)', 'peugeot-theme'),
+    'footer_policies' => __('Footer Policies (liên kết dưới cùng bên trái)', 'peugeot-theme'),
+  ]);
+});
+// widget
+// === FOOTER WIDGET AREAS ===
+add_action('widgets_init', function () {
+
+  // Hàng CTA (nếu bạn muốn kéo-thả thay vì menu, nhưng mình vẫn ưu tiên dùng menu)
+  register_sidebar([
+    'name'          => __('Footer CTA (tùy chọn)', 'peugeot-theme'),
+    'id'            => 'footer_cta_widgets',
+    'description'   => 'Nếu cần thêm block cho hàng CTA, dùng Custom HTML/Text. (Ưu tiên menu footer_cta).',
+    'before_widget' => '<div class="footer-cta-widget %2$s" id="%1$s">',
+    'after_widget'  => '</div>',
+    'before_title'  => '<h3 class="footer-cta-title">',
+    'after_title'   => '</h3>',
+  ]);
+
+  // 4 cột chính
+  register_sidebar([
+    'name' => __('Footer – Cột 1: Về Peugeot Việt Nam (text/logo/địa chỉ)', 'peugeot-theme'),
+    'id'   => 'footer_col_1',
+    'before_widget' => '<div class="footer-col footer-col-1 %2$s" id="%1$s">',
+    'after_widget'  => '</div>',
+    'before_title'  => '<h4 class="footer-title">',
+    'after_title'   => '</h4>',
+  ]);
+
+  register_sidebar([
+    'name' => __('Footer – Cột 2: Truy cập nhanh (kéo widget “Navigation Menu”)', 'peugeot-theme'),
+    'id'   => 'footer_col_2',
+    'before_widget' => '<div class="footer-col footer-col-2 %2$s" id="%1$s">',
+    'after_widget'  => '</div>',
+    'before_title'  => '<h4 class="footer-title">',
+    'after_title'   => '</h4>',
+  ]);
+
+  register_sidebar([
+    'name' => __('Footer – Cột 3: Dành cho chủ xe (kéo widget “Navigation Menu”)', 'peugeot-theme'),
+    'id'   => 'footer_col_3',
+    'before_widget' => '<div class="footer-col footer-col-3 %2$s" id="%1$s">',
+    'after_widget'  => '</div>',
+    'before_title'  => '<h4 class="footer-title">',
+    'after_title'   => '</h4>',
+  ]);
+
+  register_sidebar([
+    'name' => __('Footer – Cột 4: Tìm hiểu thêm (kéo widget “Navigation Menu”)', 'peugeot-theme'),
+    'id'   => 'footer_col_4',
+    'before_widget' => '<div class="footer-col footer-col-4 %2$s" id="%1$s">',
+    'after_widget'  => '</div>',
+    'before_title'  => '<h4 class="footer-title">',
+    'after_title'   => '</h4>',
+  ]);
+
+  // Hàng dưới
+  register_sidebar([
+    'name' => __('Footer dưới – Trái (Policies: kéo “Navigation Menu”)', 'peugeot-theme'),
+    'id'   => 'footer_bottom_left',
+    'before_widget' => '<div class="footer-bottom-left %2$s" id="%1$s">',
+    'after_widget'  => '</div>',
+  ]);
+
+  register_sidebar([
+    'name' => __('Footer dưới – Giữa (Logo)', 'peugeot-theme'),
+    'id'   => 'footer_bottom_center',
+    'before_widget' => '<div class="footer-bottom-center %2$s" id="%1$s">',
+    'after_widget'  => '</div>',
+  ]);
+
+  register_sidebar([
+    'name' => __('Footer dưới – Phải (Hotline + Social – dùng Text/HTML)', 'peugeot-theme'),
+    'id'   => 'footer_bottom_right',
+    'before_widget' => '<div class="footer-bottom-right %2$s" id="%1$s">',
+    'after_widget'  => '</div>',
   ]);
 });
 
@@ -155,106 +231,195 @@ add_action('after_setup_theme', function () {
   $file = get_template_directory() . '/inc/agency-card.php'; // dùng child theme nếu có
   if (file_exists($file)) require_once $file;
 });
-// CPT: lich_lai_thu
+/** ========================
+ * CPT
+ * ======================== */
 add_action('init', function () {
-  register_post_type('lich_lai_thu', [
-    'label' => 'Đăng ký lái thử',
-    'public' => false,
-    'show_ui' => true,
-    'menu_icon' => 'dashicons-calendar-alt',
-    'supports' => ['title'],
-  ]);
-});
-// functions.php
-add_action('acf/save_post', function ($post_id) {
-  if (get_post_type($post_id) !== 'lich_lai_thu') return;
+  if (!post_type_exists('lich_lai_thu')) {
+    register_post_type('lich_lai_thu', [
+      'label'      => 'Đăng ký lái thử',
+      'public'     => false,
+      'show_ui'    => true,
+      'menu_icon'  => 'dashicons-calendar-alt',
+      'supports'   => ['title'],
+    ]);
+  }
 
-  $car_id  = (int) get_field('car', $post_id);
-  $car     = $car_id ? get_the_title($car_id) : '';
-  $salute  = (string) get_field('salutation', $post_id);
-  $fname   = (string) get_field('first_name', $post_id);
-  $lname   = (string) get_field('last_name', $post_id);
-
-  $title = sprintf('[Lái thử] %s %s – %s – %s',
-    $salute,
-    trim($lname.' '.$fname),
-    $car ?: 'Không rõ xe',
-    wp_date('d/m/Y H:i')
-  );
-
-  remove_action('acf/save_post', __FUNCTION__);
-  wp_update_post(['ID' => $post_id, 'post_title' => $title]);
-  add_action('acf/save_post', __FUNCTION__);
-}, 20);
-// Enqueue cho trang Đặt lịch lái thử
-add_action('wp_enqueue_scripts', function () {
-  if (is_page_template('page-dat-lich-lai-thu.php')) {
-    wp_enqueue_style('td-form', get_template_directory_uri().'/assets/css/td-form.css', [], '1.0');
-    wp_enqueue_script('td-form', get_template_directory_uri().'/assets/js/td-form.js', ['jquery'], '1.0', true);
-    wp_localize_script('td-form', 'TD_AJAX', [
-      'url'   => admin_url('admin-ajax.php'),
-      'nonce' => wp_create_nonce('td_val_nonce'),
+  if (!post_type_exists('lien_he')) {
+    register_post_type('lien_he', [
+      'label'      => 'Liên hệ',
+      'public'     => false,
+      'show_ui'    => true,
+      'menu_icon'  => 'dashicons-email',
+      'supports'   => ['title'],
     ]);
   }
 });
 
-// AJAX validate realtime
-add_action('wp_ajax_td_validate_field', 'td_validate_field');
+/** ========================
+ * Helper: xác định context form theo template
+ * return 'test_drive' | 'lien_he' | ''
+ * ======================== */
+if (!function_exists('td_form_context')) {
+  function td_form_context(): string {
+    if (is_page_template('page-dat-lich-lai-thu.php')) return 'test_drive';
+    if (is_page_template('page-lien-he.php'))         return 'lien_he';
+    return '';
+  }
+}
+
+/** ========================
+ * Enqueue assets dùng CHUNG cho 2 form
+ * ======================== */
+add_action('wp_enqueue_scripts', function () {
+  $ctx = td_form_context();
+  if (!$ctx) return;
+
+  wp_enqueue_style('td-form', get_template_directory_uri().'/assets/css/td-form.css', [], '1.2');
+  wp_enqueue_script('td-form', get_template_directory_uri().'/assets/js/td-form.js', ['jquery'], '1.2', true);
+
+  wp_localize_script('td-form', 'TD_AJAX', [
+    'url'     => admin_url('admin-ajax.php'),
+    'nonce'   => wp_create_nonce('td_validate'), // <<< đồng nhất với AJAX handler
+    'context' => $ctx,
+  ]);
+});
+
+/** ========================
+ * Đặt tiêu đề tự động khi lưu ACF
+ * ======================== */
+add_action('acf/save_post', function ($post_id) {
+  $pt = get_post_type($post_id);
+  if (!in_array($pt, ['lich_lai_thu','lien_he'], true)) return;
+
+  // Dùng try-get để không lỗi khi thiếu ACF
+  $get = function ($field_key) use ($post_id) {
+    $v = function_exists('get_field') ? get_field($field_key, $post_id) : '';
+    return is_scalar($v) ? (string)$v : '';
+  };
+
+  $salute = $get('salutation');
+  $fname  = $get('first_name');
+  $lname  = $get('last_name');
+  $name   = trim($lname.' '.$fname);
+
+  if ($pt === 'lich_lai_thu') {
+    $car_id = (int) $get('car');
+    $car    = $car_id ? get_the_title($car_id) : 'Không rõ xe';
+    $title  = sprintf('[Lái thử] %s %s – %s – %s', $salute, $name, $car, wp_date('d/m/Y H:i'));
+  } else { // lien_he
+    $yeu_cau = $get('yeu_cau');
+    $title   = sprintf('[Liên hệ] %s %s – %s – %s', $salute, $name, ($yeu_cau ?: 'Không rõ yêu cầu'), wp_date('d/m/Y H:i'));
+  }
+
+  // Tránh loop
+  remove_action('acf/save_post', __FUNCTION__);
+  wp_update_post(['ID'=>$post_id, 'post_title'=>$title]);
+  add_action('acf/save_post', __FUNCTION__);
+}, 20);
+
+/** ========================
+ * Helper: bộ field bắt buộc theo context
+ * ======================== */
+function td_required_keys(string $ctx): array {
+  if ($ctx === 'test_drive') {
+    return [
+      'field_68c2380eeb74f', // car
+      'field_68c239ebeb750', // dai_ly
+      'field_68c23a85eb757', // salutation
+      'field_68c23a0eeb751', // first_name
+      'field_68c23a1feb752', // last_name
+      'field_68c23a2eeb753', // phone
+      'field_68c23a3ceb754', // email
+    ];
+  }
+  // lien_he
+  return [
+    'field_68c45ac49373b', // yeu_cau
+    'field_68c45ac49715a', // dai_ly
+    'field_68c45ac49ae86', // salutation
+    'field_68c45ac49e9fa', // first_name
+    'field_68c45ac4a2397', // last_name
+    'field_68c45ac4a5eca', // phone
+    'field_68c45ac4a9aa1', // email
+  ];
+}
+
+/** ========================
+ * AJAX validate realtime (dùng chung)
+ * ======================== */
+add_action('wp_ajax_td_validate_field',    'td_validate_field');
 add_action('wp_ajax_nopriv_td_validate_field', 'td_validate_field');
 
 function td_validate_field() {
-  check_ajax_referer('td_val_nonce', 'nonce');
+  // Đồng nhất với nonce phía enqueue
+  check_ajax_referer('td_validate', 'nonce');
+
+  $ctx   = isset($_POST['context']) ? sanitize_text_field(wp_unslash($_POST['context'])) : '';
+  if (!in_array($ctx, ['test_drive','lien_he'], true)) {
+    wp_send_json_success(['ok'=>true, 'message'=>'']); // không có context thì bỏ qua
+  }
 
   $key   = isset($_POST['key'])   ? sanitize_text_field(wp_unslash($_POST['key']))   : '';
   $value = isset($_POST['value']) ? wp_unslash($_POST['value']) : '';
   $value = is_string($value) ? trim($value) : $value;
 
   $ok = true; $msg = '';
+  $required = td_required_keys($ctx);
 
-  // Các field bắt buộc
-  $required = [
-    'field_68c2380eeb74f', // car
-    'field_68c239ebeb750', // dai_ly
-    'field_68c23a85eb757', // salutation
-    'field_68c23a0eeb751', // first_name
-    'field_68c23a1feb752', // last_name
-    'field_68c23a2eeb753', // phone
-    'field_68c23a3ceb754', // email
-  ];
+  // Bắt buộc
   if (in_array($key, $required, true)) {
     if ($value === '' || $value === '0' || $value === '---') {
       wp_send_json_success(['ok'=>false, 'message'=>'Trường này bắt buộc.']);
     }
   }
 
-  // Kiểm tra riêng từng loại
-  if ($key === 'field_68c23a2eeb753') { // phone
-    $digits = preg_replace('/\D+/', '', $value);
+  // Phone
+  if (in_array($key, ['field_68c23a2eeb753','field_68c45ac4a5eca'], true)) {
+    $digits = preg_replace('/\D+/', '', (string)$value);
     if (!preg_match('/^(0\d{9,10}|84\d{9,10})$/', $digits)) {
       $ok=false; $msg='Số điện thoại không hợp lệ.';
     }
   }
 
-  if ($key === 'field_68c23a3ceb754') { // email
+  // Email
+  if (in_array($key, ['field_68c23a3ceb754','field_68c45ac4a9aa1'], true)) {
     if (!is_email($value)) { $ok=false; $msg='Email không hợp lệ.'; }
     else {
-      // (tuỳ chọn) chống trùng email đã đăng ký
+      // tuỳ chọn: check trùng email trong cả 2 CPT
       $dupe = new WP_Query([
-        'post_type' => 'lich_lai_thu',
-        'post_status' => 'any',
+        'post_type'      => ['lich_lai_thu','lien_he'],
+        'post_status'    => 'any',
         'posts_per_page' => 1,
-        'meta_query' => [['key'=>'email','value'=>$value,'compare'=>'=']],
-        'no_found_rows' => true,
+        'meta_query'     => [[ 'key'=>'email', 'value'=>$value, 'compare'=>'=' ]],
+        'no_found_rows'  => true,
       ]);
-      if ($dupe->have_posts()) { $ok=false; $msg='Email này đã có đăng ký trước đó.'; }
+      if ($dupe->have_posts()) { $ok=false; $msg='Email này đã được gửi trước đó.'; }
       wp_reset_postdata();
     }
   }
 
   wp_send_json_success(['ok'=>$ok, 'message'=>$msg]);
 }
-add_action('acf/save_post', function($post_id){
-    if(get_post_type($post_id) === 'lich_lai_thu') {
-        // Xử lý sau khi tạo post mới, ví dụ gửi mail, đổi title, v.v.
+if (!function_exists('td_render')) {
+  function td_render($key, $label = null, $placeholder = null){
+    if (!function_exists('acf_get_field')) { 
+      echo '<p>ACF chưa kích hoạt.</p>'; 
+      return; 
     }
-}, 20);
+    $field = acf_get_field($key);
+    if (!$field) { 
+      echo '<p class="td-missing">Không tìm thấy field: '.esc_html($key).'</p>'; 
+      return; 
+    }
+
+    if ($label !== null)       $field['label'] = $label;
+    if ($placeholder !== null) $field['placeholder'] = $placeholder;
+
+    $field['prefix'] = 'acf'; // name="acf[field_xxx]"
+    $field['wrapper']['class'] = trim(($field['wrapper']['class'] ?? '').' td-field');
+
+    $field = acf_prepare_field($field);
+    acf_render_field_wrap($field);
+  }
+}

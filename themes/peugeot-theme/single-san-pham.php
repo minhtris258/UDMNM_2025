@@ -2,12 +2,21 @@
 get_header();
 ?>
 <?php
+$lien_he     = get_field('lien_he');
+$dk_lai_thu  = get_field('dk_lai_thu');
+$tim_dai_ly  = get_field('tim_dai_ly');
+$title=get_field('title');
 $banner = get_field('image'); // trả về array
 if ($banner && isset($banner['url'])) {
     echo '<img class="peugeot-banner" src="' . esc_url($banner['url']) . '" alt="' . esc_attr($banner['alt']) . '" />';
 }
 ?>
-<h1><?php the_title(); ?></h1>
+<div class="title-start">
+  <h1 class="title-main"><?php the_title(); ?></h1>
+  <h1 class="title-sub"><?php echo esc_html($title); ?></h1>
+  <div class="title-line"></div>
+</div>
+
 <?php
 $content1 = get_field('content1');
 $slides = [];
@@ -51,8 +60,12 @@ for ($i = 1; $i <= 5; $i++) {
                             <?php echo wp_kses_post($slide['content']); ?>
                         </div>
                         <div class="peugeot-slider3-buttons">
-                            <button class="peugeot-slider-btn">LIÊN HỆ</button>
-                            <button class="peugeot-slider-btn">ĐẶT LỊCH LÁI THỬ</button>
+                            <a class="peugeot-btn" href="<?php echo esc_url($tim_dai_ly['url']); ?>" target="<?php echo esc_attr($tim_dai_ly['target']); ?>">
+                    <?php echo esc_html($tim_dai_ly['title']); ?>
+                </a>
+                           <a class="peugeot-btn" href="<?php echo esc_url($dk_lai_thu['url']); ?>" target="<?php echo esc_attr($dk_lai_thu['target']); ?>">
+                    <?php echo esc_html($dk_lai_thu['title']); ?>
+                </a>
                         </div>
                     </div>
                 <?php endforeach; ?>
@@ -73,53 +86,87 @@ for ($i = 1; $i <= 3; $i++) {
     }
 }
 ?>
+<?php
+// Lấy content2 an toàn (null => [])
+$content2 = get_field('content2');
+$content2 = is_array($content2) ? $content2 : [];
+
+// Build slides nếu có ảnh
+$slides2 = [];
+for ($i = 1; $i <= 3; $i++) {
+    $img = $content2['image_content' . $i] ?? null;
+    $img_url = is_array($img) ? ($img['url'] ?? '') : ($img ? wp_get_attachment_image_url($img, 'full') : '');
+    if (!empty($img_url)) {
+        $slides2[] = [
+            'content1' => (string)($content2['text' . $i] ?? ''),
+            'content2' => (string)($content2['text_content' . $i] ?? ''),
+            'image'    => $img_url,
+        ];
+    }
+}
+?>
+
+<?php if (!empty($content2) || !empty($slides2)) : ?>
 <div class="peugeot-slider peugeot-slider4" id="peugeot-slider4">
   <div class="peugeot-slider-row">
-    
     <!-- Cột nội dung (40%) -->
     <div class="peugeot-slider-col content-col">
-      <h2 class="peugeot-slider4-title">
-        <?php echo esc_html($content2['title']); ?>
-      </h2>
+      <?php if (!empty($content2['title'])): ?>
+        <h2 class="peugeot-slider4-title">
+          <?php echo esc_html($content2['title']); ?>
+        </h2>
+      <?php endif; ?>
 
-     <!-- Thanh số slide -->
+      <?php if (!empty($slides2)): ?>
+        <!-- Thanh số slide -->
         <div class="peugeot-slider4-counter">
-            <button class="peugeot-slider4-arrow small prev">&#10094;</button>
-                <span id="current-slide">1</span> / <span id="total-slides"><?php echo count($slides); ?></span>
-            <button class="peugeot-slider4-arrow small next">&#10095;</button>
+          <button class="peugeot-slider4-arrow small prev" type="button">&#10094;</button>
+          <span id="current-slide">1</span> / <span id="total-slides"><?php echo count($slides2); ?></span>
+          <button class="peugeot-slider4-arrow small next" type="button">&#10095;</button>
         </div>
 
-      <!-- Nội dung -->
-      <div class="peugeot-slider4-contents">
-        <?php foreach ($slides as $idx => $slide): ?>
-          <div class="peugeot-slider4-content<?php echo $idx === 0 ? ' active' : ''; ?>" data-slide="<?php echo $idx; ?>">
-            <h3 class="peugeot-slider4-nav-item"><?php echo esc_html($slide['content1']); ?></h3>
-            <div class="peugeot-slider4-text">
-              <?php echo wp_kses_post($slide['content2']); ?>
+        <!-- Nội dung -->
+        <div class="peugeot-slider4-contents">
+          <?php foreach ($slides2 as $idx => $slide): ?>
+            <div class="peugeot-slider4-content<?php echo $idx === 0 ? ' active' : ''; ?>" data-slide="<?php echo (int)$idx; ?>">
+              <?php if (!empty($slide['content1'])): ?>
+                <h3 class="peugeot-slider4-nav-item"><?php echo esc_html($slide['content1']); ?></h3>
+              <?php endif; ?>
+              <?php if (!empty($slide['content2'])): ?>
+                <div class="peugeot-slider4-text"><?php echo wp_kses_post($slide['content2']); ?></div>
+              <?php endif; ?>
+              <div class="peugeot-slider3-buttons">
+                  
+                            <a class="peugeot-btn" href="<?php echo esc_url($tim_dai_ly['url']); ?>" target="<?php echo esc_attr($tim_dai_ly['target']); ?>">
+                    <?php echo esc_html($tim_dai_ly['title']); ?>
+                </a>
+                           <a class="peugeot-btn" href="<?php echo esc_url($dk_lai_thu['url']); ?>" target="<?php echo esc_attr($dk_lai_thu['target']); ?>">
+                    <?php echo esc_html($dk_lai_thu['title']); ?>
+                </a>
+                        </div>
             </div>
-            <div class="peugeot-slider4-buttons">
-              <button class="peugeot-slider-btn">LIÊN HỆ</button>
-              <button class="peugeot-slider-btn">ĐẶT LỊCH LÁI THỬ</button>
-            </div>
+          <?php endforeach; ?>
+        </div>
+      <?php endif; ?>
+    </div>
+
+    <!-- Cột ảnh (60%) -->
+    <?php if (!empty($slides2)): ?>
+      <div class="peugeot-slider-col image-col">
+        <?php foreach ($slides2 as $idx => $slide): ?>
+          <div class="peugeot-slider4-slide<?php echo $idx === 0 ? ' active' : ''; ?>" data-slide="<?php echo (int)$idx; ?>">
+            <img src="<?php echo esc_url($slide['image']); ?>" alt="<?php echo esc_attr($slide['content1'] ?: ''); ?>" class="peugeot-slider4-img" />
           </div>
         <?php endforeach; ?>
-      </div>
-    </div>
-    
-    <!-- Cột ảnh (60%) -->
-    <div class="peugeot-slider-col image-col">
-      <?php foreach ($slides as $idx => $slide): ?>
-        <div class="peugeot-slider4-slide<?php echo $idx === 0 ? ' active' : ''; ?>" data-slide="<?php echo $idx; ?>">
-          <img src="<?php echo esc_url($slide['image']); ?>" alt="<?php echo esc_attr($slide['content1']); ?>" class="peugeot-slider4-img" />
-        </div>
-      <?php endforeach; ?>
 
-      <!-- Nút điều hướng mũi tên -->
-      <button class="peugeot-slider-arrow prev">&#10094;</button>
-      <button class="peugeot-slider-arrow next">&#10095;</button>
-    </div>
+        <button class="peugeot-slider-arrow prev" type="button">&#10094;</button>
+        <button class="peugeot-slider-arrow next" type="button">&#10095;</button>
+      </div>
+    <?php endif; ?>
   </div>
 </div>
+<?php endif; ?>
+
 <?php 
 $bao_gia = get_field('bao_gia');
 if ($bao_gia): 
@@ -164,8 +211,6 @@ if ($bao_gia):
         </div>
     </div>
 </div>
-<pre><?php print_r($bao_gia['left_button']); ?></pre>
-<pre><?php print_r($bao_gia['right_button']); ?></pre>
 
 <?php endif; ?>
 
@@ -267,13 +312,74 @@ if ($gioi_thieu) : ?>
   <?php endif; ?>
 </section>
 <?php endif; ?>
+
+
+<?php
+$content6 = get_field('content6');
+$content6 = is_array($content6) ? $content6 : []; // luôn là mảng
+
+$slides = [];
+for ($i = 1; $i <= 5; $i++) { // cho phép 5 màu
+    if (!empty($content6['image' . $i])) {
+        $slides[] = [
+            'color' => $content6['color' . $i] ?? '',
+            'image' => is_array($content6['image' . $i]) 
+                ? ($content6['image' . $i]['url'] ?? '')
+                : wp_get_attachment_image_url($content6['image' . $i], 'full'),
+        ];
+    }
+}
+?>
+
+<?php if (!empty($content6) || !empty($slides)) : ?>
+<div class="peugeot-product-colors container">
+
+    <?php if (!empty($content6['title1'])): ?>
+        <h2 class="peugeot-product-colors-title">
+            <?php echo esc_html($content6['title1']); ?>
+        </h2>
+    <?php endif; ?>
+
+    <?php if (!empty($content6['title2'])): ?>
+        <h2 class="peugeot-product-colors-title">
+            <?php echo esc_html($content6['title2']); ?>
+        </h2>
+    <?php endif; ?>
+
+    <?php if (!empty($content6['number_of_colors'])): ?>
+        <p><?php echo esc_html($content6['number_of_colors']); ?></p>
+    <?php endif; ?>
+
+    <!-- Ảnh xe chính -->
+    <?php if (!empty($slides)): ?>
+        <div class="peugeot-product-main">
+            <img id="peugeot-main-img" 
+                 src="<?php echo esc_url($slides[0]['image']); ?>" 
+                 alt="Car color" />
+        </div>
+
+        <!-- Danh sách màu -->
+        <div class="peugeot-product-colors-list">
+            <?php foreach ($slides as $index => $slide): ?>
+                <div class="peugeot-product-color-item <?php echo $index === 0 ? 'active' : ''; ?>" 
+                     data-image="<?php echo esc_url($slide['image']); ?>" 
+                     style="background-color: <?php echo esc_attr($slide['color']); ?>;">
+                </div>
+            <?php endforeach; ?>
+        </div>
+    <?php endif; ?>
+
+</div>
+<?php endif; ?>
+
 <?php 
 $tinh_nang = get_field('tinh_nang');
 
 if ($tinh_nang) : ?>
 <section class="video-section text-center py-10">
+  <div class="peugeot-title">
   <?php if (!empty($tinh_nang['title'])): ?>
-    <h3 class="text-xl font-bold"><?php echo esc_html($tinh_nang['title']); ?></h3>
+    <h1 class="text-xl font-bold"><?php echo esc_html($tinh_nang['title']); ?></h1>
   <?php endif; ?>
 
   <?php if (!empty($tinh_nang['subtitle'])): ?>
@@ -283,11 +389,11 @@ if ($tinh_nang) : ?>
   <?php endif; ?>
 
   <?php if (!empty($tinh_nang['desc'])): ?>
-    <div class="text-gray-600 mb-6 text-start mx-auto" style="max-width:800px">
+    <div class="text-gray-600 mb-6 text-center mx-auto" style="max-width:800px">
       <?php echo apply_filters('the_content', $tinh_nang['desc']); ?>
     </div>
   <?php endif; ?>
-
+</div>
   <?php
   // ==== GALLERY 1-4 ẢNH + DESC ====
   $items = [];
@@ -339,7 +445,7 @@ if ($n > 0) :
   <section class="container my-4">
     <div class="row g-3 justify-content-center">
       <?php foreach ($items as $item) : ?>
-        <div class="col-12 col-md-<?php echo (int)$mdCols; ?> col-lg-<?php echo (int)$lgCols; ?>">
+        <div class="col-3 col-md-<?php echo (int)$mdCols; ?> col-lg-<?php echo (int)$lgCols; ?>">
           <article class="h-100 text-center p-3">
   <div class="d-flex justify-content-center mb-3">
     <div class="thumb-wrapper">
@@ -364,47 +470,6 @@ if ($n > 0) :
 
 
 
-<?php
-$content6 = get_field('content6');
-$slides = [];
-for ($i = 1; $i <= 5; $i++) { // cho phép 5 màu
-    if (!empty($content6['image' . $i])) {
-        $slides[] = [
-            'color' => $content6['color' . $i] ?? '',
-            'image' => is_array($content6['image' . $i]) 
-                ? $content6['image' . $i]['url'] 
-                : wp_get_attachment_image_url($content6['image' . $i], 'full'),
-        ];
-    }
-}
-?>
-<div class="peugeot-product-colors container">
-    <h2 class="peugeot-product-colors-title">
-        <?php echo esc_html($content6['title1']); ?>
-    </h2>
-    <h2 class="peugeot-product-colors-title">
-        <?php echo esc_html($content6['title2']); ?>
-    </h2>
-    <p><?php echo esc_html($content6['number_of_colors']); ?></p>
-
-    <!-- Ảnh xe chính -->
-    <?php if (!empty($slides)): ?>
-        <div class="peugeot-product-main">
-            <img id="peugeot-main-img" src="<?php echo esc_url($slides[0]['image']); ?>" alt="Car color" />
-        </div>
-    <?php endif; ?>
-
-    <!-- Danh sách màu -->
-    <div class="peugeot-product-colors-list">
-        <?php foreach ($slides as $index => $slide): ?>
-            <div class="peugeot-product-color-item <?php echo $index === 0 ? 'active' : ''; ?>" 
-                data-image="<?php echo esc_url($slide['image']); ?>" 
-                style="background-color: <?php echo esc_attr($slide['color']); ?>;">
-            </div>
-        <?php endforeach; ?>
-    </div>
-</div>
-
 <?php 
 $dich_vu = get_field('dich_vu');
 
@@ -425,6 +490,214 @@ if ($dich_vu) : ?>
       <?php echo apply_filters('the_content', $dich_vu['desc']); ?>
     </div>
   <?php endif; ?>
+
+  <?php
+$content7 = get_field('content7');
+$slides = [];
+for ($i = 1; $i <= 4; $i++) {
+    if (!empty($content7['image_content' . $i])) {
+        $slides[] = [
+            'content1' => $content7['text' . $i] ?? '',
+            'content2' => $content7['text_content' . $i] ?? '',
+            'image' => is_array($content7['image_content' . $i]) ? $content7['image_content' . $i]['url'] : wp_get_attachment_image_url($content7['image_content' . $i], 'full'),
+        ];
+    }
+}
+?>
+<div class="peugeot-slider peugeot-slider4" id="peugeot-slider4">
+  <div class="peugeot-slider-row">
+    <div class="peugeot-slider-col image-col">
+      <?php foreach ($slides as $idx => $slide): ?>
+        <div class="peugeot-slider4-slide<?php echo $idx === 0 ? ' active' : ''; ?>" data-slide="<?php echo $idx; ?>">
+          <img src="<?php echo esc_url($slide['image']); ?>" alt="<?php echo esc_attr($slide['content1']); ?>" class="peugeot-slider4-img" />
+        </div>
+      <?php endforeach; ?>
+
+      <!-- Nút điều hướng mũi tên -->
+      <button class="peugeot-slider-arrow prev">&#10094;</button>
+      <button class="peugeot-slider-arrow next">&#10095;</button>
+    </div>
+    <!-- Cột nội dung (40%) -->
+    <div class="peugeot-slider-col content-col">
+     <!-- Thanh số slide -->
+        <div class="peugeot-slider4-counter">
+            <button class="peugeot-slider4-arrow small prev">&#10094;</button>
+                <span id="current-slide">1</span> / <span id="total-slides"><?php echo count($slides); ?></span>
+            <button class="peugeot-slider4-arrow small next">&#10095;</button>
+        </div>
+
+      <!-- Nội dung -->
+      <div class="peugeot-slider4-contents">
+        <?php foreach ($slides as $idx => $slide): ?>
+          <div class="peugeot-slider4-content<?php echo $idx === 0 ? ' active' : ''; ?>" data-slide="<?php echo $idx; ?>">
+            <h3 class="peugeot-slider4-nav-item"><?php echo esc_html($slide['content1']); ?></h3>
+            <div class="peugeot-slider4-text">
+              <?php echo wp_kses_post($slide['content2']); ?>
+            </div>
+          </div>
+        <?php endforeach; ?>
+      </div>
+    </div>
+    
+    <!-- Cột ảnh (60%) -->
+    
+  </div>
+</div>
+<div class="peugeot-buttons text-center my-5 py-3">
+                           
+                           <a class="peugeot-btn-primary" href="<?php echo esc_url($dk_lai_thu['url']); ?>" target="<?php echo esc_attr($dk_lai_thu['target']); ?>">
+                    <?php echo esc_html($dk_lai_thu['title']); ?>
+                </a>
+                        </div>
+  <?php
+$content8 = get_field('content8');
+$slides = [];
+for ($i = 1; $i <= 4; $i++) {
+    if (!empty($content8['image_content' . $i])) {
+        $slides[] = [
+            'content1' => $content8['text' . $i] ?? '',
+            'content2' => $content8['text_content' . $i] ?? '',
+            'image' => is_array($content8['image_content' . $i]) ? $content8['image_content' . $i]['url'] : wp_get_attachment_image_url($content8['image_content' . $i], 'full'),
+        ];
+    }
+}
+?>
+<div class="peugeot-slider peugeot-slider4" id="peugeot-slider4">
+  <div class="title-color">
+      <h1 class="color-title1"><?php echo esc_html($content8['title1']); ?> <span class="color-title2"><?php echo esc_html($content8['title2']); ?></span></h1>
+ <p><?php echo esc_html($content8['desc']); ?></p>
+    </div>
+
+ 
+  <div class="peugeot-slider-row">
+   
+    <!-- Cột nội dung (40%) -->
+    <div class="peugeot-slider-col content-col">
+     <!-- Thanh số slide -->
+        <div class="peugeot-slider4-counter">
+            <button class="peugeot-slider4-arrow small prev">&#10094;</button>
+                <span id="current-slide">1</span> / <span id="total-slides"><?php echo count($slides); ?></span>
+            <button class="peugeot-slider4-arrow small next">&#10095;</button>
+        </div>
+
+      <!-- Nội dung -->
+      <div class="peugeot-slider4-contents">
+        <?php foreach ($slides as $idx => $slide): ?>
+          <div class="peugeot-slider4-content<?php echo $idx === 0 ? ' active' : ''; ?>" data-slide="<?php echo $idx; ?>">
+            <h3 class="peugeot-slider4-nav-item"><?php echo esc_html($slide['content1']); ?></h3>
+            <div class="peugeot-slider4-text">
+              <?php echo wp_kses_post($slide['content2']); ?>
+            </div>
+          </div>
+        <?php endforeach; ?>
+      </div>
+    </div>
+    
+    <!-- Cột ảnh (60%) -->
+     <div class="peugeot-slider-col image-col">
+      <?php foreach ($slides as $idx => $slide): ?>
+        <div class="peugeot-slider4-slide<?php echo $idx === 0 ? ' active' : ''; ?>" data-slide="<?php echo $idx; ?>">
+          <img src="<?php echo esc_url($slide['image']); ?>" alt="<?php echo esc_attr($slide['content1']); ?>" class="peugeot-slider4-img" />
+        </div>
+      <?php endforeach; ?>
+
+      <!-- Nút điều hướng mũi tên -->
+      <button class="peugeot-slider-arrow prev">&#10094;</button>
+      <button class="peugeot-slider-arrow next">&#10095;</button>
+    </div>
+  </div>
+</div>
+
+<?php
+$options = get_field('option') ?: get_field('option','option');
+
+$slides = [];
+if (is_array($options)) {
+  for ($i=1; $i<=6; $i++){
+    $imgVal = $options["image_pb{$i}"] ?? '';
+    $imgUrl = '';
+    if (is_array($imgVal))      $imgUrl = $imgVal['url'] ?? '';
+    elseif (is_numeric($imgVal)) $imgUrl = wp_get_attachment_image_url((int)$imgVal, 'full');
+    elseif (is_string($imgVal))  $imgUrl = $imgVal;
+
+    $slides[] = [
+      'phien_ban' => trim((string)($options["phien_ban{$i}"] ?? '')),
+      'ten'       => trim((string)($options["ten_phien_ban{$i}"] ?? '')),
+      'gia'       => trim((string)($options["gia_phien_ban{$i}"] ?? '')),
+      'content'   => (string)($options["content{$i}"] ?? ''),
+      'mota'      => (string)($options["mo_ta{$i}"] ?? ''),
+      'image'     => $imgUrl
+    ];
+  }
+  $slides = array_values(array_filter($slides, fn($s)=> ($s['phien_ban']||$s['ten']||$s['gia']||$s['content']||$s['mota']||$s['image'])));
+}
+?>
+
+<?php if (!empty($slides)): ?>
+  <div class="title-color">
+    <h1><?php echo esc_html($options['title1']); ?></h1>
+   <h1><?php echo esc_html($options['title2']); ?></h1>
+   <p><?php echo esc_html($options['desc']); ?></p>
+  </div>
+   
+<section class="peugeot-sliderpb" id="peugeot-sliderpb"
+        style="--pb-bg:url('<?php echo esc_url($slides[0]['image']); ?>');">
+
+  <div class="pb-inner">
+    <!-- Cột ảnh 50% -->
+    <div class="pb-visual">
+      <div class="pb-visual-bg" aria-hidden="true"></div>
+      <!-- (xoá NẾU còn nút cũ trong pb-visual) -->
+    </div>
+
+    <!-- Cột nội dung 50% -->
+    <div class="pb-content">
+      <div class="pb-panels">
+        <div class="pb-tabs">
+          <?php foreach ($slides as $i=>$s): ?>
+            <button class="pb-tab<?php echo $i===0?' is-active':'';?>" data-idx="<?php echo $i; ?>">
+              <?php echo esc_html($s['phien_ban'] ?: ($s['ten'] ?: 'Phiên bản '.($i+1))); ?>
+            </button>
+          <?php endforeach; ?>
+        </div>
+
+        <?php foreach ($slides as $i=>$s): ?>
+          <div class="pb-panel<?php echo $i===0?' is-active':'';?>"
+               data-idx="<?php echo $i; ?>"
+               data-bg="<?php echo esc_url($s['image']); ?>">
+            <?php if ($s['ten']): ?><h3 class="pb-title"><?php echo esc_html($s['ten']); ?></h3><?php endif; ?>
+            <?php if ($s['gia']): ?><div class="pb-price"><?php echo esc_html($s['gia']); ?></div><?php endif; ?>
+            <?php if ($s['content']): ?><div class="pb-desc"><?php echo wp_kses_post($s['content']); ?></div><?php endif; ?>
+              <div class="pb-actions">
+                <p><?php echo esc_html($options['description']); ?></p>
+                <div class="peugeot-slider3-buttons">
+                  
+                            <a class="peugeot-btn" href="<?php echo esc_url($tim_dai_ly['url']); ?>" target="<?php echo esc_attr($tim_dai_ly['target']); ?>">
+                    <?php echo esc_html($tim_dai_ly['title']); ?>
+                </a>
+                           <a class="peugeot-btn" href="<?php echo esc_url($dk_lai_thu['url']); ?>" target="<?php echo esc_attr($dk_lai_thu['target']); ?>">
+                    <?php echo esc_html($dk_lai_thu['title']); ?>
+                </a>
+                        </div>
+              </div>
+            <?php if ($s['mota']): ?><div class="pb-note"><?php echo wp_kses_post($s['mota']); ?></div><?php endif; ?>
+          </div>
+        <?php endforeach; ?>
+      </div>
+    </div>
+  </div>
+
+  <!-- LỚP PHỦ NÚT – bám mép trang -->
+  <div class="pb-arrows" aria-hidden="true">
+    <button class="pb-arrow pb-prev" type="button" aria-label="Trước">&#10094;</button>
+    <button class="pb-arrow pb-next" type="button" aria-label="Sau">&#10095;</button>
+  </div>
+</section>
+
+
+<?php endif; ?>
+
+
 
   <?php
   // ==== GALLERY 1–4: ẢNH (URL) + DESC ====
@@ -464,7 +737,7 @@ if ($n > 0) :
   <section class="container my-4">
     <div class="row g-3 justify-content-center">
       <?php foreach ($items as $item) : ?>
-        <div class="col-12 col-md-<?php echo (int)$mdCols; ?> col-lg-<?php echo (int)$lgCols; ?>">
+        <div class="col-6 col-md-<?php echo (int)$mdCols; ?> col-lg-<?php echo (int)$lgCols; ?>">
           <article class="h-100 text-center p-3">
   <div class="d-flex justify-content-center mb-3">
     <div class="thumb-wrapper">
