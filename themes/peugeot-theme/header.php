@@ -33,6 +33,7 @@
                 'container'      => false,
                 'menu_class'     => 'peugeot-menu-list d-flex gap-4 mb-0',
                 'fallback_cb'    => false,
+                'walker'         => new PG_Mega_Walker(),
             ]);
             ?>
 

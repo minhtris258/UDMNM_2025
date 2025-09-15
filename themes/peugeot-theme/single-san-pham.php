@@ -5,6 +5,7 @@ get_header();
 $lien_he     = get_field('lien_he');
 $dk_lai_thu  = get_field('dk_lai_thu');
 $tim_dai_ly  = get_field('tim_dai_ly');
+$mieu_ta     = get_field('mieu_ta');
 $title=get_field('title');
 $banner = get_field('image'); // trả về array
 if ($banner && isset($banner['url'])) {
@@ -15,6 +16,7 @@ if ($banner && isset($banner['url'])) {
   <h1 class="title-main"><?php the_title(); ?></h1>
   <h1 class="title-sub"><?php echo esc_html($title); ?></h1>
   <div class="title-line"></div>
+  <div class="title-desc"><?php echo esc_html($mieu_ta); ?></div>
 </div>
 
 <?php
@@ -32,7 +34,7 @@ for ($i = 1; $i <= 5; $i++) {
 ?>
 <div class="peugeot-slider peugeot-slider3" id="peugeot-slider3">
     <div class="peugeot-slider-row">
-        <!-- Cột ảnh (60%) -->
+        <!-- Cột ảnh (55%) -->
         <div class="peugeot-slider-col image-col">
             <?php foreach ($slides as $idx => $slide): ?>
                 <div class="peugeot-slider3-slide<?php echo $idx === 0 ? ' active' : ''; ?>">
@@ -41,7 +43,7 @@ for ($i = 1; $i <= 5; $i++) {
             <?php endforeach; ?>
         </div>
 
-        <!-- Cột nội dung (40%) -->
+        <!-- Cột nội dung (45%) -->
         <div class="peugeot-slider-col content-col">
             <!-- Nav -->
             <div class="peugeot-slider3-nav">
@@ -109,7 +111,7 @@ for ($i = 1; $i <= 3; $i++) {
 <?php if (!empty($content2) || !empty($slides2)) : ?>
 <div class="peugeot-slider peugeot-slider4" id="peugeot-slider4">
   <div class="peugeot-slider-row">
-    <!-- Cột nội dung (40%) -->
+    <!-- Cột nội dung (45%) -->
     <div class="peugeot-slider-col content-col">
       <?php if (!empty($content2['title'])): ?>
         <h2 class="peugeot-slider4-title">
@@ -150,7 +152,7 @@ for ($i = 1; $i <= 3; $i++) {
       <?php endif; ?>
     </div>
 
-    <!-- Cột ảnh (60%) -->
+    <!-- Cột ảnh (55%) -->
     <?php if (!empty($slides2)): ?>
       <div class="peugeot-slider-col image-col">
         <?php foreach ($slides2 as $idx => $slide): ?>
@@ -181,10 +183,12 @@ if ($bao_gia):
             <?php if (!empty($bao_gia['left_image'])): ?>
                 <img src="<?php echo esc_url($bao_gia['left_image']['url']); ?>" alt="" class="peugeot-baogia-img">
             <?php endif; ?>
-
+              <div class="peugeot-box-title">
             <h3><?php echo esc_html($bao_gia['left_title']); ?></h3>
+            </div>
+            <div class="peugeot-box-desc">
             <p><?php echo esc_html($bao_gia['left_desc']); ?></p>
-
+            </div>
             <?php if (!empty($bao_gia['left_button'])): 
                 $btn = $bao_gia['left_button']; ?>
                 <a class="peugeot-btn" href="<?php echo esc_url($btn['url']); ?>" target="<?php echo esc_attr($btn['target']); ?>">
@@ -198,10 +202,12 @@ if ($bao_gia):
             <?php if (!empty($bao_gia['right_image'])): ?>
                 <img src="<?php echo esc_url($bao_gia['right_image']['url']); ?>" alt=""  class="peugeot-baogia-img">
             <?php endif; ?>
-
+              <div class="peugeot-box-title">
             <h3><?php echo esc_html($bao_gia['right_title']); ?></h3>
+            </div>
+            <div class="peugeot-box-desc">
             <p><?php echo esc_html($bao_gia['right_desc']); ?></p>
-
+            </div>
             <?php if (!empty($bao_gia['right_button'])): 
                 $btn = $bao_gia['right_button']; ?>
                 <a class="peugeot-btn" href="<?php echo esc_url($btn['url']); ?>" target="<?php echo esc_attr($btn['target']); ?>">
@@ -335,13 +341,13 @@ for ($i = 1; $i <= 5; $i++) { // cho phép 5 màu
 <div class="peugeot-product-colors container">
 
     <?php if (!empty($content6['title1'])): ?>
-        <h2 class="peugeot-product-colors-title">
+        <h2 class="peugeot-product-colors-title1">
             <?php echo esc_html($content6['title1']); ?>
         </h2>
     <?php endif; ?>
 
     <?php if (!empty($content6['title2'])): ?>
-        <h2 class="peugeot-product-colors-title">
+        <h2 class="peugeot-product-colors-title2">
             <?php echo esc_html($content6['title2']); ?>
         </h2>
     <?php endif; ?>
@@ -389,7 +395,7 @@ if ($tinh_nang) : ?>
   <?php endif; ?>
 
   <?php if (!empty($tinh_nang['desc'])): ?>
-    <div class="text-gray-600 mb-6 text-center mx-auto" style="max-width:800px">
+    <div class="text-gray-600 mb-6 text-center mx-auto" >
       <?php echo apply_filters('the_content', $tinh_nang['desc']); ?>
     </div>
   <?php endif; ?>
@@ -454,7 +460,7 @@ if ($n > 0) :
   </div>
 
   <?php if (!empty($item['desc'])) : ?>
-    <div class="fw-bold">
+    <div class="fw-bold justify-content-center peugeot-desc-mobile">
       <?php echo apply_filters('the_content', $item['desc']); ?>
     </div>
   <?php endif; ?>
@@ -470,26 +476,7 @@ if ($n > 0) :
 
 
 
-<?php 
-$dich_vu = get_field('dich_vu');
 
-if ($dich_vu) : ?>
-<section class="video-section text-center py-10">
-  <?php if (!empty($dich_vu['title'])): ?>
-    <h3 class="text-xl font-bold"><?php echo esc_html($dich_vu['title']); ?></h3>
-  <?php endif; ?>
-
-  <?php if (!empty($dich_vu['subtitle'])): ?>
-    <h2 class="text-3xl text-blue-600 font-extrabold my-2">
-      <?php echo esc_html($dich_vu['subtitle']); ?>
-    </h2>
-  <?php endif; ?>
-
-  <?php if (!empty($dich_vu['desc'])): ?>
-    <div class="text-gray-600 mb-6 text-start mx-auto" style="max-width:800px">
-      <?php echo apply_filters('the_content', $dich_vu['desc']); ?>
-    </div>
-  <?php endif; ?>
 
   <?php
 $content7 = get_field('content7');
@@ -517,7 +504,7 @@ for ($i = 1; $i <= 4; $i++) {
       <button class="peugeot-slider-arrow prev">&#10094;</button>
       <button class="peugeot-slider-arrow next">&#10095;</button>
     </div>
-    <!-- Cột nội dung (40%) -->
+    <!-- Cột nội dung (45%) -->
     <div class="peugeot-slider-col content-col">
      <!-- Thanh số slide -->
         <div class="peugeot-slider4-counter">
@@ -539,11 +526,11 @@ for ($i = 1; $i <= 4; $i++) {
       </div>
     </div>
     
-    <!-- Cột ảnh (60%) -->
+    <!-- Cột ảnh (55%) -->
     
   </div>
 </div>
-<div class="peugeot-buttons text-center my-5 py-3">
+<div class="peugeot-buttons text-center mb-5 py-3">
                            
                            <a class="peugeot-btn-primary" href="<?php echo esc_url($dk_lai_thu['url']); ?>" target="<?php echo esc_attr($dk_lai_thu['target']); ?>">
                     <?php echo esc_html($dk_lai_thu['title']); ?>
@@ -571,7 +558,7 @@ for ($i = 1; $i <= 4; $i++) {
  
   <div class="peugeot-slider-row">
    
-    <!-- Cột nội dung (40%) -->
+    <!-- Cột nội dung (45%) -->
     <div class="peugeot-slider-col content-col">
      <!-- Thanh số slide -->
         <div class="peugeot-slider4-counter">
@@ -593,7 +580,7 @@ for ($i = 1; $i <= 4; $i++) {
       </div>
     </div>
     
-    <!-- Cột ảnh (60%) -->
+    <!-- Cột ảnh (55%) -->
      <div class="peugeot-slider-col image-col">
       <?php foreach ($slides as $idx => $slide): ?>
         <div class="peugeot-slider4-slide<?php echo $idx === 0 ? ' active' : ''; ?>" data-slide="<?php echo $idx; ?>">
@@ -635,7 +622,7 @@ if (is_array($options)) {
 
 <?php if (!empty($slides)): ?>
   <div class="title-color">
-    <h1><?php echo esc_html($options['title1']); ?></h1>
+    <h1 class="py-3"><?php echo esc_html($options['title1']); ?></h1>
    <h1><?php echo esc_html($options['title2']); ?></h1>
    <p><?php echo esc_html($options['desc']); ?></p>
   </div>
@@ -697,13 +684,30 @@ if (is_array($options)) {
 
 <?php endif; ?>
 
+<?php 
+$dich_vu = get_field('dich_vu');
 
+if ($dich_vu) : ?>
+<section class="video-section text-center py-10">
+  <?php if (!empty($dich_vu['title'])): ?>
+    <h3 class="text-xl font-bold"><?php echo esc_html($dich_vu['title']); ?></h3>
+  <?php endif; ?>
+
+  <?php if (!empty($dich_vu['subtitle'])): ?>
+    <h2 class="text-3xl text-blue-600 font-extrabold my-2">
+      <?php echo esc_html($dich_vu['subtitle']); ?>
+    </h2>
+  <?php endif; ?>
+
+  <?php if (!empty($dich_vu['desc'])): ?>
+    <div class="text-gray-600 mb-6 text-start mx-auto">
+      <?php echo apply_filters('the_content', $dich_vu['desc']); ?>
+    </div>
+  <?php endif; ?>
 
   <?php
   // ==== GALLERY 1–4: ẢNH (URL) + DESC ====
 $items = [];
-$fallback_img = get_theme_file_uri('/assets/images/placeholder-150.png'); // optional
-
 for ($i = 1; $i <= 4; $i++) {
   $img_url   = trim($dich_vu['image' . $i] ?? '');      // bạn dán URL vào ACF
   $desc_html = $dich_vu['desc_image' . $i] ?? '';       // WYSIWYG

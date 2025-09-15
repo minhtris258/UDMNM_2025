@@ -1,0 +1,56 @@
+/* ===========================
+   VN-Peugeot-New (WOFF2)
+   =========================== */
+
+/* Light 300 */
+@font-face {
+  font-family: "VN-Peugeot-New";
+  src: url("../fonts/VN-Peugeot-New/VN-Peugeot-New-Light.woff2") format("woff2");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Regular 400 */
+@font-face {
+  font-family: "VN-Peugeot-New";
+  src: url("../fonts/VN-Peugeot-New/VN-Peugeot-New-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Bold 700 */
+@font-face {
+  font-family: "VN-Peugeot-New";
+  src: url("../fonts/VN-Peugeot-New/VN-Peugeot-New-Bold.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Bold Italic 700 */
+@font-face {
+  font-family: "VN-Peugeot-New";
+  src: url("../fonts/VN-Peugeot-New/VN-Peugeot-New-Bold-Italic.woff2") format("woff2");
+  font-weight: 600;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* ===========================
+   Icon font (optional)
+   =========================== */
+@font-face {
+  font-family: "PeugeotIcons";
+  src: url("../fonts/VN-Peugeot-New/icons-peugeot.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: block; /* icons thường nên block để tránh nhấp nháy */
+}
+
+/* ===========================
+   Apply globally
+   =========================== */
+
+

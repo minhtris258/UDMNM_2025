@@ -141,6 +141,7 @@ add_action('wp_enqueue_scripts', function () {
   wp_enqueue_style('google-fonts', '//fonts.googleapis.com/css?family=Roboto+Condensed:300,400,700|Roboto:100,300,400,700', [], null);
   wp_enqueue_style('font-awesome', '//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css', [], null);
   wp_enqueue_style('peugeot-custom-css', get_template_directory_uri().'/custom.css', [], null);
+   wp_enqueue_style('peugeot-fonts', get_template_directory_uri() . '/assets/css/fonts.css');
 
   // JS
   wp_enqueue_script('bootstrap-js', 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js', ['jquery'], null, true);
@@ -165,6 +166,144 @@ add_filter('jpeg_quality', fn() => 80);
 add_action('login_enqueue_scripts', function () {
   echo '<style>.login h1 a{background-image:url("'.esc_url(get_template_directory_uri().'/images/login-logo.png').'")!important;background-size:contain!important;width:200px!important;height:80px!important;display:block!important}</style>';
 });
+// 1) Bật ảnh đại diện + size dùng cho menu
+add_theme_support('post-thumbnails');
+add_image_size('menu-thumb', 360, 220, true); // 16:10 đẹp cho ô menu
+
+// 2) Helper: lấy ảnh cho menu item (ưu tiên ảnh bìa bài viết mà menu trỏ tới)
+function pg_menu_item_thumb_url($item, $size = 'menu-thumb'){
+  // Trỏ tới bài viết / trang / CPT
+  if ($item->type === 'post_type' && !empty($item->object_id)) {
+    $url = get_the_post_thumbnail_url((int)$item->object_id, $size);
+    if ($url) return $url;
+  }
+  // Trỏ tới taxonomy có thumbnail_id (nếu có)
+  if ($item->type === 'taxonomy' && !empty($item->object_id)) {
+    $thumb_id = get_term_meta((int)$item->object_id, 'thumbnail_id', true);
+    if ($thumb_id) {
+      $url = wp_get_attachment_image_url((int)$thumb_id, $size);
+      if ($url) return $url;
+    }
+  }
+  return '';
+}
+
+// 3) Walker: cấp 0 mở mega panel, cấp 1 hiển thị ô có ảnh
+class PG_Mega_Walker extends Walker_Nav_Menu {
+
+  // Báo cho $args biết item có con hay không
+  public function display_element($element, &$children_elements, $max_depth, $depth = 0, $args = [], &$output = ''){
+    if (!$element) return;
+    $id_field = $this->db_fields['id'];
+    if (isset($args[0]) && is_object($args[0])) {
+      $args[0]->has_children = ! empty($children_elements[$element->$id_field]);
+    }
+    parent::display_element($element, $children_elements, $max_depth, $depth, $args, $output);
+  }
+
+  // Mở danh sách con: depth 0 => mega-panel, >=1 => sub-menu thường
+  public function start_lvl( &$output, $depth = 0, $args = [] ){
+    $indent = str_repeat("\t", $depth);
+    if ($depth === 0){
+      // Mega panel + nút đóng
+      $output .= "\n{$indent}<div class=\"mega-panel\" role=\"dialog\" aria-modal=\"false\">"
+               . "<button class=\"mega-close\" aria-label=\"Đóng menu\">&times;</button>"
+               . "<ul class=\"mega-grid\">\n";
+    } else {
+      $output .= "\n{$indent}<ul class=\"sub-menu\">\n";
+    }
+  }
+
+  public function end_lvl( &$output, $depth = 0, $args = [] ){
+    $indent = str_repeat("\t", $depth);
+    if ($depth === 0){
+      $output .= "{$indent}</ul></div>\n";
+    } else {
+      $output .= "{$indent}</ul>\n";
+    }
+  }
+
+  public function start_el( &$output, $item, $depth = 0, $args = [], $id = 0 ) {
+  $title = apply_filters('the_title', $item->title, $item->ID);
+
+  // ===== Depth helpers =====
+  $level       = $depth + 1;                        // 1,2,3...
+  $depth_li    = 'depth-' . $depth;                 // depth-0, depth-1...
+  $text_class  = 'text-menu-' . $level;             // text-menu-1,2,3...
+
+  // ----- CLASSES CHO <li> -----
+  $li_classes = ['menu-item-' . (int)$item->ID, $depth_li];
+  if ($depth === 0 && !empty($args->has_children)) {
+    $li_classes[] = 'menu-item-has-children';
+    $li_classes[] = 'has-mega';
+  }
+  $output .= '<li class="' . esc_attr(implode(' ', $li_classes)) . '">';
+
+  // ----- THUỘC TÍNH LINK -----
+  $base_link_class = ($depth === 1 ? 'mega-link' : 'menu-link') . ' ' . $text_class;
+  $atts = [
+    'href'   => !empty($item->url) ? $item->url : '',
+    'class'  => $base_link_class,
+    'target' => !empty($item->target) ? $item->target : '',
+    'rel'    => !empty($item->xfn) ? $item->xfn : '',
+    'title'  => !empty($item->attr_title) ? $item->attr_title : '',
+  ];
+  $attr = '';
+  foreach ($atts as $k => $v) if (!empty($v)) $attr .= ' '.$k.'="'.esc_attr($v).'"';
+
+  // ----- NỘI DUNG LINK -----
+  if ($depth === 1) {
+    // Ảnh bìa bài viết
+    $img = pg_menu_item_thumb_url($item, 'menu-thumb');
+    $thumbFlag = $img ? 'has-thumb' : 'no-thumb';
+
+    $output .= '<a'.$attr.'>';
+      $output .= '<span class="mega-thumb-wrap '.$thumbFlag.'">';
+      if ($img) {
+        $output .= '<span class="mega-thumb"><img src="'.esc_url($img).'" alt="'.esc_attr($title).'" loading="lazy" decoding="async"></span>';
+      }
+      $output .= '</span>';
+      $output .= '<span class="mega-title '.$text_class.'">'.esc_html($title).'</span>';
+    $output .= '</a>';
+
+  } else {
+    // Cấp 0 và >=2
+    $output .= '<a'.$attr.'><span class="menu-text '.$text_class.'">'.esc_html($title).'</span></a>';
+  }
+}
+
+
+  public function end_el( &$output, $item, $depth = 0, $args = [] ){
+    $output .= "</li>\n";
+  }
+}
+
+
+// 4) Thêm class has-mega cho item cấp 0 có con (để CSS bật panel)
+add_filter('nav_menu_css_class', function($classes, $item, $args, $depth){
+  if (isset($args->walker) && $args->walker instanceof PG_Mega_Walker && $depth === 0) {
+    if (in_array('menu-item-has-children', (array)$item->classes, true)) {
+      $classes[] = 'has-mega';
+    }
+  }
+  return $classes;
+}, 10, 4);
+
+
+
+// Helper: lấy ID trang settings theo template (nếu cần)
+function pg_get_settings_page_id_by_template( $template_file ) {
+  $q = new WP_Query([
+    'post_type'      => 'page',
+    'post_status'    => 'publish',
+    'meta_key'       => '_wp_page_template',
+    'meta_value'     => $template_file,
+    'posts_per_page' => 1,
+    'fields'         => 'ids',
+  ]);
+  return $q->have_posts() ? (int) $q->posts[0] : 0;
+}
+
 
 /* =========================
  * AJAX filter (giữ nguyên logic bạn đang dùng)

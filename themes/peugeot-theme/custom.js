@@ -1,138 +1,136 @@
 document.addEventListener("DOMContentLoaded", function () {
-    // Xử lý tất cả slider kiểu wrapper (ví dụ content1)
-    document.querySelectorAll(".peugeot-slider-wrapper").forEach(function (wrapper) {
-        const slider = wrapper.closest(".peugeot-slider");
-        const slides = wrapper.querySelectorAll(".peugeot-slide");
+  // =========================
+  // 1) SLIDER KIỂU WRAPPER (ví dụ: hero có .peugeot-slider-wrapper + .peugeot-slide)
+  // =========================
+  document.querySelectorAll(".peugeot-slider-wrapper").forEach(function (wrapper) {
+    const slider = wrapper.closest(".peugeot-slider");
+    const slides = wrapper.querySelectorAll(".peugeot-slide");
+    if (!slider || !slides.length) return;
 
-        let currentIndex = 0;
-        const totalSlides = slides.length;
-        let autoSlideInterval;
-        let startX = 0;
-        let isDragging = false;
+    let currentIndex = 0;
+    const totalSlides = slides.length;
+    let autoSlideInterval;
+    let startX = 0;
+    let isDragging = false;
 
-        function updateSlide(index) {
-            wrapper.style.transform = `translateX(-${index * 100}%)`;
-            currentIndex = index;
-        }
-
-        function startAutoSlide() {
-            stopAutoSlide();
-            autoSlideInterval = setInterval(() => {
-                let nextIndex = (currentIndex + 1) % totalSlides;
-                updateSlide(nextIndex);
-            }, 4000);
-        }
-
-        function stopAutoSlide() {
-            clearInterval(autoSlideInterval);
-        }
-
-        // Click nav zone
-        slider.querySelector(".peugeot-slider-nav-zone.left")?.addEventListener("click", () => {
-            updateSlide((currentIndex - 1 + totalSlides) % totalSlides);
-            startAutoSlide();
-        });
-        slider.querySelector(".peugeot-slider-nav-zone.right")?.addEventListener("click", () => {
-            updateSlide((currentIndex + 1) % totalSlides);
-            startAutoSlide();
-        });
-
-        // Swipe
-        wrapper.addEventListener("touchstart", (e) => {
-            startX = e.touches[0].clientX;
-            isDragging = true;
-            stopAutoSlide();
-        });
-        wrapper.addEventListener("touchend", (e) => {
-            if (!isDragging) return;
-            let endX = e.changedTouches[0].clientX;
-            let diff = startX - endX;
-            if (diff > 50) updateSlide((currentIndex + 1) % totalSlides);
-            else if (diff < -50) updateSlide((currentIndex - 1 + totalSlides) % totalSlides);
-            isDragging = false;
-            startAutoSlide();
-        });
-
-        // Init
-        updateSlide(0);
-        startAutoSlide();
-    });
-
-    // Xử lý mobile menu
-    var btn = document.getElementById('mobileMenuBtn');
-    var overlay = document.getElementById('mobileMenuOverlay');
-    var closeBtn = document.getElementById('closeMobileMenu');
-    if (btn && overlay && closeBtn) {
-        btn.onclick = function () {
-            overlay.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        };
-        closeBtn.onclick = function () {
-            overlay.classList.remove('active');
-            document.body.style.overflow = '';
-        };
-        overlay.onclick = function (e) {
-            if (e.target === overlay) {
-                overlay.classList.remove('active');
-                document.body.style.overflow = '';
-            }
-        };
+    function updateSlide(index) {
+      wrapper.style.transform = `translateX(-${index * 100}%)`;
+      currentIndex = index;
     }
 
-    // Slider fade (content1 - dạng .peugeot-slider với .peugeot-slider-slide)
+    function startAutoSlide() {
+      stopAutoSlide();
+      autoSlideInterval = setInterval(() => {
+        let nextIndex = (currentIndex + 1) % totalSlides;
+        updateSlide(nextIndex);
+      }, 4000);
+    }
+
+    function stopAutoSlide() {
+      if (autoSlideInterval) clearInterval(autoSlideInterval);
+    }
+
+    // Click nav zone
+    slider.querySelector(".peugeot-slider-nav-zone.left")?.addEventListener("click", () => {
+      updateSlide((currentIndex - 1 + totalSlides) % totalSlides);
+      startAutoSlide();
+    });
+    slider.querySelector(".peugeot-slider-nav-zone.right")?.addEventListener("click", () => {
+      updateSlide((currentIndex + 1) % totalSlides);
+      startAutoSlide();
+    });
+
+    // Swipe
+    wrapper.addEventListener("touchstart", (e) => {
+      startX = e.touches[0].clientX;
+      isDragging = true;
+      stopAutoSlide();
+    }, { passive: true });
+
+    wrapper.addEventListener("touchend", (e) => {
+      if (!isDragging) return;
+      let endX = e.changedTouches[0].clientX;
+      let diff = startX - endX;
+      if (diff > 50) updateSlide((currentIndex + 1) % totalSlides);
+      else if (diff < -50) updateSlide((currentIndex - 1 + totalSlides) % totalSlides);
+      isDragging = false;
+      startAutoSlide();
+    });
+
+    // Init
+    updateSlide(0);
+    startAutoSlide();
+  });
+
+  // =========================
+  // 2) SLIDER FADE (.peugeot-slider với .peugeot-slider-slide) — HỖ TRỢ NAV NẰM TRONG SLIDE (CÁCH B)
+  // =========================
+  // =========================
+// 2) SLIDER FADE (.peugeot-slider với .peugeot-slider-slide)
+//    Hoist NAV ra top-level để luôn hiển thị
+// =========================
 (function () {
   document.querySelectorAll(".peugeot-slider").forEach(function (slider) {
-    const slides   = Array.from(slider.querySelectorAll(".peugeot-slider-slide"));
+    // Chỉ khởi tạo khi container có slide trực tiếp
+    const slides = Array.from(slider.querySelectorAll(":scope > .peugeot-slider-slide"));
     if (!slides.length) return;
 
-    const navItems = Array.from(slider.querySelectorAll(".peugeot-slider-nav-item"));
+    // 👉 HOIST NAV: nếu nav nằm trong slide, nhấc cụm nav đầu tiên ra làm con trực tiếp của slider
+    let navRoot = slider.querySelector(":scope > .peugeot-slider-nav");
+    if (!navRoot) {
+      const nestedNav = slider.querySelector(".peugeot-slider-slide .peugeot-slider-nav");
+      if (nestedNav) {
+        slider.insertBefore(nestedNav, slider.firstChild); // đặt lên đầu
+        navRoot = nestedNav;
+      }
+    }
+
+    const navItems = navRoot ? Array.from(navRoot.querySelectorAll(".peugeot-slider-nav-item")) : [];
     const leftBtn  = slider.querySelector(".peugeot-slider-arrow.left");
     const rightBtn = slider.querySelector(".peugeot-slider-arrow.right");
 
     // slide hiện tại (ưu tiên slide có .active sẵn)
-    let current = Math.max(0, slides.findIndex(s => s.classList.contains("active")));
+    let current = slides.findIndex(s => s.classList.contains("active"));
     if (current < 0) current = 0;
 
-    // --- Tính & set chiều cao cho container dựa theo ảnh của slide active ---
     function resizeToActive() {
-      const active = slides[current];
-      if (!active) return;
-
-      // nếu có ảnh => tính theo tỉ lệ thật; fallback offsetHeight
-      const img = active.querySelector("img");
-      let h = active.offsetHeight || 600;
-
-      if (img && img.naturalWidth) {
-        const ratio = img.naturalHeight / img.naturalWidth;
-        const w = slider.clientWidth;
-        h = Math.max(180, Math.round(w * ratio));
-      }
-      slider.style.height = h + "px";
+      slider.style.height = ""; // không ép height
     }
 
-    function activate(n) {
-      if (n === current) return;
+    function updateSlidesActive(idx) {
+      slides.forEach((s, i) => s.classList.toggle("active", i === idx));
+    }
 
-      slides[current].classList.remove("active");
-      navItems[current]?.classList.remove("active");
+    // Toggle active cho TẤT CẢ nav-items theo data-slide (phòng khi sau này bạn có nav phụ)
+    function updateNavActive(idx) {
+      slider.querySelectorAll(".peugeot-slider-nav-item").forEach(el => {
+        const n = parseInt(el.dataset.slide, 10);
+        el.classList.toggle("active", n === idx);
+      });
+    }
 
-      current = n;
-
-      slides[current].classList.add("active");
-      navItems[current]?.classList.add("active");
-
+    function setActive(idx) {
+      if (idx === current || idx < 0 || idx >= slides.length) return;
+      current = idx;
+      updateSlidesActive(current);
+      updateNavActive(current);
       resizeToActive();
     }
 
-    function next() { activate((current + 1) % slides.length); }
-    function prev() { activate((current - 1 + slides.length) % slides.length); }
+    const next = () => setActive((current + 1) % slides.length);
+    const prev = () => setActive((current - 1 + slides.length) % slides.length);
 
     // Nút trái/phải
     leftBtn?.addEventListener("click", prev);
     rightBtn?.addEventListener("click", next);
 
-    // Tabs nav
-    navItems.forEach((el, i) => el.addEventListener("click", () => activate(i)));
+    // Uỷ quyền click cho nav-items (nav ở đâu cũng được)
+    slider.addEventListener("click", (e) => {
+      const el = e.target.closest(".peugeot-slider-nav-item");
+      if (!el || !slider.contains(el)) return;
+      const i = parseInt(el.dataset.slide, 10);
+      if (!Number.isNaN(i)) setActive(i);
+    });
 
     // Swipe (mobile)
     let startX = 0;
@@ -142,18 +140,17 @@ document.addEventListener("DOMContentLoaded", function () {
       if (Math.abs(dx) > 40) (dx < 0 ? next : prev)();
     });
 
-    // Keyboard (khi slider được focus)
+    // Keyboard
     slider.setAttribute("tabindex", "0");
     slider.addEventListener("keydown", e => {
       if (e.key === "ArrowLeft")  { e.preventDefault(); prev(); }
       if (e.key === "ArrowRight") { e.preventDefault(); next(); }
     });
 
-    // Khởi tạo trạng thái & chiều cao
-    slides.forEach((s, i) => s.classList.toggle("active", i === current));
-    navItems.forEach((n, i) => n.classList.toggle("active", i === current));
+    // Khởi tạo
+    updateSlidesActive(current);
+    updateNavActive(current);
 
-    // canh lại khi load/resize + khi ảnh active vừa load xong
     window.addEventListener("load", resizeToActive);
     window.addEventListener("resize", resizeToActive);
     const firstImg = slides[current].querySelector("img");
@@ -163,6 +160,8 @@ document.addEventListener("DOMContentLoaded", function () {
     resizeToActive();
   });
 })();
+
+
 
 
 // Slider 2 cột fade (content3 - dạng .peugeot-slider3 với .peugeot-slider3-slide)
@@ -479,75 +478,7 @@ document.querySelectorAll(".peugeot-sliderpb").forEach(function (root) {
   setBG(getBG(current));
 });
 });
-
-    // === XỬ LÝ MOBILE MENU (REPLACE) ===
-var btn = document.getElementById('mobileMenuBtn');
-var overlay = document.getElementById('mobileMenuOverlay');
-var closeBtn = document.getElementById('closeMobileMenu');
-var headerEl = document.getElementById('siteHeader') || document.querySelector('.peugeot-header');
-
-if (btn && overlay && closeBtn && headerEl) {
-  const THRESHOLD = 100;
-
-  btn.onclick = function () {
-    overlay.classList.add('active');
-    headerEl.classList.add('nav-open');     // cờ nav mở
-    headerEl.classList.add('header-dark');  // tối header khi mở menu
-    document.body.style.overflow = 'hidden';
-  };
-
-  function closeOverlay() {
-    overlay.classList.remove('active');
-    headerEl.classList.remove('nav-open');
-
-    // Nếu ở đầu trang & không còn submenu mobile mở -> bỏ dark
-    const hasAnyMobileOpen = !!overlay.querySelector('.peugeot-mobile-menu-list li.menu-item-has-children.open');
-    if (window.scrollY <= THRESHOLD && !hasAnyMobileOpen) {
-      headerEl.classList.remove('header-dark');
-    } else {
-      headerEl.classList.add('header-dark');
-    }
-    document.body.style.overflow = '';
-  }
-
-  closeBtn.onclick = closeOverlay;
-  overlay.onclick = function (e) { if (e.target === overlay) closeOverlay(); };
-}
-
-// === SUBMENU MOBILE (OVERLAY): ACCORDION (ADD) ===
-document.querySelectorAll('.peugeot-mobile-menu-list').forEach(function(menu){
-  menu.querySelectorAll('li.menu-item-has-children > a').forEach(function(a){
-    a.addEventListener('click', function(e){
-      e.preventDefault(); // nếu muốn <a> đi link, bỏ dòng này và gắn click vào caret riêng
-
-      const li = a.parentElement;
-      const willOpen = !li.classList.contains('open');
-
-      // đóng anh em cùng cấp
-      li.parentElement.querySelectorAll(':scope > li.menu-item-has-children.open').forEach(function(sib){
-        if (sib !== li) sib.classList.remove('open');
-      });
-
-      // toggle chính nó
-      li.classList.toggle('open', willOpen);
-
-      // đồng bộ header-dark khi overlay đang mở
-      const headerEl = document.getElementById('siteHeader') || document.querySelector('.peugeot-header');
-      if (headerEl) {
-        if (willOpen) {
-          headerEl.classList.add('header-dark');
-        } else {
-          const hasAnyOpen = !!menu.querySelector('li.menu-item-has-children.open');
-          if (window.scrollY <= 100 && !hasAnyOpen && !headerEl.classList.contains('nav-open')) {
-            headerEl.classList.remove('header-dark');
-          }
-        }
-      }
-    });
-  });
-});
-
-    // ===== Header states: scroll (desktop & mobile), submenu (desktop), hamburger (mobile) =====
+/* ===== Header state + Mobile overlay (single source) ===== */
 (function () {
   const header  = document.getElementById('siteHeader') || document.querySelector('.peugeot-header');
   const overlay = document.getElementById('mobileMenuOverlay');
@@ -556,94 +487,128 @@ document.querySelectorAll('.peugeot-mobile-menu-list').forEach(function(menu){
   const mainNav = document.querySelector('.peugeot-main-nav');
   if (!header) return;
 
-  // ====== Cấu hình ======
-  const THRESHOLD = 100; // px - coi như "đầu trang" nếu scrollY <= THRESHOLD
-
-  // ====== Helpers ======
+  const THRESHOLD = 100;
   const atTop   = () => window.scrollY <= THRESHOLD;
-  const anyOpen = () => !!mainNav?.querySelector('li.menu-item-has-children.open');
+  const anyDesktopSubOpen = () => !!mainNav?.querySelector('li.open');
   const navOpen = () => header.classList.contains('nav-open');
 
-  function updateHeaderDark() {
-    // Bật dark nếu: đã cuộn qua ngưỡng  || có submenu đang mở || nav mobile đang mở
-    const shouldDark = !atTop() || anyOpen() || navOpen();
+  // Make it global so other blocks can call it
+  window.updateHeaderDark = function updateHeaderDark () {
+    const shouldDark = !atTop() || anyDesktopSubOpen() || navOpen();
     header.classList.toggle('header-dark', shouldDark);
+  };
+
+  function openOverlay(){
+    if (!overlay) return;
+    overlay.classList.add('active');
+    header.classList.add('nav-open');
+    document.body.style.overflow = 'hidden';
+    window.updateHeaderDark();
+  }
+  function closeOverlay(){
+    if (!overlay) return;
+    overlay.classList.remove('active');
+    header.classList.remove('nav-open');
+    document.body.style.overflow = '';
+    window.updateHeaderDark();
   }
 
-  // ====== Scroll (giữ hành vi cũ) ======
-  function onScroll() {
-    updateHeaderDark();
-  }
-  onScroll();
-  window.addEventListener('scroll', onScroll, { passive: true });
+  btnOpen?.addEventListener('click', openOverlay);
+  btnClose?.addEventListener('click', closeOverlay);
+  overlay?.addEventListener('click', (e) => { if (e.target === overlay) closeOverlay(); });
 
-  // ====== Submenu: bấm để mở/đóng; đóng & đang ở đầu trang -> tắt header-dark ======
-  if (mainNav) {
-    const parents = mainNav.querySelectorAll('li.menu-item-has-children');
-
-    parents.forEach(li => {
-      const a = li.querySelector(':scope > a');
-      if (!a) return;
-
-      a.addEventListener('click', (e) => {
-        // Nếu muốn anchor đi link, bỏ dòng này và gán click vào nút caret riêng.
-        e.preventDefault();
-
-        const willOpen = !li.classList.contains('open');
-
-        // (Tuỳ chọn) đóng các submenu khác:
-        parents.forEach(x => x !== li && x.classList.remove('open'));
-
-        // Toggle submenu hiện tại
-        li.classList.toggle('open', willOpen);
-
-        // Cập nhật màu header theo đúng luật:
-        // - Nếu submenu vừa đóng và đang ở đầu trang + không mở nav -> tắt dark.
-        // - Ngược lại (đang mở submenu / đã cuộn / đang mở nav) -> bật dark.
-        updateHeaderDark();
-      });
-    });
-
-    // Click ra ngoài: đóng tất cả submenu, rồi về trạng thái theo scroll/hamburger
-    document.addEventListener('click', (e) => {
-      if (!mainNav.contains(e.target)) {
-        mainNav.querySelectorAll('li.menu-item-has-children.open').forEach(li => li.classList.remove('open'));
-        updateHeaderDark();
-      }
-    });
-
-    // Nhấn ESC: đóng submenu
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
-        mainNav.querySelectorAll('li.menu-item-has-children.open').forEach(li => li.classList.remove('open'));
-        updateHeaderDark();
-      }
-    });
-  }
-
-  // ====== Hamburger (mobile) ======
-  if (btnOpen) {
-    btnOpen.addEventListener('click', () => {
-      header.classList.add('nav-open');
-      updateHeaderDark();
-    });
-  }
-  if (btnClose) {
-    btnClose.addEventListener('click', () => {
-      header.classList.remove('nav-open');
-      updateHeaderDark();
-    });
-  }
-
-  // (Tuỳ chọn) Click overlay để đóng nav
-  if (overlay) {
-    overlay.addEventListener('click', (e) => {
-      if (e.target === overlay) {
-        header.classList.remove('nav-open');
-        updateHeaderDark();
-      }
-    });
-  }
+  // Scroll: đồng bộ màu header
+  window.addEventListener('scroll', window.updateHeaderDark, { passive: true });
+  window.updateHeaderDark();
 })();
 
+   /* ---------- DESKTOP SUBMENU (mega) — CLICK TOGGLE (robust) ---------- */
+(function(){
+  const header  = document.getElementById('siteHeader') || document.querySelector('.peugeot-header');
+  const mainNav = document.querySelector('.peugeot-main-nav');
+  if (!header || !mainNav) return;
 
+  // Hàm kiểm tra li có .mega-panel là CON TRỰC TIẾP
+  function hasMegaPanel(li){
+    for (const el of li.children) {
+      if (el.classList && el.classList.contains('mega-panel')) return true;
+    }
+    return false;
+  }
+
+  // Bắt sự kiện click ngay trên nav (uỷ quyền)
+  mainNav.addEventListener('click', (e) => {
+    const a  = e.target.closest('a');
+    const li = a?.closest('li');
+    if (!a || !li || !mainNav.contains(li)) return;
+
+    // Nếu li có mega-panel -> chặn đi link & toggle .open
+    if (hasMegaPanel(li)) {
+      e.preventDefault();
+
+      const willOpen = !li.classList.contains('open');
+      // Đóng tất cả mục khác
+      mainNav.querySelectorAll('li.open').forEach(x => { if (x !== li) x.classList.remove('open'); });
+      // Mở mục hiện tại
+      li.classList.toggle('open', willOpen);
+
+      // Cập nhật màu header (nếu bạn đang dùng hàm này ở nơi khác thì gọi lại)
+      if (typeof updateHeaderDark === 'function') updateHeaderDark();
+      return;
+    }
+
+    // Nếu KHÔNG có mega-panel => để mặc định đi link
+  });
+
+  // Click ra ngoài để đóng
+  document.addEventListener('click', (e) => {
+    if (!mainNav.contains(e.target)) {
+      mainNav.querySelectorAll('li.open').forEach(li => li.classList.remove('open'));
+      if (typeof updateHeaderDark === 'function') updateHeaderDark();
+    }
+  });
+
+  // ESC để đóng
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      mainNav.querySelectorAll('li.open').forEach(li => li.classList.remove('open'));
+      if (typeof updateHeaderDark === 'function') updateHeaderDark();
+    }
+  });
+  // Mobile submenu accordion (uỷ quyền sự kiện, không đụng desktop)
+// === SUBMENU MOBILE (overlay): first tap opens, second tap navigates ===
+document.querySelectorAll('.peugeot-mobile-menu-list').forEach(function(menu){
+  menu.querySelectorAll('li.menu-item-has-children > a').forEach(function(a){
+    a.addEventListener('click', function(e){
+      const li   = this.parentElement;
+      const href = this.getAttribute('href') || '';
+
+      // Lần 1: nếu đang đóng -> mở và chặn điều hướng
+      if (!li.classList.contains('open')) {
+        e.preventDefault();
+        // đóng anh em cùng cấp
+        li.parentElement.querySelectorAll(':scope > li.menu-item-has-children.open')
+          .forEach(sib => { if (sib !== li) sib.classList.remove('open'); });
+        li.classList.add('open');
+        return;
+      }
+
+      // Lần 2: nếu đã mở
+      // - nếu href trống hoặc '#': chỉ toggle
+      // - nếu href là URL thật: KHÔNG preventDefault => đi link
+      if (!href || href === '#') {
+        e.preventDefault();
+        li.classList.toggle('open');
+      } 
+      // else: để trình duyệt điều hướng bình thường
+    });
+  });
+});
+
+  document.body.addEventListener("click", (e) => {
+    if (e.target.classList.contains("mega-close")) {
+      const li = e.target.closest("li.open");
+      if (li) li.classList.remove("open");
+    }
+  });
+})();

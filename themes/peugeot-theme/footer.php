@@ -92,14 +92,10 @@
           <?php
           if (is_active_sidebar('footer_bottom_center')) {
             dynamic_sidebar('footer_bottom_center');
-          } else {
-            // fallback: logo thương hiệu
-            if (function_exists('the_custom_logo') && has_custom_logo()) {
-              the_custom_logo();
-            } else {
-              echo '<span class="footer-logo-text">'.esc_html(get_bloginfo('name')).'</span>';
+          }  else {
+              echo '';
             }
-          }
+          
           ?>
         </div>
 
@@ -121,7 +117,12 @@
 
       </div>
     </div>
-    
+    <div class="text-center py-3">
+      <?php if (function_exists('the_custom_logo') && has_custom_logo()) {
+              the_custom_logo();
+          }
+      ?>
+      </div>
   </div>
   <div class="peugeot-footer-bottom text-center py-3">
         &copy; <?php echo date('Y'); ?> | Thiết kế & phát triển bởi <span class="fw-bold text-primary">MinhTris</span>

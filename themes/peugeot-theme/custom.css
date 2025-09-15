@@ -1,37 +1,26 @@
 
 body {
     line-height: 1.4;
-    font-family: "VN-PeugeotNew-Regular";
+    /* font-family: "VN-PeugeotNew-Regular"; */
     color: #000;
     /* font-size: 1.4rem; */
     font-weight: 400;
     background-color: #fff;
     letter-spacing: .05em;
-    font-family: 'Peugeot New', system-ui;
-    /* font-family: "VN-PeugeotNew-Regular"; */
+    /* font-family: 'Peugeot-New', sans-serif; */
     overflow-x: hidden;
 }
-
-.peugeot-menu-list .sub-menu {
-    display: none;
-    position: absolute;
-    left: -28px;
-    margin-top: 8px;
-    top: 100%;
-    background: #222;
-    min-width: 220px;
-    z-index: 10;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
-    border-radius: 0 0 8px 8px;
-    padding: 12px 8px;
+body, html {
+    font-size: 14px;
 }
 
-.peugeot-menu-list li.menu-item-has-children {
-    position: relative;
+body, p, h1, h2, h3, h4, h5, h6 {
+  font-family: 'VN-Peugeot-New', Arial, sans-serif;
 }
-
-.peugeot-menu-list li.menu-item-has-children.open>.sub-menu {
-    display: block;
+h1, h2, h3 { font-weight: 700; }
+.emph, em, i { font-style: italic; }
+p {
+    white-space: pre-line;
 }
 
 .peugeot-menu-list li.menu-item-has-children>a::after {
@@ -183,52 +172,8 @@ img.custom-logo {
     margin-top: 50px;
 }
 
-/* --- MENU DESKTOP --- */
-.peugeot-main-nav {
-    display: flex;
-    flex: 1 1 auto;
-    align-items: center;
-    position: relative;
-    padding-bottom: 6px;
-}
-
-.peugeot-menu-list {
-    list-style: none;
-    display: flex;
-    gap: 32px;
-    margin-bottom: 0;
-    margin-left: 0;
-    padding-left: 0;
-}
-
-.peugeot-menu-list li {
-    display: flex;
-    align-items: center;
-}
-
-.peugeot-menu-list a {
-    color: #fff;
-    font-weight: 700;
-    font-size: 16px;
-    text-transform: uppercase;
-    text-decoration: none;
-    letter-spacing: 0.04em;
-    transition: color .2s;
-}
-
-.peugeot-menu-list a:hover {
-    color: #dadada;
-}
 
 /* Anchor có submenu: thêm khoảng trống cho caret */
-.peugeot-menu-list li.menu-item-has-children>a {
-    display: inline-flex;
-    /* để canh giữa dọc icon và chữ */
-    align-items: center;
-    gap: 8px;
-    /* khoảng cách chữ ↔ caret */
-    position: relative;
-}
 
 /* Caret mặc định: chỉ xuống */
 .peugeot-menu-list li.menu-item-has-children>a::after {
@@ -282,7 +227,7 @@ img.custom-logo {
 /* --- GẠCH DƯỚI MENU --- */
 .peugeot-main-nav {
     border-bottom: 2px solid #fff;
-    opacity: 0.7;
+    opacity: 1;
 }
 
 .peugeot-menu-list,
@@ -414,14 +359,7 @@ img.custom-logo {
         align-items: center;
     }
 
-    .peugeot-main-nav {
-        display: flex !important;
-        flex: 1 1 auto;
-        align-items: center;
-        padding-bottom: 6px;
-        border-bottom: 2px solid #fff;
-        opacity: 0.7;
-    }
+    
 
     .peugeot-menu-list {
         display: flex !important;
@@ -654,7 +592,6 @@ p.text-gray-600.mb-6 {
 
 .peugeot-slider-slide {
     width: 100vw;
-    height: 600px;
     position: absolute;
     top: 0;
     left: 0;
@@ -774,6 +711,7 @@ p.text-gray-600.mb-6 {
     }
 }
 
+
 /* Tối ưu phần tử cho GPU & redraw mượt */
 .peugeot-slider {
     contain: paint;
@@ -848,6 +786,13 @@ p.text-gray-600.mb-6 {
         transition-duration: 720ms, 520ms;
     }
 }
+@media (max-width: 768px) {
+    .peugeot-slider-slide img {
+        height: auto !important;
+    }
+    
+    
+}
 
 
 
@@ -896,8 +841,8 @@ p.text-gray-600.mb-6 {
 }
 
 .peugeot-slider3-slide img {
-    width: 100%;
-    height: 100%;
+max-width: 100%;
+    height: auto;
     object-fit: cover;
     display: block;
 }
@@ -957,6 +902,9 @@ p.text-gray-600.mb-6 {
     width: 100%;
     line-height: 1.5;
     font-size: 1rem;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    padding-right: 50px;
 }
 
 .peugeot-slider3-buttons {
@@ -986,7 +934,11 @@ p.text-gray-600.mb-6 {
     background-size: cover;
     background-position: center;
 }
-
+.title-desc {
+    padding: 20px;
+    white-space: pre-line;
+    font-size: 20px;
+}
 /* ====== SLIDER 4 ====== */
 
 
@@ -1028,13 +980,20 @@ p.text-gray-600.mb-6 {
 
 /* NGỪNG ép chiều cao ảnh = 100%; để ảnh tự giữ tỉ lệ */
 .peugeot-slider4 .peugeot-slider4-slide img {
-    width: auto;
-    height: auto;
+    /* width: auto; */
+    /* height: auto; */
     max-width: 100%;
-    max-height: 100%;
+    /* max-height: 100%; */
     object-fit: contain;
     /* không cắt ảnh */
     display: block;
+}
+.peugeot-slider4-nav-item {
+    font-size: 15px;
+}
+.peugeot-slider4-text {
+    font-size: 14px;
+    padding-right: 70px;
 }
 
 
@@ -1084,7 +1043,7 @@ p.text-gray-600.mb-6 {
 }
 
 .peugeot-slider-arrow.next {
-    right: 10px;
+    right: 22px;
 }
 
 .peugeot-slider4-counter {
@@ -1095,10 +1054,11 @@ p.text-gray-600.mb-6 {
 .peugeot-slider4-counter {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: start;
     gap: 8px;
     /* khoảng cách giữa các phần tử */
     margin-top: 15px;
+    margin-left: 14px;
     /* cách nội dung phía trên */
     font-size: 16px;
     font-weight: 500;
@@ -1138,6 +1098,72 @@ p.text-gray-600.mb-6 {
     display: block;
 }
 
+@media  (max-width: 991px) {
+    .title-desc {
+        font-size: 14px;
+        padding: 10px;
+    }
+    .peugeot-slider-row{
+        padding: 0%;
+    }
+    .peugeot-slider4-title {
+    text-align: center;
+}
+    .peugeot-slider4-counter {
+    justify-content: center;
+    }
+    .peugeot-slider4-content.active {
+    display: block;
+    text-align: center;
+    padding: 0px;
+}
+.peugeot-slider4-text {
+    font-size: 14px;
+    padding-left: 20px;
+    padding-right: 20px;
+    }
+ .peugeot-slider-arrow.next {
+    right: 0px !important;
+ }
+
+ .peugeot-slider-arrow.prev {
+    left: 0px !important;
+ }
+ .peugeot-slider3 {
+    position: relative;
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+}
+.peugeot-slider3-text {
+    padding-right: 0px;
+    padding: 0px 20px;
+}
+.peugeot-btn {
+    width: 100%;
+}
+h3.text-xl.font-bold {
+    padding: 10px 50px;
+}
+h2.text-3xl.text-blue-600.font-extrabold.my-2 {
+    padding: 0px 50px;
+}
+.peugeot-slider3-nav {
+    justify-content: center;
+}
+.peugeot-slider4-nav-item {
+    text-align: center;
+}
+
+}
+ 
+h2.peugeot-product-colors-title1 {
+    -webkit-text-fill-color: transparent;
+    background: linear-gradient(142.06deg, #6e8cc8 -51.7%, #245d75 -.35%, #a4e1ff 41.8%, #3a508e 78.54%, #39588b 123.96%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    line-height: 1.8;
+}
 
 
 /* color  */
@@ -1204,7 +1230,6 @@ p.text-gray-600.mb-6 {
     background: #0066ff;
     color: #fff;
     text-decoration: none;
-    font-weight: bold;
     border-radius: 4px;
     transition: 0.3s;
 }
@@ -1247,6 +1272,20 @@ p.text-gray-600.mb-6 {
     height: auto;
     object-fit: cover;
     display: block;
+}
+.peugeot-desc-mobile {
+  display: -webkit-box;
+  -webkit-line-clamp: 5; /* số dòng tối đa */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+@media (min-width: 768px) {
+  .peugeot-desc-mobile {
+    -webkit-line-clamp: unset;
+    display: block;
+    overflow: visible;
+  }
 }
 
 /* options */
@@ -1473,6 +1512,9 @@ p.text-gray-600.mb-6 {
     .pb-arrow {
         display: none;
     }
+    .thumb-wrapper {
+    width: 100px;
+    }
 }
 
 
@@ -1561,7 +1603,12 @@ p.text-gray-600.mb-6 {
     justify-items: start;
     padding: 20px;
 }
-
+.peugeot-box-title {
+    text-align: start;
+}
+.peugeot-box-desc {
+    text-align: start;
+}
 /* Ảnh full chiều ngang khối ảnh */
 .peugeot-slider3-img,
 .peugeot-slider4-img,
@@ -1674,7 +1721,12 @@ p.text-gray-600.mb-6 {
         display: inline-block;
         margin: 6px 8px 0 0;
         text-align: center;
+        place-content: center;
     }
+    .peugeot-slider3-buttons {
+        flex-wrap: wrap;
+    width: 100%;
+}
 
     /* Hình trong các slide chiếm toàn bộ chiều ngang container */
     .peugeot-slider3-slide,
@@ -1740,70 +1792,72 @@ p.text-gray-600.mb-6 {
     opacity: .6;
 }
 
-/* ===== MOBILE: đưa nav & content xuống dưới, cố định vùng ảnh ===== */
-@media (max-width: 768px) {
-
-    /* Slider tổng: cho phép phần dưới tràn tự nhiên */
-    #peugeot-slider {
-        overflow: visible;
-    }
-
-    /* Mỗi slide: bỏ absolute/fade, hiển thị theo khối để xếp chồng tự nhiên */
-    #peugeot-slider .peugeot-slider-slide {
-        position: static !important;
-        opacity: 1 !important;
-        display: none;
-        /* ẩn mặc định */
-    }
-
-    #peugeot-slider .peugeot-slider-slide.active {
-        display: block;
-        /* chỉ hiện slide active */
-    }
-
-    /* Ảnh: giữ 1 chiều cao cố định để KHÔNG “nhảy” khi đổi ảnh/a.r. khác nhau */
-    #peugeot-slider .peugeot-slider-img {
-        width: 100%;
-        height: var(--mobile-slider-h, 240px);
-        /* bạn đổi 240px theo ý */
-        object-fit: cover;
-        /* không bóp méo, crop đẹp */
-        display: block;
-        transform: none !important;
-        /* tắt Ken Burns/zoom nếu có */
-        transition: none !important;
-        /* tắt hiệu ứng gây giật */
-    }
-
-    /* Nội dung: không overlay nữa, xuống dưới ảnh */
-    #peugeot-slider .peugeot-slider-content {
-        position: static !important;
-        width: 100%;
-        padding: 14px 16px 18px;
-        margin-top: 8px;
-        background: #fff;
-        /* có thể để transparent nếu muốn */
-        color: #111;
-        border-radius: 0 0 12px 12px;
-        opacity: 1 !important;
-        transform: none !important;
-    }
-
-    /* Thanh tab/tiêu đề để bấm: cũng xuống dưới (sau ảnh & trước/hoặc sau content tuỳ thứ tự markup) */
-    #peugeot-slider .peugeot-slider-nav {
-        position: static !important;
-        top: auto;
-        left: auto;
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
-        padding: 10px 16px 0;
-        margin: 0;
-    }
-
-    /* (tuỳ chọn) ẩn mũi tên cho gọn trên mobile */
-    /* #peugeot-slider .peugeot-slider-arrow { display: none; } */
+/* ===== MOBILE: nav ở TRÊN, rồi tới ảnh, rồi nội dung ===== */
+@media (max-width: 768px){
+.peugeot-slider-nav-item {
+    font-size: 11px !important;  
+    color: #000 !important;      
 }
+
+  /* Biến container thành cột để dùng order */
+  #peugeot-slider{
+    display: flex;
+    flex-direction: column;
+    overflow: visible;
+  }
+
+  /* Nav lên trên cùng */
+  #peugeot-slider .peugeot-slider-nav{
+    order: 0;
+    position: static !important;
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 10px;
+    padding: 12px 16px;
+    margin: 0 0 8px;       /* cách phía dưới một chút */
+    background: #fff;      /* nếu muốn nổi bật hơn */
+    /* Nếu muốn nó dính trên khi cuộn: */
+    /* position: sticky; top: 0; z-index: 2; */
+  }
+
+  /* Slide (ảnh + content) hiển thị bên dưới nav */
+  #peugeot-slider .peugeot-slider-slide{
+    order: 1;
+    position: static !important;
+    opacity: 1 !important;
+    display: none;         /* ẩn mặc định */
+  }
+  #peugeot-slider .peugeot-slider-slide.active{
+    display: block;        /* chỉ hiện slide đang active */
+  }
+
+  /* Ảnh giữ tỷ lệ, không giật */
+  #peugeot-slider .peugeot-slider-img{
+    width: 100%;
+    height: var(--mobile-slider-h, 240px);
+    object-fit: cover;
+    display: block;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  /* Nội dung xuống dưới ảnh (không overlay) */
+  #peugeot-slider .peugeot-slider-content{
+    position: static !important;
+    width: 100%;
+    padding: 14px 16px 18px;
+    margin-top: 8px;
+    background: #fff;
+    color: #111;
+    border-radius: 0 0 12px 12px;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  /* (Tuỳ chọn) ẩn mũi tên trên mobile cho gọn */
+  /* #peugeot-slider .peugeot-slider-arrow{ display:none; } */
+}
+
 
 /* CTA row */
 .peugeot-footer-top {
@@ -1847,6 +1901,9 @@ p.text-gray-600.mb-6 {
 }
 
 @media (max-width:992px) {
+    .peugeot-footer-bottom {
+    font-size: 12px;
+    }
     .footer-cta-menu {
         grid-template-columns: repeat(2, 1fr)
     }
@@ -1954,7 +2011,10 @@ p.text-gray-600.mb-6 {
     opacity: 1;
     color: #0072ff
 }
-
+.widget_text {
+    font-size: 13px;
+    color: #787B80;
+}
 @media (max-width:992px) {
     .footer-bottom-grid {
         grid-template-columns: 1fr;
@@ -1983,7 +2043,7 @@ p.text-gray-600.mb-6 {
 li.menu-item.menu-item-type-post_type.menu-item-object-page.menu-item a {
     color: #fff;
     font-weight: 700;
-    font-size: 16px;
+    font-size: 13px;
     text-transform: uppercase;
     text-decoration: none;
     letter-spacing: 0.04em;
@@ -1993,17 +2053,22 @@ li.menu-item.menu-item-type-post_type.menu-item-object-page.menu-item a {
 li.menu-item.menu-item-type-custom.menu-item-object-custom.menu-item a {
     color: #fff;
     font-weight: 700;
-    font-size: 16px;
+    font-size: 13px;
     text-transform: uppercase;
     text-decoration: none;
     letter-spacing: 0.04em;
     transition: color .2s;
+        display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    position: relative;
 }
 .peugeot-title {
     padding: 25px;
 }
 .title-color {
     padding: 30px;
+    text-align: center;
 }
 
 /* ==== BẢNG GIÁ XE PEUGEOT ==== */
@@ -2063,6 +2128,7 @@ li.menu-item.menu-item-type-custom.menu-item-object-custom.menu-item a {
   line-height: 1.2;
   font-weight: 800;
   color: var(--pg-blue);
+  padding-top: 10px;
 }
 
 /* Dòng “Giá niêm yết ⓘ” – nếu có phần tử .xe-note */
@@ -2110,6 +2176,347 @@ li.menu-item.menu-item-type-custom.menu-item-object-custom.menu-item a {
   .bang-gia-xe .xe-title{ font-size: 22px; }
 }
 @media (max-width: 600px){
+    .peugeot-footer-bottom {
+    font-size: 10px;
+    }
   .bang-gia-xe{ grid-template-columns: 1fr; gap: 18px; }
   .bang-gia-xe .xe-title{ font-size: 20px; }
+}
+/* ====== post ====== */
+.peugeot-post-title {
+    text-align: center;
+    margin-bottom: 16px;
+    padding: 50px;
+        -webkit-text-fill-color: transparent;
+    background: linear-gradient(142.06deg, #6e8cc8 -51.7%, #245d75 -.35%, #a4e1ff 41.8%, #3a508e 78.54%, #39588b 123.96%);
+    -webkit-background-clip: text;
+    background-clip: text;
+        font-weight: bold;
+}
+
+.peugeot-post-content {
+    padding: 40px 60px 40px 40px;
+    font-size: 16px;
+    line-height: 1.6;
+}
+@media (max-width: 767.98px)
+ {
+        .peugeot-banner img {
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover !important;
+        object-position: center !important;
+        display: block;
+        }
+        .peugeot-post-content {
+    padding: 0px 20px 20px 20px;
+    font-size: 13px;
+    line-height: 1.6;
+}
+}
+/* === MEGA: đẩy ra dưới header, full-width theo nav (không nổi giữa) === */
+
+:root{
+  --pg-header-h: 110px;  /* desktop */
+}
+
+/* Mega panel full màn hình nhưng BÊN DƯỚI header */
+.peugeot-main-nav .mega-panel{
+  position: fixed;
+  left: 0; right: 0;
+  top: var(--pg-header-h);
+  height: calc(100vh - var(--pg-header-h));
+  width: 100vw;
+
+  background: #fff;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 40px 32px;
+
+  /* header đang có z-index:100 -> để panel thấp hơn */
+  z-index: 90;
+
+  opacity: 0; visibility: hidden; pointer-events: none;
+  transition: opacity .25s ease, visibility 0s linear .25s;
+
+  overflow-y: auto;                 /* cuộn trong vùng còn lại */
+}
+
+.peugeot-main-nav li.open > .mega-panel{
+  opacity: 1; visibility: visible; pointer-events: auto;
+  transition-delay: 0s;
+}
+
+/* Bên trong panel: grid căn giữa, max-width để không quá dài */
+.peugeot-main-nav .mega-panel > .mega-grid{
+  max-width: 1440px;                /* hoặc 1280px tuỳ bạn */
+  margin: 0 auto;
+  padding: 0 24px 24px;
+  display: grid;
+  gap: 24px;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  align-content: start;
+}
+
+/* Hover ô sản phẩm */
+.mega-link{ display:block; text-decoration:none; border-radius:12px; padding:12px;
+  transition:transform .15s, box-shadow .15s, background-color .15s; }
+.mega-link:hover{ background:#f7f8fa; transform:translateY(-2px); box-shadow:0 6px 16px rgba(0,0,0,.06); }
+
+.mega-thumb{ display:block; width:100%; aspect-ratio:16/10; border-radius:12px; overflow:hidden; background:#f2f3f5; margin-bottom:8px; }
+.mega-thumb img{ width:100%; height:100%; object-fit:cover; display:block; }
+.mega-title{ font-weight:800; font-size:16px; color:#111; line-height:1.3; }
+
+/* Caret desktop (xoay khi .open) */
+.peugeot-main-nav .peugeot-menu-list > li.menu-item-has-children > a::after{
+  content:""; display:inline-block; margin-left:6px; vertical-align:middle;
+  width:0;height:0; border-left:6px solid transparent; border-right:6px solid transparent; border-top:6px solid currentColor;
+  transition: transform .2s ease;
+}
+.peugeot-main-nav .peugeot-menu-list > li.menu-item-has-children.open > a::after{ transform: rotate(180deg); }
+
+/* Mobile vẫn dùng submenu accordion; ẩn hẳn mega */
+@media (max-width: 767.98px){
+  .peugeot-mobile-menu-list .mega-panel{ display:none !important; }
+}
+@media (max-width: 991px){
+  :root{ --pg-header-h: 70px; }     /* chiều cao header-dark mobile của bạn */
+}
+a.menu-link {
+    color: #fff;
+    font-weight: 700;
+    font-size: 13px;
+    text-transform: uppercase;
+    text-decoration: none;
+    letter-spacing: 0.04em;
+    transition: color .2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    position: relative;
+}
+.mega-close {
+  position: absolute;
+  top: 16px;
+  left: 16px; /* đổi thành right:16px nếu muốn nằm bên phải */
+  font-size: 32px;
+  font-weight: 300;
+  color: #333;
+  background: none;
+  border: none;
+  cursor: pointer;
+  line-height: 1;
+  z-index: 1100;
+  transition: color .2s;
+}
+.mega-close:hover { color: #007bff; }
+/* Overlay phủ full màn hình và tự cuộn nội dung của nó */
+.peugeot-mobile-menu-overlay{
+  position: fixed;
+  inset: 0;                 /* thay top/left/width/height = 100vh */
+  overflow-y: auto;         /* chỉ overlay cuộn */
+
+  overscroll-behavior: contain; /* không “kéo” body khi chạm mép */
+  z-index: 9999;
+}
+
+/* Khi menu mở: khóa body */
+html.menu-lock, body.menu-lock{
+  height: 100%;
+  overflow: hidden;
+}
+
+/* iOS chắc ăn: cố định body ở vị trí hiện tại */
+body.menu-lock{
+  position: fixed;
+  width: 100%;
+}
+/* archive tintuc */
+.archive-banner {
+  position: relative;
+  text-align: center;
+}
+.archive-banner img {
+      margin-top: -50px;
+    max-width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+.archive-banner-overlay {
+      position: absolute;
+    bottom: 20px;
+    left: 20%;
+    top: 40%;
+    transform: translateX(-50%);
+    color: #fff;
+}
+.archive-tabs {
+  display: flex;
+  gap: 20px;
+  margin: 30px 0;
+}
+.archive-tabs .tab {
+  padding: 8px 16px;
+  border-bottom: 2px solid transparent;
+}
+.archive-tabs .tab.active {
+  border-color: #005BAC;
+  font-weight: bold;
+  text-decoration: none;
+}
+.archive-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+.archive-item {
+      border: 1px solid #eee;
+    padding: 16px;
+    background: #fff;
+    display: grid;
+    align-content: space-between;
+}
+.archive-item-title {
+  font-size: 18px;
+  margin: 10px 0;
+}
+.read-more {
+  color: #005BAC;
+  font-weight: bold;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+img.attachment-small.size-small.wp-post-image {
+    max-width: 100%;
+    height: auto;
+}
+.archive-item-title a {
+    text-decoration: none;
+    color: black;
+}
+@media (max-width: 991px) {
+  .archive-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .archive-banner-overlay {
+    position: static;
+    padding: 20px;
+    color: #000000;
+        transform: translateX(0%);
+}
+.archive-banner img {
+    margin-top: 0px;
+    max-width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+.archive-item-title a {
+    font-size: 13px;
+}
+.archive-excerpt {
+    padding: 5px;
+    font-size: 13px;
+}
+ .archive-grid-products {
+    grid-template-columns: repeat(2, 1fr) !important; 
+  }
+    .product-price-desc{
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
+  }
+
+  /* Vì bạn dùng nl2br -> có <br>, ẩn <br> trên mobile để không bị ngắt dòng sớm */
+  .product-price-desc br{
+    display: none;
+  }
+  .read-more-product {
+    padding: 10px 10px !important;
+    font-size: 13px;
+  }
+  .product-price-sub, .product-price-desc {
+    font-size: 13px !important;
+    
+}
+}
+
+.archive-grid-products {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+.archive-item-product {
+    padding: 16px;
+    background: #fff;
+    display: grid;
+    align-content: space-between;
+}
+.archive-item-product-title {
+  font-size: 18px;
+  margin: 10px 0;
+  text-align: center;
+}
+.read-more-product {
+   display: block;         /* để set width */
+  width: 100%;
+  max-width: 360px;       /* độ rộng mong muốn của nút */
+  box-sizing: border-box;
+
+  text-align: center;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 14px 24px;
+  background: #1476ff;
+  color: #fff;
+  border: 0;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background .3s;
+}
+.read-more-product:hover {
+    background: #005bac;
+}
+img.attachment-small.size-small.wp-post-image {
+    max-width: 100%;
+    height: auto;
+}
+.archive-item-product-title a {
+    text-decoration: none;
+    color: black;
+}
+.archive-excerpt.product-meta {
+    text-align: center;
+}
+.product-price {
+    color: #1476ff;
+    font-weight: bold;
+    padding: 5px;
+}
+ .product-price-desc {
+    padding: 10px;
+}
+.product-price-sub, .product-price-desc {
+    font-size: 14px;
+    color: #787B80;
+}
+.product-btns{
+  display:flex;
+  flex-direction:column;
+  gap:16px;
+  align-items:center;     /* căn giữa các nút */
+  margin-top:12px;
+}
+.xem-tat-ca-wrap {
+    text-align: center;
+    color: #005BAC;
+    text-transform: uppercase;
+    text-decoration: none;
+}
+.xem-tat-ca-wrap a{
+    text-decoration: none;
+}
+.xem-tat-ca-wrap a:hover{
+    color: #000;
 }

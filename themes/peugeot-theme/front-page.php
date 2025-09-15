@@ -3,6 +3,9 @@ get_header();
 ?>
 
 <?php 
+$link1 = get_field('link1');
+$link2 = get_field('link2');
+$title_product = get_field('title_product');
 $slider = get_field('slider_images');
 if ($slider) : ?>
     <div class="peugeot-slider">
@@ -44,27 +47,37 @@ for ($i = 1; $i <= 3; $i++) {
 <section class="peugeot-content-block">
     <h2><?php echo esc_html($content1['title1']); ?></h2>
 </section>
-<div class="peugeot-slider" id="peugeot-slider">
-    <?php foreach ($slides as $idx => $slide): ?>
+<div class="peugeot-slider" id="peugeot-slider" data-min-h="0">
+  <?php foreach ($slides as $idx => $slide): ?>
     <div class="peugeot-slider-slide<?php echo $idx === 0 ? ' active' : ''; ?>">
-        <img src="<?php echo esc_url($slide['image']); ?>" alt="<?php echo esc_attr($slide['title']); ?>" class="peugeot-slider-img" />
-        <div class="peugeot-slider-content">
-            <?php echo wp_kses_post($slide['content']); ?>
-            <button class="peugeot-slider-btn">ĐẶT LỊCH LÁI THỬ</button>
-        </div>
-    </div>
-    <?php endforeach; ?>
+      <img src="<?php echo esc_url($slide['image']); ?>" alt="<?php echo esc_attr($slide['title']); ?>" class="peugeot-slider-img" />
 
-    <button class="peugeot-slider-arrow left">&#10094;</button>
-    <button class="peugeot-slider-arrow right">&#10095;</button>
-    <div class="peugeot-slider-nav">
-        <?php foreach ($slides as $idx => $slide): ?>
-            <span class="peugeot-slider-nav-item<?php echo $idx === 0 ? ' active' : ''; ?>" data-slide="<?php echo $idx; ?>">
-                <?php echo esc_html($slide['title']); ?>
+      <?php if ($idx === 0): // chỉ in NAV 1 lần trong slide đầu ?>
+        <div class="peugeot-slider-nav">
+          <?php foreach ($slides as $j => $s): ?>
+            <span class="peugeot-slider-nav-item<?php echo $j === 0 ? ' active' : ''; ?>" data-slide="<?php echo $j; ?>">
+              <?php echo esc_html($s['title']); ?>
             </span>
-        <?php endforeach; ?>
+          <?php endforeach; ?>
+        </div>
+      <?php endif; ?>
+
+      <div class="peugeot-slider-content">
+        <?php echo wp_kses_post($slide['content']); ?>
+        <div class="peugeot-buttons text-center mb-5 py-3">
+
+            <a class="peugeot-btn-primary" href="<?php echo esc_url($link2['url']); ?>" target="<?php echo esc_attr($link2['target']); ?>">
+                <?php echo esc_html($link2['title']); ?>
+            </a>
+        </div>
+      </div>
     </div>
+  <?php endforeach; ?>
+
+  <button class="peugeot-slider-arrow left">&#10094;</button>
+  <button class="peugeot-slider-arrow right">&#10095;</button>
 </div>
+
 <?php 
 $content2 = get_field('content2');
 
@@ -137,9 +150,14 @@ for ($i = 1; $i <= 2; $i++) {
                         <div class="peugeot-slider3-text">
                             <?php echo wp_kses_post($slide['content']); ?>
                         </div>
-                        <div class="peugeot-slider3-buttons">
-                            <button class="peugeot-slider-btn">LIÊN HỆ</button>
-                            <button class="peugeot-slider-btn">ĐẶT LỊCH LÁI THỬ</button>
+                         <div class="peugeot-slider3-buttons">
+
+                            <a class="peugeot-btn" href="<?php echo esc_url($link1['url']); ?>" target="<?php echo esc_attr($link1['target']); ?>">
+                    <?php echo esc_html($link1['title']); ?>
+                </a>
+                           <a class="peugeot-btn" href="<?php echo esc_url($link2['url']); ?>" target="<?php echo esc_attr($link2['target']); ?>">
+                    <?php echo esc_html($link2['title']); ?>
+                </a>
                         </div>
                     </div>
                 <?php endforeach; ?>
@@ -157,6 +175,8 @@ $args = [
 $q = new WP_Query($args);
 
 if ($q->have_posts()): ?>
+  <section class="peugeot-content-block">
+    <h2><?php echo esc_html($title_product); ?></h2>
   <div class="bang-gia-xe">
     <?php while ($q->have_posts()): $q->the_post();
       $thong_tin   = get_field('thong_tin_xe');
@@ -180,10 +200,18 @@ if ($q->have_posts()): ?>
 
         <h3 class="xe-title"><?php the_title(); ?></h3>
 
-        <?php if (!empty($thong_tin['gia'])): ?>
-          <p class="xe-gia">Từ <?php echo esc_html($thong_tin['gia']); ?> triệu đồng</p>
-          <div class="xe-note">Giá niêm yết <span class="i">i</span></div>
-        <?php endif; ?>
+        <?php
+            $price     = get_field('price');      // Text
+            $price_sub = get_field('price_sub');  // Text
+            ?>
+
+            <?php if (!empty($price)): ?>
+              <p class="xe-gia"><?php echo esc_html($price); ?></p>
+            <?php endif; ?>
+
+            <?php if (!empty($price_sub)): ?>
+              <p class="xe-gia-sub"><?php echo esc_html($price_sub); ?></p>
+            <?php endif; ?>
 
         <a href="<?php echo esc_url($detail_link); ?>" class="btn-xem">
           Xem chi tiết <?php echo esc_html(get_the_title()); ?>
@@ -191,14 +219,175 @@ if ($q->have_posts()): ?>
       </div>
     <?php endwhile; ?>
   </div>
+  <?php
+// Link archive CPT san-pham
+$archive_link = get_post_type_archive_link('san-pham');
+// Fallback nếu CPT chưa có has_archive
+if (!$archive_link) {
+  $archive_link = home_url('/san-pham/');
+}
+?>
+<div class="xem-tat-ca-wrap">
+  <a class="btn-xem-tat-ca" href="<?php echo esc_url($archive_link); ?>">
+    Xem tất cả
+  </a>
+</div>
+</section>
 <?php endif; wp_reset_postdata(); ?>
 
+<?php 
+$content4 = get_field('content4');
+
+if ($content4) : ?>
+<section class="video-section text-center py-10">
+  <div class="peugeot-title">
+  <?php if (!empty($content4['title'])): ?>
+    <h1 class="text-xl font-bold"><?php echo esc_html($content4['title']); ?></h1>
+  <?php endif; ?>
+
+  <?php if (!empty($content4['subtitle'])): ?>
+    <h2 class="text-3xl text-blue-600 font-extrabold my-2">
+      <?php echo esc_html($content4['subtitle']); ?>
+    </h2>
+  <?php endif; ?>
+
+  <?php if (!empty($content4['desc'])): ?>
+    <div class="text-gray-600 mb-6 text-center mx-auto">
+      <?php echo apply_filters('the_content', $content4['desc']); ?>
+    </div>
+  <?php endif; ?>
+</div>
+  <?php
+  // ==== GALLERY 1-4 ẢNH + DESC ====
+  $items = [];
+  for ($i = 1; $i <= 4; $i++) {
+    $img_field  = $content4['image' . $i] ?? null;
+    $desc_field = $content4['desc_image' . $i] ?? ''; // WYSIWYG
+
+    if (!empty($img_field)) {
+      $img_id = null;
+      if (is_numeric($img_field)) {
+        $img_id = (int)$img_field;
+      } elseif (is_array($img_field)) {
+        $img_id = isset($img_field['ID']) ? (int)$img_field['ID'] : null;
+        $img_url_fallback = $img_field['url'] ?? '';
+        $img_alt_fallback = $img_field['alt'] ?? '';
+      }
+
+      if ($img_id) {
+        $img_html = wp_get_attachment_image(
+          $img_id,
+          'large',
+          false,
+          [
+            'class'   => 'thumb-150',
+            'loading' => 'lazy',
+            'sizes'   => '(min-width:1200px) 25vw, (min-width:768px) 50vw, 100vw',
+          ]
+        );
+      } else {
+        $img_html = sprintf(
+          '<img src="150px" alt="150px" class="thumb-150" loading="lazy">',
+          esc_url($img_url_fallback ?? ''),
+          esc_attr($img_alt_fallback ?? '')
+        );
+      }
+
+      $items[] = [
+        'img_html' => $img_html,
+        'desc'     => $desc_field, // giữ nguyên HTML từ WYSIWYG
+      ];
+    }
+  }
+
+$n = count($items);
+if ($n > 0) :
+  $lgCols = 12 / min($n, 4); // 1:12, 2:6, 3:4, 4:3
+  $mdCols = ($n === 1) ? 12 : 6;
+?>
+  <section class="container my-4">
+    <div class="row g-3 justify-content-center">
+      <?php foreach ($items as $item) : ?>
+        <div class="col-3 col-md-<?php echo (int)$mdCols; ?> col-lg-<?php echo (int)$lgCols; ?>">
+          <article class="h-100 text-center p-3">
+  <div class="d-flex justify-content-center mb-3">
+    <div class="thumb-wrapper">
+      <?php echo $item['img_html']; ?>
+    </div>
+  </div>
+
+  <?php if (!empty($item['desc'])) : ?>
+    <div class="justify-content-center peugeot-desc-mobile">
+      <?php echo apply_filters('the_content', $item['desc']); ?>
+    </div>
+  <?php endif; ?>
+</article>
+
+        </div>
+      <?php endforeach; ?>
+    </div>
+  </section>
+<?php endif; ?>
+  </section>
+<?php endif; ?>
+
+
+<?php 
+$content5 = get_field('content5');
+if ($content5): 
+?>
+<div class="peugeot-register container">
+   
+    <div class="peugeot-register-boxes">
+        <!-- Box trái -->
+        <div class="peugeot-register-box">
+            <?php if (!empty($content5['left_image'])): ?>
+                <img src="<?php echo esc_url($content5['left_image']['url']); ?>" alt="" class="peugeot-baogia-img">
+            <?php endif; ?>
+              <div class="peugeot-box-title">
+            <h3><?php echo esc_html($content5['left_title']); ?></h3>
+            </div>
+            <div class="peugeot-box-desc">
+            <p><?php echo esc_html($content5['left_desc']); ?></p>
+            </div>
+
+            <?php if (!empty($content5['left_button'])): 
+                $btn = $content5['left_button']; ?>
+                <a class="peugeot-btn" href="<?php echo esc_url($btn['url']); ?>" target="<?php echo esc_attr($btn['target']); ?>">
+                    <?php echo esc_html($btn['title']); ?>
+                </a>
+            <?php endif; ?>
+        </div>
+
+        <!-- Box phải -->
+        <div class="peugeot-register-box">
+            <?php if (!empty($content5['right_image'])): ?>
+                <img src="<?php echo esc_url($content5['right_image']['url']); ?>" alt=""  class="peugeot-baogia-img">
+            <?php endif; ?>
+              <div class="peugeot-box-title">
+            <h3><?php echo esc_html($content5['right_title']); ?></h3>
+            </div>
+            <div class="peugeot-box-desc">
+              <p><?php echo esc_html($content5['right_desc']); ?></p>
+            </div>
+
+            <?php if (!empty($content5['right_button'])): 
+                $btn = $content5['right_button']; ?>
+                <a class="peugeot-btn" href="<?php echo esc_url($btn['url']); ?>" target="<?php echo esc_attr($btn['target']); ?>">
+                    <?php echo esc_html($btn['title']); ?>
+                </a>
+            <?php endif; ?>
+        </div>
+    </div>
+</div>
+
+<?php endif; ?>
 
 <?php
 // Lấy 5 bài mới nhất từ category 'tin_tuc'
 $news_q = new WP_Query([
-  'post_type'           => 'post',
-  'category_name'       => 'tin-tuc',
+  'post_type'           => 'tin_tuc',
+  'category_name'       => '',
   'posts_per_page'      => 5,
   'ignore_sticky_posts' => true,
 ]);
