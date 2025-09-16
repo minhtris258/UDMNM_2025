@@ -478,6 +478,25 @@ document.querySelectorAll(".peugeot-sliderpb").forEach(function (root) {
   setBG(getBG(current));
 });
 });
+
+  document.querySelectorAll(".peugeot-product-colors").forEach(function (block) {
+    var mainImg = block.querySelector("#peugeot-main-img");
+    var colorItems = block.querySelectorAll(".peugeot-product-color-item");
+    if (!mainImg || !colorItems.length) return;
+
+    colorItems.forEach(function (item) {
+      item.addEventListener("click", function () {
+        // Bỏ active ở tất cả item
+        colorItems.forEach(function (el) { el.classList.remove("active"); });
+        // Đặt active cho item đang click
+        item.classList.add("active");
+        // Đổi ảnh xe
+        var imgUrl = item.getAttribute("data-image");
+        if (imgUrl) mainImg.setAttribute("src", imgUrl);
+      });
+    });
+  });
+
 /* ===== Header state + Mobile overlay (single source) ===== */
 (function () {
   const header  = document.getElementById('siteHeader') || document.querySelector('.peugeot-header');

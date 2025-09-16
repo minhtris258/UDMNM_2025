@@ -82,7 +82,7 @@ for ($i = 1; $i <= 3; $i++) {
 $content2 = get_field('content2');
 
 if ($content2) : ?>
-    <section class="video-section text-center py-10">
+    <section class="video-section text-center py-5">
         <?php if (!empty($content2['title'])): ?>
             <h1 class="text-xl font-weight-bold"><?php echo esc_html($content2['title']); ?></h1>
         <?php endif; ?>
@@ -101,7 +101,7 @@ if ($content2) : ?>
             <div class="video-wrapper py-3" style="max-width:1200px;margin:0 auto;">
                 <iframe width="100%" height="700" 
                         src="<?php echo esc_url($content2['youtube_url']); ?>" 
-                        title="YouTube video" frameborder="0" allowfullscreen>
+                        title="<?php echo esc_attr__('Video YouTube', 'peugeot-theme'); ?>" frameborder="0" allowfullscreen>
                 </iframe>
             </div>
         <?php endif; ?>
@@ -214,8 +214,8 @@ if ($q->have_posts()): ?>
             <?php endif; ?>
 
         <a href="<?php echo esc_url($detail_link); ?>" class="btn-xem">
-          Xem chi tiết <?php echo esc_html(get_the_title()); ?>
-        </a>
+  <?php printf(esc_html__('Xem chi tiết %s', 'peugeot-theme'), esc_html(get_the_title())); ?>
+</a>
       </div>
     <?php endwhile; ?>
   </div>
@@ -228,9 +228,9 @@ if (!$archive_link) {
 }
 ?>
 <div class="xem-tat-ca-wrap">
-  <a class="btn-xem-tat-ca" href="<?php echo esc_url($archive_link); ?>">
-    Xem tất cả
-  </a>
+<a class="btn-xem-tat-ca" href="<?php echo esc_url($archive_link); ?>">
+  <?php echo esc_html__('Xem tất cả', 'peugeot-theme'); ?>
+</a>
 </div>
 </section>
 <?php endif; wp_reset_postdata(); ?>
@@ -239,7 +239,7 @@ if (!$archive_link) {
 $content4 = get_field('content4');
 
 if ($content4) : ?>
-<section class="video-section text-center py-10">
+<section class="video-section text-center py-5">
   <div class="peugeot-title">
   <?php if (!empty($content4['title'])): ?>
     <h1 class="text-xl font-bold"><?php echo esc_html($content4['title']); ?></h1>
@@ -384,9 +384,9 @@ if ($content5):
 <?php endif; ?>
 
 <?php
-// Lấy 5 bài mới nhất từ category 'tin_tuc'
+// Lấy 5 bài mới nhất từ category 'tin-tuc'
 $news_q = new WP_Query([
-  'post_type'           => 'tin_tuc',
+  'post_type'           => 'tin-tuc',
   'category_name'       => '',
   'posts_per_page'      => 5,
   'ignore_sticky_posts' => true,
@@ -403,8 +403,10 @@ if ($news_q->have_posts()) {
     }
     $slides[] = [
       'content1' => get_the_title(),
-      'content2' => wpautop( wp_kses_post( wp_trim_words( get_the_excerpt(), 40, '…' ) ) ) .
-                    '<p><a class="peugeot-slider-btn" href="'. esc_url( get_permalink() ) .'">ĐỌC TIẾP</a></p>',
+      'content2' => wpautop( wp_kses_post( wp_trim_words( get_the_excerpt(), 40, esc_html__('…','peugeot-theme') ) ) ) .
+              '<p><a class="peugeot-slider-btn" href="'. esc_url( get_permalink() ) .'">'.
+                esc_html__('Đọc tiếp','peugeot-theme').
+              '</a></p>',
       'image'    => $img,
       'alt'      => get_the_title(),
     ];
@@ -457,7 +459,14 @@ if ($news_q->have_posts()) {
   </div>
 </div>
 <?php else: ?>
-  <p>Chưa có bài viết nào trong chuyên mục <em>tin_tuc</em>.</p>
+  <p>
+  <?php
+    printf(
+      esc_html__('Chưa có bài viết nào trong chuyên mục %s.', 'peugeot-theme'),
+      '<em>tin-tuc</em>'
+    );
+  ?>
+</p>
 <?php endif; ?>
 
 

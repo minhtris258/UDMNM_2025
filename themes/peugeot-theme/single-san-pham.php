@@ -20,7 +20,7 @@ if ($banner && isset($banner['url'])) {
 </div>
 
 <?php
-$content1 = get_field('content1');
+$content1 = function_exists('get_field') ? get_field('content1') : [];
 $slides = [];
 for ($i = 1; $i <= 5; $i++) {
     if (!empty($content1['image_content' . $i])) {
@@ -31,6 +31,7 @@ for ($i = 1; $i <= 5; $i++) {
         ];
     }
 }
+
 ?>
 <div class="peugeot-slider peugeot-slider3" id="peugeot-slider3">
     <div class="peugeot-slider-row">
@@ -63,11 +64,11 @@ for ($i = 1; $i <= 5; $i++) {
                         </div>
                         <div class="peugeot-slider3-buttons">
                             <a class="peugeot-btn" href="<?php echo esc_url($tim_dai_ly['url']); ?>" target="<?php echo esc_attr($tim_dai_ly['target']); ?>">
-                    <?php echo esc_html($tim_dai_ly['title']); ?>
-                </a>
-                           <a class="peugeot-btn" href="<?php echo esc_url($dk_lai_thu['url']); ?>" target="<?php echo esc_attr($dk_lai_thu['target']); ?>">
-                    <?php echo esc_html($dk_lai_thu['title']); ?>
-                </a>
+                                <?php echo esc_html($tim_dai_ly['title']); ?>
+                            </a>
+                            <a class="peugeot-btn" href="<?php echo esc_url($dk_lai_thu['url']); ?>" target="<?php echo esc_attr($dk_lai_thu['target']); ?>">
+                                <?php echo esc_html($dk_lai_thu['title']); ?>
+                            </a>
                         </div>
                     </div>
                 <?php endforeach; ?>

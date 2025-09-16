@@ -73,7 +73,7 @@ for ($i = 1; $i <= 3; $i++) {
 $content2 = get_field('content2');
 
 if ($content2) : ?>
-    <section class="video-section text-center py-10">
+    <section class="video-section text-center py-4">
         <?php if (!empty($content2['title'])): ?>
             <h3 class="text-xl font-bold"><?php echo esc_html($content2['title']); ?></h3>
         <?php endif; ?>

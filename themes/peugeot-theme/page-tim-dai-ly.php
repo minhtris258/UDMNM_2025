@@ -1,6 +1,7 @@
 <?php
 /**
  * Template Name: Trang Tìm Đại Lý
+ * Text Domain: peugeot-theme
  */
 get_header();
 ?>
@@ -72,7 +73,9 @@ $top_mien_terms = get_terms(['taxonomy'=>$tax_mien,'hide_empty'=>false]);
  <h1 class="ag-title"><?php the_title(); ?></h1>
  <div class="container py-2" style="background-color: #ebebeb;">
 <div class="agency-tabs">
-  <a class="agency-tab <?php echo $mien ? '' : 'is-active'; ?>" href="<?php echo pg_qs(['mien'=>null]); ?>">Tất cả</a>
+  <a class="agency-tab <?php echo $mien ? '' : 'is-active'; ?>" href="<?php echo pg_qs(['mien'=>null]); ?>">
+    <?php echo esc_html__('TẤT CẢ', 'peugeot-theme'); ?>
+  </a>
   <?php if (!is_wp_error($top_mien_terms)) foreach ($top_mien_terms as $t): ?>
     <a class="agency-tab <?php echo $mien == $t->term_id ? 'is-active' : ''; ?>" href="<?php echo pg_qs(['mien'=>$t->term_id]); ?>">
       <?php echo esc_html($t->name); ?>
@@ -80,29 +83,24 @@ $top_mien_terms = get_terms(['taxonomy'=>$tax_mien,'hide_empty'=>false]);
   <?php endforeach; ?>
 </div>
 
-
-
- 
-
   <!-- FORM -->
 <form class="agency-filter-form agency-filter form-compact"
       method="get" action="<?php echo esc_url(get_permalink()); ?>">
 
-
   <!-- Hàng 1: ô search full width + icon -->
   <div class="row1 search-wrap">
-    <label for="keyword" class="sr-only">Từ khoá</label>
+    <label for="keyword" class="sr-only"><?php echo esc_html__('Từ khoá', 'peugeot-theme'); ?></label>
     <input id="keyword" type="text" name="keyword"
            value="<?php echo esc_attr($kw); ?>"
-           placeholder="Nhập từ khoá tìm kiếm" />
+           placeholder="<?php echo esc_attr__('Nhập từ khoá tìm kiếm', 'peugeot-theme'); ?>" />
   </div>
 
   <!-- Hàng 2: 2 select -->
   <div class="row2">
     <div>
-      <label for="mien" class="sr-only">Miền</label>
+      <label for="mien" class="sr-only"><?php echo esc_html__('Miền', 'peugeot-theme'); ?></label>
       <select id="mien" name="mien">
-        <option value=""><?php echo esc_html('Toàn quốc'); ?></option>
+        <option value=""><?php echo esc_html__('Toàn quốc', 'peugeot-theme'); ?></option>
         <?php
         $mien_terms = get_terms(['taxonomy'=>$tax_mien,'hide_empty'=>false]);
         if (!is_wp_error($mien_terms)) {
@@ -119,9 +117,9 @@ $top_mien_terms = get_terms(['taxonomy'=>$tax_mien,'hide_empty'=>false]);
     </div>
 
     <div>
-      <label for="tinhthanh" class="sr-only">Tỉnh/Thành</label>
+      <label for="tinhthanh" class="sr-only"><?php echo esc_html__('Tỉnh/Thành', 'peugeot-theme'); ?></label>
       <select id="tinhthanh" name="tinhthanh">
-        <option value=""><?php echo esc_html('Chọn Tỉnh/Thành phố'); ?></option>
+        <option value=""><?php echo esc_html__('Chọn Tỉnh/Thành phố', 'peugeot-theme'); ?></option>
         <?php
         $tinh_terms = get_terms(['taxonomy'=>$tax_tinh,'hide_empty'=>false]);
         if (!is_wp_error($tinh_terms)) {
@@ -137,15 +135,16 @@ $top_mien_terms = get_terms(['taxonomy'=>$tax_mien,'hide_empty'=>false]);
       </select>
     </div>
 
-    <!-- Nếu vẫn muốn nút Lọc / Reset thì để lại; còn không, xoá 2 div dưới -->
     <div class="actions">
-      <a class="btn-ghost" href="<?php echo esc_url(get_permalink()); ?>">Reset</a>
+      <a class="btn-ghost" href="<?php echo esc_url(get_permalink()); ?>">
+        <?php echo esc_html__('Reset', 'peugeot-theme'); ?>
+      </a>
     </div>
   </div>
 </form>
 </div>
 <h2 class="agency-count">
-  Có <?php echo (int) $query->found_posts; ?> Đại lý / Chi Nhánh / Workshop
+  <?php printf(esc_html__('Có %d Đại lý / Chi Nhánh / Workshop', 'peugeot-theme'), (int) $query->found_posts); ?>
 </h2>
  <!-- KẾT QUẢ (server-side lần đầu) -->
 <div id="agency-results" data-page="<?php echo esc_attr($paged); ?>">
@@ -169,7 +168,7 @@ $top_mien_terms = get_terms(['taxonomy'=>$tax_mien,'hide_empty'=>false]);
     </div>
 
   <?php else: ?>
-    <p>Không có bài nào.</p>
+    <p><?php echo esc_html__('Không có bài nào.', 'peugeot-theme'); ?></p>
   <?php endif; wp_reset_postdata(); ?>
 </div>
 </div>

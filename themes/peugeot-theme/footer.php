@@ -32,32 +32,32 @@
         <div class="col-12 col-md-6 col-lg-3">
           <?php if (is_active_sidebar('footer_col_1')) { dynamic_sidebar('footer_col_1'); }
           else { ?>
-            <h4 class="footer-title">Về Peugeot Việt Nam</h4>
-            <p class="footer-desc">Kéo widget “Text/Custom HTML” vào khu vực này để thêm mô tả, địa chỉ, giấy phép…</p>
+            <h4 class="footer-title"><?php echo esc_html__('Về Peugeot Việt Nam', 'peugeot-theme'); ?></h4>
+            <p class="footer-desc"><?php echo esc_html__('Kéo widget “Text/Custom HTML” vào khu vực này để thêm mô tả, địa chỉ, giấy phép…', 'peugeot-theme'); ?></p>
           <?php } ?>
         </div>
 
         <div class="col-12 col-md-6 col-lg-3">
           <?php if (is_active_sidebar('footer_col_2')) { dynamic_sidebar('footer_col_2'); }
           else { ?>
-            <h4 class="footer-title">Truy cập nhanh</h4>
-            <p class="footer-desc">Kéo widget “Navigation Menu” (trỏ tới 1 menu link).</p>
+            <h4 class="footer-title"><?php echo esc_html__('Truy cập nhanh', 'peugeot-theme'); ?></h4>
+            <p class="footer-desc"><?php echo esc_html__('Kéo widget “Navigation Menu” (trỏ tới 1 menu link).', 'peugeot-theme'); ?></p>
           <?php } ?>
         </div>
 
         <div class="col-12 col-md-6 col-lg-3">
           <?php if (is_active_sidebar('footer_col_3')) { dynamic_sidebar('footer_col_3'); }
           else { ?>
-            <h4 class="footer-title">Dành cho chủ xe Peugeot</h4>
-            <p class="footer-desc">Kéo widget “Navigation Menu”.</p>
+            <h4 class="footer-title"><?php echo esc_html__('Dành cho chủ xe Peugeot', 'peugeot-theme'); ?></h4>
+            <p class="footer-desc"><?php echo esc_html__('Kéo widget “Navigation Menu”.', 'peugeot-theme'); ?></p>
           <?php } ?>
         </div>
 
         <div class="col-12 col-md-6 col-lg-3">
           <?php if (is_active_sidebar('footer_col_4')) { dynamic_sidebar('footer_col_4'); }
           else { ?>
-            <h4 class="footer-title">Tìm hiểu thêm</h4>
-            <p class="footer-desc">Kéo widget “Navigation Menu”.</p>
+            <h4 class="footer-title"><?php echo esc_html__('Tìm hiểu thêm', 'peugeot-theme'); ?></h4>
+            <p class="footer-desc"><?php echo esc_html__('Kéo widget “Navigation Menu”.', 'peugeot-theme'); ?></p>
           <?php } ?>
         </div>
       </div>
@@ -93,9 +93,8 @@
           if (is_active_sidebar('footer_bottom_center')) {
             dynamic_sidebar('footer_bottom_center');
           }  else {
-              echo '';
-            }
-          
+            echo '';
+          }
           ?>
         </div>
 
@@ -104,12 +103,15 @@
           if (is_active_sidebar('footer_bottom_right')) {
             dynamic_sidebar('footer_bottom_right');
           } else {
-            echo '<div class="footer-hotline">HOTLINE: 1900 1101</div>
+            $hotline = '1900 1101';
+            echo '<div class="footer-hotline">' .
+                   sprintf( esc_html__( 'HOTLINE: %s', 'peugeot-theme' ), esc_html( $hotline ) ) .
+                 '</div>
                   <div class="footer-social">
-                    <a class="footer-social-icon" href="#" aria-label="Facebook"><i class="fa fa-facebook"></i></a>
-                    <a class="footer-social-icon" href="#" aria-label="Instagram"><i class="fa fa-instagram"></i></a>
-                    <a class="footer-social-icon" href="#" aria-label="YouTube"><i class="fa fa-youtube-play"></i></a>
-                    <a class="footer-social-icon" href="#" aria-label="LinkedIn"><i class="fa fa-linkedin"></i></a>
+                    <a class="footer-social-icon" href="#" aria-label="'.esc_attr__('Facebook', 'peugeot-theme').'"><i class="fa fa-facebook"></i></a>
+                    <a class="footer-social-icon" href="#" aria-label="'.esc_attr__('Instagram', 'peugeot-theme').'"><i class="fa fa-instagram"></i></a>
+                    <a class="footer-social-icon" href="#" aria-label="'.esc_attr__('YouTube', 'peugeot-theme').'"><i class="fa fa-youtube-play"></i></a>
+                    <a class="footer-social-icon" href="#" aria-label="'.esc_attr__('LinkedIn', 'peugeot-theme').'"><i class="fa fa-linkedin"></i></a>
                   </div>';
           }
           ?>
@@ -118,15 +120,28 @@
       </div>
     </div>
     <div class="text-center py-3">
-      <?php if (function_exists('the_custom_logo') && has_custom_logo()) {
-              the_custom_logo();
-          }
+      <?php
+      if (function_exists('the_custom_logo') && has_custom_logo()) {
+        the_custom_logo();
+      }
       ?>
-      </div>
-  </div>
-  <div class="peugeot-footer-bottom text-center py-3">
-        &copy; <?php echo date('Y'); ?> | Thiết kế & phát triển bởi <span class="fw-bold text-primary">MinhTris</span>
     </div>
+  </div>
+
+  <div class="peugeot-footer-bottom text-center py-3">
+    &copy; <?php echo esc_html( date_i18n('Y') ); ?> |
+    <?php
+      /* Translators: %s: developer/agency name */
+      printf(
+        wp_kses(
+          /* translators: keep <span> tags */
+          __( 'Thiết kế &amp; phát triển bởi <span class="fw-bold text-primary">%s</span>', 'peugeot-theme' ),
+          ['span' => ['class' => []]]
+        ),
+        'MinhTris'
+      );
+    ?>
+  </div>
 </footer>
 <?php wp_footer(); ?>
 </body>

@@ -1,4 +1,3 @@
-
 body {
     line-height: 1.4;
     /* font-family: "VN-PeugeotNew-Regular"; */
@@ -10,15 +9,35 @@ body {
     /* font-family: 'Peugeot-New', sans-serif; */
     overflow-x: hidden;
 }
-body, html {
+
+body,
+html {
     font-size: 14px;
 }
 
-body, p, h1, h2, h3, h4, h5, h6 {
-  font-family: 'VN-Peugeot-New', Arial, sans-serif;
+body,
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: 'VN-Peugeot-New', Arial, sans-serif;
 }
-h1, h2, h3 { font-weight: 700; }
-.emph, em, i { font-style: italic; }
+
+h1,
+h2,
+h3 {
+    font-weight: 700;
+}
+
+.emph,
+em,
+i {
+    font-style: italic;
+}
+
 p {
     white-space: pre-line;
 }
@@ -195,7 +214,8 @@ img.custom-logo {
 
 /* (tuỳ chọn) hiệu ứng hover đổi màu chữ sẽ kéo caret đổi theo vì dùng currentColor */
 .peugeot-menu-list a:hover {
-    color: #dadada;
+    color: #0066ff;
+
 }
 
 /* --- EXTRA MENU DESKTOP (phải) --- */
@@ -359,7 +379,7 @@ img.custom-logo {
         align-items: center;
     }
 
-    
+
 
     .peugeot-menu-list {
         display: flex !important;
@@ -570,6 +590,7 @@ img.custom-logo {
         background: #222;
     }
 }
+
 p.text-gray-600.mb-6 {
     white-space: pre-line;
     padding: 20px;
@@ -786,12 +807,13 @@ p.text-gray-600.mb-6 {
         transition-duration: 720ms, 520ms;
     }
 }
+
 @media (max-width: 768px) {
     .peugeot-slider-slide img {
         height: auto !important;
     }
-    
-    
+
+
 }
 
 
@@ -841,7 +863,7 @@ p.text-gray-600.mb-6 {
 }
 
 .peugeot-slider3-slide img {
-max-width: 100%;
+    max-width: 100%;
     height: auto;
     object-fit: cover;
     display: block;
@@ -934,11 +956,13 @@ max-width: 100%;
     background-size: cover;
     background-position: center;
 }
+
 .title-desc {
     padding: 20px;
     white-space: pre-line;
     font-size: 20px;
 }
+
 /* ====== SLIDER 4 ====== */
 
 
@@ -988,9 +1012,11 @@ max-width: 100%;
     /* không cắt ảnh */
     display: block;
 }
+
 .peugeot-slider4-nav-item {
     font-size: 15px;
 }
+
 .peugeot-slider4-text {
     font-size: 14px;
     padding-right: 70px;
@@ -1098,65 +1124,78 @@ max-width: 100%;
     display: block;
 }
 
-@media  (max-width: 991px) {
+@media (max-width: 991px) {
     .title-desc {
         font-size: 14px;
         padding: 10px;
     }
-    .peugeot-slider-row{
+
+    .peugeot-slider-row {
         padding: 0%;
     }
+
     .peugeot-slider4-title {
-    text-align: center;
-}
+        text-align: center;
+    }
+
     .peugeot-slider4-counter {
-    justify-content: center;
+        justify-content: center;
     }
+
     .peugeot-slider4-content.active {
-    display: block;
-    text-align: center;
-    padding: 0px;
-}
-.peugeot-slider4-text {
-    font-size: 14px;
-    padding-left: 20px;
-    padding-right: 20px;
+        display: block;
+        text-align: center;
+        padding: 0px;
     }
- .peugeot-slider-arrow.next {
-    right: 0px !important;
- }
 
- .peugeot-slider-arrow.prev {
-    left: 0px !important;
- }
- .peugeot-slider3 {
-    position: relative;
-    width: 100%;
-    height: auto;
-    overflow: hidden;
-}
-.peugeot-slider3-text {
-    padding-right: 0px;
-    padding: 0px 20px;
-}
-.peugeot-btn {
-    width: 100%;
-}
-h3.text-xl.font-bold {
-    padding: 10px 50px;
-}
-h2.text-3xl.text-blue-600.font-extrabold.my-2 {
-    padding: 0px 50px;
-}
-.peugeot-slider3-nav {
-    justify-content: center;
-}
-.peugeot-slider4-nav-item {
-    text-align: center;
-}
+    .peugeot-slider4-text {
+        font-size: 14px;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    .peugeot-slider-arrow.next {
+        right: 0px !important;
+    }
+
+    .peugeot-slider-arrow.prev {
+        left: 0px !important;
+    }
+
+    .peugeot-slider3 {
+        position: relative;
+        width: 100%;
+        height: auto;
+        overflow: hidden;
+    }
+
+    .peugeot-slider3-text {
+        padding-right: 0px;
+        padding: 0px 20px;
+    }
+
+    .peugeot-btn {
+        width: 100%;
+    }
+
+    h3.text-xl.font-bold {
+        padding: 10px 50px;
+    }
+
+    h2.text-3xl.text-blue-600.font-extrabold.my-2 {
+        padding: 0px 50px;
+    }
+
+    .peugeot-slider3-nav {
+        justify-content: center;
+    }
+
+    .peugeot-slider4-nav-item {
+        text-align: center;
+    }
 
 }
- 
+
 h2.peugeot-product-colors-title1 {
     -webkit-text-fill-color: transparent;
     background: linear-gradient(142.06deg, #6e8cc8 -51.7%, #245d75 -.35%, #a4e1ff 41.8%, #3a508e 78.54%, #39588b 123.96%);
@@ -1235,7 +1274,7 @@ h2.peugeot-product-colors-title1 {
 }
 
 .peugeot-btn:hover {
-    background: #004bb5;
+    background: black;
 }
 
 .peugeot-register-boxes {
@@ -1268,24 +1307,27 @@ h2.peugeot-product-colors-title1 {
 }
 
 .thumb-wrapper img {
-     max-width: 100%;
+    max-width: 100%;
     height: auto;
     object-fit: cover;
     display: block;
 }
+
 .peugeot-desc-mobile {
-  display: -webkit-box;
-  -webkit-line-clamp: 5; /* số dòng tối đa */
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    /* số dòng tối đa */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
+
 @media (min-width: 768px) {
-  .peugeot-desc-mobile {
-    -webkit-line-clamp: unset;
-    display: block;
-    overflow: visible;
-  }
+    .peugeot-desc-mobile {
+        -webkit-line-clamp: unset;
+        display: block;
+        overflow: visible;
+    }
 }
 
 /* options */
@@ -1342,6 +1384,7 @@ h2.peugeot-product-colors-title1 {
     box-shadow: 0 10px 30px rgba(0, 0, 0, .08);
     padding: 22px
 }
+
 .pb-actions {
     width: 100%;
     background: #fff;
@@ -1512,8 +1555,9 @@ h2.peugeot-product-colors-title1 {
     .pb-arrow {
         display: none;
     }
+
     .thumb-wrapper {
-    width: 100px;
+        width: 100px;
     }
 }
 
@@ -1603,12 +1647,15 @@ h2.peugeot-product-colors-title1 {
     justify-items: start;
     padding: 20px;
 }
+
 .peugeot-box-title {
     text-align: start;
 }
+
 .peugeot-box-desc {
     text-align: start;
 }
+
 /* Ảnh full chiều ngang khối ảnh */
 .peugeot-slider3-img,
 .peugeot-slider4-img,
@@ -1692,8 +1739,9 @@ h2.peugeot-product-colors-title1 {
         display: block;
     }
 }
-.peugeot-btn-primary{
-        display: inline-block;
+
+.peugeot-btn-primary {
+    display: inline-block;
     padding: 12px 70px;
     background: #0066ff;
     color: #fff;
@@ -1702,8 +1750,15 @@ h2.peugeot-product-colors-title1 {
     border-radius: 4px;
     transition: 0.3s;
 }
+
 .peugeot-btn-primary:hover {
-    background: #004bb5;
+    background: black;
+}
+li::marker {
+     content: none;
+}
+span.menu-text.text-menu-3 {
+    color: black;
 }
 
 /* ========== MOBILE NHỎ ========== */
@@ -1723,10 +1778,11 @@ h2.peugeot-product-colors-title1 {
         text-align: center;
         place-content: center;
     }
+
     .peugeot-slider3-buttons {
         flex-wrap: wrap;
-    width: 100%;
-}
+        width: 100%;
+    }
 
     /* Hình trong các slide chiếm toàn bộ chiều ngang container */
     .peugeot-slider3-slide,
@@ -1793,69 +1849,74 @@ h2.peugeot-product-colors-title1 {
 }
 
 /* ===== MOBILE: nav ở TRÊN, rồi tới ảnh, rồi nội dung ===== */
-@media (max-width: 768px){
-.peugeot-slider-nav-item {
-    font-size: 11px !important;  
-    color: #000 !important;      
-}
+@media (max-width: 768px) {
+    .peugeot-slider-nav-item {
+        font-size: 11px !important;
+        color: #000 !important;
+    }
 
-  /* Biến container thành cột để dùng order */
-  #peugeot-slider{
-    display: flex;
-    flex-direction: column;
-    overflow: visible;
-  }
+    /* Biến container thành cột để dùng order */
+    #peugeot-slider {
+        display: flex;
+        flex-direction: column;
+        overflow: visible;
+    }
 
-  /* Nav lên trên cùng */
-  #peugeot-slider .peugeot-slider-nav{
-    order: 0;
-    position: static !important;
-    display: flex;
-    flex-wrap: nowrap;
-    gap: 10px;
-    padding: 12px 16px;
-    margin: 0 0 8px;       /* cách phía dưới một chút */
-    background: #fff;      /* nếu muốn nổi bật hơn */
-    /* Nếu muốn nó dính trên khi cuộn: */
-    /* position: sticky; top: 0; z-index: 2; */
-  }
+    /* Nav lên trên cùng */
+    #peugeot-slider .peugeot-slider-nav {
+        order: 0;
+        position: static !important;
+        display: flex;
+        flex-wrap: nowrap;
+        gap: 10px;
+        padding: 12px 16px;
+        margin: 0 0 8px;
+        /* cách phía dưới một chút */
+        background: #fff;
+        /* nếu muốn nổi bật hơn */
+        /* Nếu muốn nó dính trên khi cuộn: */
+        /* position: sticky; top: 0; z-index: 2; */
+    }
 
-  /* Slide (ảnh + content) hiển thị bên dưới nav */
-  #peugeot-slider .peugeot-slider-slide{
-    order: 1;
-    position: static !important;
-    opacity: 1 !important;
-    display: none;         /* ẩn mặc định */
-  }
-  #peugeot-slider .peugeot-slider-slide.active{
-    display: block;        /* chỉ hiện slide đang active */
-  }
+    /* Slide (ảnh + content) hiển thị bên dưới nav */
+    #peugeot-slider .peugeot-slider-slide {
+        order: 1;
+        position: static !important;
+        opacity: 1 !important;
+        display: none;
+        /* ẩn mặc định */
+    }
 
-  /* Ảnh giữ tỷ lệ, không giật */
-  #peugeot-slider .peugeot-slider-img{
-    width: 100%;
-    height: var(--mobile-slider-h, 240px);
-    object-fit: cover;
-    display: block;
-    transform: none !important;
-    transition: none !important;
-  }
+    #peugeot-slider .peugeot-slider-slide.active {
+        display: block;
+        /* chỉ hiện slide đang active */
+    }
 
-  /* Nội dung xuống dưới ảnh (không overlay) */
-  #peugeot-slider .peugeot-slider-content{
-    position: static !important;
-    width: 100%;
-    padding: 14px 16px 18px;
-    margin-top: 8px;
-    background: #fff;
-    color: #111;
-    border-radius: 0 0 12px 12px;
-    opacity: 1 !important;
-    transform: none !important;
-  }
+    /* Ảnh giữ tỷ lệ, không giật */
+    #peugeot-slider .peugeot-slider-img {
+        width: 100%;
+        height: var(--mobile-slider-h, 240px);
+        object-fit: cover;
+        display: block;
+        transform: none !important;
+        transition: none !important;
+    }
 
-  /* (Tuỳ chọn) ẩn mũi tên trên mobile cho gọn */
-  /* #peugeot-slider .peugeot-slider-arrow{ display:none; } */
+    /* Nội dung xuống dưới ảnh (không overlay) */
+    #peugeot-slider .peugeot-slider-content {
+        position: static !important;
+        width: 100%;
+        padding: 14px 16px 18px;
+        margin-top: 8px;
+        background: #fff;
+        color: #111;
+        border-radius: 0 0 12px 12px;
+        opacity: 1 !important;
+        transform: none !important;
+    }
+
+    /* (Tuỳ chọn) ẩn mũi tên trên mobile cho gọn */
+    /* #peugeot-slider .peugeot-slider-arrow{ display:none; } */
 }
 
 
@@ -1902,8 +1963,9 @@ h2.peugeot-product-colors-title1 {
 
 @media (max-width:992px) {
     .peugeot-footer-bottom {
-    font-size: 12px;
+        font-size: 12px;
     }
+
     .footer-cta-menu {
         grid-template-columns: repeat(2, 1fr)
     }
@@ -2011,10 +2073,12 @@ h2.peugeot-product-colors-title1 {
     opacity: 1;
     color: #0072ff
 }
+
 .widget_text {
     font-size: 13px;
     color: #787B80;
 }
+
 @media (max-width:992px) {
     .footer-bottom-grid {
         grid-template-columns: 1fr;
@@ -2058,140 +2122,173 @@ li.menu-item.menu-item-type-custom.menu-item-object-custom.menu-item a {
     text-decoration: none;
     letter-spacing: 0.04em;
     transition: color .2s;
-        display: inline-flex;
+    display: inline-flex;
     align-items: center;
     gap: 8px;
     position: relative;
 }
+
 .peugeot-title {
     padding: 25px;
 }
+
 .title-color {
     padding: 30px;
     text-align: center;
 }
 
 /* ==== BẢNG GIÁ XE PEUGEOT ==== */
-:root{
-  --pg-blue: #0a66ff;    /* xanh nút & giá */
-  --pg-blue-dark: #0956cc;
-  --pg-text: #0a0a0a;
-  --pg-muted: #6b7280;   /* xám chữ phụ */
+:root {
+    --pg-blue: #0a66ff;
+    /* xanh nút & giá */
+    --pg-blue-dark: #0956cc;
+    --pg-text: #0a0a0a;
+    --pg-muted: #6b7280;
+    /* xám chữ phụ */
 }
 
-.bang-gia-xe{
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 24px 16px 8px;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 24px;
+.bang-gia-xe {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 24px 16px 8px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
 }
 
 /* Card */
-.bang-gia-xe .xe-item{
-  text-align: center;
+.bang-gia-xe .xe-item {
+    text-align: center;
+    display: grid
+;
+    align-content: space-between;
 }
 
 /* Ảnh */
-.bang-gia-xe .xe-thumb{
-  position: relative;
-  width: 100%;
-  aspect-ratio: 16/9;          /* luôn đúng tỉ lệ, không bóp ảnh */
-  overflow: hidden;
-  border-radius: 4px;
-  background: #f4f7fb;
+.bang-gia-xe .xe-thumb {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16/9;
+    /* luôn đúng tỉ lệ, không bóp ảnh */
+    overflow: hidden;
+    border-radius: 4px;
+    background: #f4f7fb;
 }
-.bang-gia-xe .xe-thumb img{
-  width: 100%; height: 100%;
-  object-fit: cover;
-  transition: transform .45s ease;
+
+.bang-gia-xe .xe-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform .45s ease;
 }
-.bang-gia-xe .xe-item:hover .xe-thumb img{
-  transform: scale(1.04);
+
+.bang-gia-xe .xe-item:hover .xe-thumb img {
+    transform: scale(1.04);
 }
 
 /* Tiêu đề */
-.bang-gia-xe .xe-title{
-  margin: 16px 8px 6px;
-  font-size: 26px;
-  line-height: 1.15;
-  font-weight: 900;
-  text-transform: uppercase;
-  color: var(--pg-text);
+.bang-gia-xe .xe-title {
+    margin: 16px 8px 6px;
+    font-size: 26px;
+    line-height: 1.15;
+    font-weight: 900;
+    text-transform: uppercase;
+    color: var(--pg-text);
 }
 
 /* Giá */
-.bang-gia-xe .xe-gia{
-  margin: 0 0 6px;
-  font-size: 18px;
-  line-height: 1.2;
-  font-weight: 800;
-  color: var(--pg-blue);
-  padding-top: 10px;
+.bang-gia-xe .xe-gia {
+    margin: 0 0 6px;
+    font-size: 18px;
+    line-height: 1.2;
+    font-weight: 800;
+    color: var(--pg-blue);
+    padding-top: 10px;
 }
 
 /* Dòng “Giá niêm yết ⓘ” – nếu có phần tử .xe-note */
-.bang-gia-xe .xe-note{
-  margin: 0 0 12px;
-  font-size: 15px;
-  color: var(--pg-muted);
+.bang-gia-xe .xe-note {
+    margin: 0 0 12px;
+    font-size: 15px;
+    color: var(--pg-muted);
 }
-.bang-gia-xe .xe-note .i{
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  margin-left: 6px;
-  width: 18px; height: 18px;
-  border-radius: 50%;
-  border: 2px solid #d3d9e4;
-  font-size: 12px;
-  font-weight: 700;
+
+.bang-gia-xe .xe-note .i {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 6px;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    border: 2px solid #d3d9e4;
+    font-size: 12px;
+    font-weight: 700;
 }
 
 /* Nút */
-.bang-gia-xe .btn-xem{
-  display: inline-block;
-  margin-top: 10px;
-  padding: 14px 22px;
-  background: var(--pg-blue);
-  color: #fff !important;
-  font-weight: 800;
-  text-transform: uppercase;
-  border-radius: 2px;
-  transition: background .2s ease, transform .2s ease;
+.bang-gia-xe .btn-xem {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 14px 22px;
+    background: var(--pg-blue);
+    color: #fff !important;
+  font-weight: bold;
+    font-size: 13px;
+    text-transform: uppercase;
+    border-radius: 2px;
+    text-decoration: none;
+    transition: background .2s ease, transform .2s ease;
 }
-.bang-gia-xe .btn-xem:hover{
-  background: var(--pg-blue-dark);
-  transform: translateY(-2px);
-  text-decoration: none;
+
+.bang-gia-xe .btn-xem:hover {
+    background: black;
+    
+    text-decoration: none;
 }
 
 /* Responsive */
-@media (max-width: 1200px){
-  .bang-gia-xe{ grid-template-columns: repeat(3, 1fr); }
-}
-@media (max-width: 992px){
-  .bang-gia-xe{ grid-template-columns: repeat(2, 1fr); }
-  .bang-gia-xe .xe-title{ font-size: 22px; }
-}
-@media (max-width: 600px){
-    .peugeot-footer-bottom {
-    font-size: 10px;
+@media (max-width: 1200px) {
+    .bang-gia-xe {
+        grid-template-columns: repeat(3, 1fr);
     }
-  .bang-gia-xe{ grid-template-columns: 1fr; gap: 18px; }
-  .bang-gia-xe .xe-title{ font-size: 20px; }
 }
+
+@media (max-width: 992px) {
+    .bang-gia-xe {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .bang-gia-xe .xe-title {
+        font-size: 22px;
+    }
+}
+
+@media (max-width: 600px) {
+    .peugeot-footer-bottom {
+        font-size: 10px;
+    }
+
+    .bang-gia-xe {
+        grid-template-columns: 1fr;
+        gap: 18px;
+    }
+
+    .bang-gia-xe .xe-title {
+        font-size: 20px;
+    }
+}
+
 /* ====== post ====== */
 .peugeot-post-title {
     text-align: center;
     margin-bottom: 16px;
     padding: 50px;
-        -webkit-text-fill-color: transparent;
+    -webkit-text-fill-color: transparent;
     background: linear-gradient(142.06deg, #6e8cc8 -51.7%, #245d75 -.35%, #a4e1ff 41.8%, #3a508e 78.54%, #39588b 123.96%);
     -webkit-background-clip: text;
     background-clip: text;
-        font-weight: bold;
+    font-weight: bold;
 }
 
 .peugeot-post-content {
@@ -2199,89 +2296,146 @@ li.menu-item.menu-item-type-custom.menu-item-object-custom.menu-item a {
     font-size: 16px;
     line-height: 1.6;
 }
-@media (max-width: 767.98px)
- {
-        .peugeot-banner img {
+
+@media (max-width: 767.98px) {
+    .peugeot-banner img {
         width: 100% !important;
         height: 100% !important;
         object-fit: cover !important;
         object-position: center !important;
         display: block;
-        }
-        .peugeot-post-content {
-    padding: 0px 20px 20px 20px;
-    font-size: 13px;
-    line-height: 1.6;
+    }
+
+    .peugeot-post-content {
+        padding: 0px 20px 20px 20px;
+        font-size: 13px;
+        line-height: 1.6;
+    }
 }
-}
+
 /* === MEGA: đẩy ra dưới header, full-width theo nav (không nổi giữa) === */
 
-:root{
-  --pg-header-h: 110px;  /* desktop */
+:root {
+    --pg-header-h: 110px;
+    /* desktop */
 }
 
 /* Mega panel full màn hình nhưng BÊN DƯỚI header */
-.peugeot-main-nav .mega-panel{
-  position: fixed;
-  left: 0; right: 0;
-  top: var(--pg-header-h);
-  height: calc(100vh - var(--pg-header-h));
-  width: 100vw;
+.peugeot-main-nav .mega-panel {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: var(--pg-header-h);
+    height: calc(100vh - var(--pg-header-h));
+    width: 100vw;
 
-  background: #fff;
-  border-radius: 0;
-  box-shadow: none;
-  padding: 40px 32px;
+    background: #fff;
+    border-radius: 0;
+    box-shadow: none;
+    padding: 40px 32px;
 
-  /* header đang có z-index:100 -> để panel thấp hơn */
-  z-index: 90;
+    /* header đang có z-index:100 -> để panel thấp hơn */
+    z-index: 90;
 
-  opacity: 0; visibility: hidden; pointer-events: none;
-  transition: opacity .25s ease, visibility 0s linear .25s;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity .25s ease, visibility 0s linear .25s;
 
-  overflow-y: auto;                 /* cuộn trong vùng còn lại */
+    overflow-y: auto;
+    /* cuộn trong vùng còn lại */
 }
 
-.peugeot-main-nav li.open > .mega-panel{
-  opacity: 1; visibility: visible; pointer-events: auto;
-  transition-delay: 0s;
+.peugeot-main-nav li.open>.mega-panel {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transition-delay: 0s;
 }
 
 /* Bên trong panel: grid căn giữa, max-width để không quá dài */
-.peugeot-main-nav .mega-panel > .mega-grid{
-  max-width: 1440px;                /* hoặc 1280px tuỳ bạn */
-  margin: 0 auto;
-  padding: 0 24px 24px;
-  display: grid;
-  gap: 24px;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  align-content: start;
+.peugeot-main-nav .mega-panel>.mega-grid {
+    max-width: 1440px;
+    /* hoặc 1280px tuỳ bạn */
+    margin: 0 auto;
+    padding: 0 24px 24px;
+    display: grid;
+    gap: 24px;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    align-content: start;
 }
 
 /* Hover ô sản phẩm */
-.mega-link{ display:block; text-decoration:none; border-radius:12px; padding:12px;
-  transition:transform .15s, box-shadow .15s, background-color .15s; }
-.mega-link:hover{ background:#f7f8fa; transform:translateY(-2px); box-shadow:0 6px 16px rgba(0,0,0,.06); }
+.mega-link {
+    display: block;
+    text-decoration: none;
+    border-radius: 12px;
+    padding: 12px;
+    transition: transform .15s, box-shadow .15s, background-color .15s;
+}
 
-.mega-thumb{ display:block; width:100%; aspect-ratio:16/10; border-radius:12px; overflow:hidden; background:#f2f3f5; margin-bottom:8px; }
-.mega-thumb img{ width:100%; height:100%; object-fit:cover; display:block; }
-.mega-title{ font-weight:800; font-size:16px; color:#111; line-height:1.3; }
+.mega-link:hover {
+    background: #f7f8fa;
+    
+}
+
+.mega-thumb {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16/10;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #f2f3f5;
+    margin-bottom: 8px;
+}
+
+.mega-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.mega-title {
+    font-weight: 800;
+    font-size: 16px;
+    color: #111;
+    line-height: 1.3;
+}
 
 /* Caret desktop (xoay khi .open) */
-.peugeot-main-nav .peugeot-menu-list > li.menu-item-has-children > a::after{
-  content:""; display:inline-block; margin-left:6px; vertical-align:middle;
-  width:0;height:0; border-left:6px solid transparent; border-right:6px solid transparent; border-top:6px solid currentColor;
-  transition: transform .2s ease;
+.peugeot-main-nav .peugeot-menu-list>li.menu-item-has-children>a::after {
+    content: "";
+    display: inline-block;
+    margin-left: 6px;
+    vertical-align: middle;
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 6px solid currentColor;
+    transition: transform .2s ease;
 }
-.peugeot-main-nav .peugeot-menu-list > li.menu-item-has-children.open > a::after{ transform: rotate(180deg); }
+
+.peugeot-main-nav .peugeot-menu-list>li.menu-item-has-children.open>a::after {
+    transform: rotate(180deg);
+}
 
 /* Mobile vẫn dùng submenu accordion; ẩn hẳn mega */
-@media (max-width: 767.98px){
-  .peugeot-mobile-menu-list .mega-panel{ display:none !important; }
+@media (max-width: 767.98px) {
+    .peugeot-mobile-menu-list .mega-panel {
+        display: none !important;
+    }
 }
-@media (max-width: 991px){
-  :root{ --pg-header-h: 70px; }     /* chiều cao header-dark mobile của bạn */
+
+@media (max-width: 991px) {
+    :root {
+        --pg-header-h: 70px;
+    }
+
+    /* chiều cao header-dark mobile của bạn */
 }
+
 a.menu-link {
     color: #fff;
     font-weight: 700;
@@ -2295,228 +2449,395 @@ a.menu-link {
     gap: 8px;
     position: relative;
 }
-.mega-close {
-  position: absolute;
-  top: 16px;
-  left: 16px; /* đổi thành right:16px nếu muốn nằm bên phải */
-  font-size: 32px;
-  font-weight: 300;
-  color: #333;
-  background: none;
-  border: none;
-  cursor: pointer;
-  line-height: 1;
-  z-index: 1100;
-  transition: color .2s;
-}
-.mega-close:hover { color: #007bff; }
-/* Overlay phủ full màn hình và tự cuộn nội dung của nó */
-.peugeot-mobile-menu-overlay{
-  position: fixed;
-  inset: 0;                 /* thay top/left/width/height = 100vh */
-  overflow-y: auto;         /* chỉ overlay cuộn */
 
-  overscroll-behavior: contain; /* không “kéo” body khi chạm mép */
-  z-index: 9999;
+    
+
+.mega-close {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    /* đổi thành right:16px nếu muốn nằm bên phải */
+    font-size: 32px;
+    font-weight: 300;
+    color: #333;
+    background: none;
+    border: none;
+    cursor: pointer;
+    line-height: 1;
+    z-index: 1100;
+    transition: color .2s;
+}
+
+.mega-close:hover {
+    color: #007bff;
+}
+
+/* Overlay phủ full màn hình và tự cuộn nội dung của nó */
+.peugeot-mobile-menu-overlay {
+    position: fixed;
+    inset: 0;
+    /* thay top/left/width/height = 100vh */
+    overflow-y: auto;
+    /* chỉ overlay cuộn */
+
+    overscroll-behavior: contain;
+    /* không “kéo” body khi chạm mép */
+    z-index: 9999;
 }
 
 /* Khi menu mở: khóa body */
-html.menu-lock, body.menu-lock{
-  height: 100%;
-  overflow: hidden;
+html.menu-lock,
+body.menu-lock {
+    height: 100%;
+    overflow: hidden;
 }
 
 /* iOS chắc ăn: cố định body ở vị trí hiện tại */
-body.menu-lock{
-  position: fixed;
-  width: 100%;
+body.menu-lock {
+    position: fixed;
+    width: 100%;
 }
+
 /* archive tintuc */
 .archive-banner {
-  position: relative;
-  text-align: center;
+    position: relative;
+    text-align: center;
 }
+
 .archive-banner img {
-      margin-top: -50px;
+    margin-top: -50px;
     max-width: 100%;
     height: auto;
     object-fit: cover;
 }
+
 .archive-banner-overlay {
-      position: absolute;
+    position: absolute;
     bottom: 20px;
     left: 20%;
     top: 40%;
     transform: translateX(-50%);
     color: #fff;
 }
+
 .archive-tabs {
-  display: flex;
-  gap: 20px;
-  margin: 30px 0;
+    display: flex;
+    gap: 20px;
+    margin: 30px 0;
 }
+
 .archive-tabs .tab {
-  padding: 8px 16px;
-  border-bottom: 2px solid transparent;
+    padding: 8px 16px;
+    border-bottom: 2px solid transparent;
 }
+
 .archive-tabs .tab.active {
-  border-color: #005BAC;
-  font-weight: bold;
-  text-decoration: none;
+    border-color: #005BAC;
+    font-weight: bold;
+    text-decoration: none;
 }
+
 .archive-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
 }
+
 .archive-item {
-      border: 1px solid #eee;
+    border: 1px solid #eee;
     padding: 16px;
     background: #fff;
     display: grid;
     align-content: space-between;
 }
+
 .archive-item-title {
-  font-size: 18px;
-  margin: 10px 0;
+    font-size: 18px;
+    margin: 10px 0;
 }
+
 .read-more {
-  color: #005BAC;
-  font-weight: bold;
-  text-transform: uppercase;
-  text-decoration: none;
+    color: #005BAC;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-decoration: none;
 }
+
 img.attachment-small.size-small.wp-post-image {
     max-width: 100%;
     height: auto;
 }
+
 .archive-item-title a {
     text-decoration: none;
     color: black;
 }
-@media (max-width: 991px) {
-  .archive-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  .archive-banner-overlay {
-    position: static;
-    padding: 20px;
-    color: #000000;
-        transform: translateX(0%);
-}
-.archive-banner img {
-    margin-top: 0px;
-    max-width: 100%;
-    height: auto;
-    object-fit: cover;
-}
-.archive-item-title a {
-    font-size: 13px;
-}
-.archive-excerpt {
-    padding: 5px;
-    font-size: 13px;
-}
- .archive-grid-products {
-    grid-template-columns: repeat(2, 1fr) !important; 
-  }
-    .product-price-desc{
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: normal;
-  }
 
-  /* Vì bạn dùng nl2br -> có <br>, ẩn <br> trên mobile để không bị ngắt dòng sớm */
-  .product-price-desc br{
-    display: none;
-  }
-  .read-more-product {
-    padding: 10px 10px !important;
-    font-size: 13px;
-  }
-  .product-price-sub, .product-price-desc {
-    font-size: 13px !important;
-    
-}
+@media (max-width: 991px) {
+    .archive-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .archive-banner-overlay {
+        position: static;
+        padding: 20px;
+        color: #000000;
+        transform: translateX(0%);
+    }
+
+    .archive-banner img {
+        margin-top: 0px;
+        max-width: 100%;
+        height: auto;
+        object-fit: cover;
+    }
+
+    .archive-item-title a {
+        font-size: 13px;
+    }
+
+    .archive-excerpt {
+        padding: 5px;
+        font-size: 13px;
+    }
+
+    .archive-grid-products {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+
+    .product-price-desc {
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: normal;
+    }
+
+    /* Vì bạn dùng nl2br -> có <br>, ẩn <br> trên mobile để không bị ngắt dòng sớm */
+    .product-price-desc br {
+        display: none;
+    }
+
+    .read-more-product {
+        padding: 10px 10px !important;
+        font-size: 13px;
+    }
+
+    .product-price-sub,
+    .product-price-desc {
+        font-size: 13px !important;
+
+    }
 }
 
 .archive-grid-products {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
 }
+
 .archive-item-product {
     padding: 16px;
     background: #fff;
     display: grid;
     align-content: space-between;
 }
-.archive-item-product-title {
-  font-size: 18px;
-  margin: 10px 0;
-  text-align: center;
-}
-.read-more-product {
-   display: block;         /* để set width */
-  width: 100%;
-  max-width: 360px;       /* độ rộng mong muốn của nút */
-  box-sizing: border-box;
 
-  text-align: center;
-  text-transform: uppercase;
-  text-decoration: none;
-  padding: 14px 24px;
-  background: #1476ff;
-  color: #fff;
-  border: 0;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background .3s;
+.archive-item-product-title {
+    font-size: 18px;
+    margin: 10px 0;
+    text-align: center;
 }
+
+.read-more-product {
+    display: block;
+    /* để set width */
+    width: 100%;
+    max-width: 360px;
+    /* độ rộng mong muốn của nút */
+    box-sizing: border-box;
+
+    text-align: center;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 14px 24px;
+    background: #1476ff;
+    color: #fff;
+    border: 0;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background .3s;
+}
+
 .read-more-product:hover {
     background: #005bac;
 }
+
 img.attachment-small.size-small.wp-post-image {
     max-width: 100%;
     height: auto;
 }
+
 .archive-item-product-title a {
     text-decoration: none;
     color: black;
 }
+
 .archive-excerpt.product-meta {
     text-align: center;
 }
+
 .product-price {
     color: #1476ff;
     font-weight: bold;
     padding: 5px;
 }
- .product-price-desc {
+
+.product-price-desc {
     padding: 10px;
 }
-.product-price-sub, .product-price-desc {
+
+.product-price-sub,
+.product-price-desc {
     font-size: 14px;
     color: #787B80;
 }
-.product-btns{
-  display:flex;
-  flex-direction:column;
-  gap:16px;
-  align-items:center;     /* căn giữa các nút */
-  margin-top:12px;
+
+.product-btns {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: center;
+    /* căn giữa các nút */
+    margin-top: 12px;
 }
+
 .xem-tat-ca-wrap {
     text-align: center;
     color: #005BAC;
     text-transform: uppercase;
     text-decoration: none;
 }
-.xem-tat-ca-wrap a{
+
+.xem-tat-ca-wrap a {
     text-decoration: none;
 }
-.xem-tat-ca-wrap a:hover{
+
+.xem-tat-ca-wrap a:hover {
     color: #000;
+}
+
+.timeline-yearbar .yearbar {
+    margin: 0;
+    padding: 0;
+}
+
+.timeline-yearbar .year-link {
+    border-radius: 999px;
+    padding: 6px 12px;
+}
+
+.timeline-yearbar .year-link.active {
+    outline: 2px solid #0d6efd;
+}
+
+.brand-history .timeline {
+    margin: 0;
+    padding: 0;
+    border-left: 3px solid #e9ecef;
+}
+
+.brand-history .timeline-item {
+    position: relative;
+    margin: 0 0 28px 0;
+    padding-left: 24px;
+}
+
+.brand-history .timeline-item::before {
+    content: "";
+    position: absolute;
+    left: -8px;
+    top: 6px;
+    width: 14px;
+    height: 14px;
+    border-radius: 999px;
+    background: #0d6efd;
+    box-shadow: 0 0 0 3px #fff;
+}
+
+.brand-history .timeline-year {
+    font-weight: 700;
+    color: #0d6efd;
+    min-width: 90px;
+    margin-bottom: 10px;
+}
+
+.brand-history .timeline-content {
+       flex: 1;
+    display: flex;
+    border: 1px solid #edf1f5;
+    border-radius: 14px;
+    overflow: hidden;
+    flex-direction: row;
+}
+
+.brand-history .timeline-media img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.brand-history .timeline-body {
+    padding: 16px;
+}
+.timeline-body {
+    flex: 0 0 40%;
+}
+.timeline-media {
+    flex: 0 0 60%;
+}
+/* --- Year bar sticky ở 20% viewport --- */
+.timeline-yearbar{
+  position: sticky;
+  top: 14vh;          /* ~20% màn hình */
+  z-index: 50;        /* nổi lên trên ảnh/section khác */
+  background: #fff;   /* để không bị trong suốt khi gim */
+  padding: 8px 0;
+  border-bottom: 1px solid #eef2f6;
+}
+
+/* Thanh năm hiển thị đẹp hơn khi sticky */
+.timeline-yearbar .yearbar { margin: 0; padding: 0; display:flex; flex-wrap:wrap; gap:8px; }
+.timeline-yearbar .year-link { border-radius: 999px; padding: 6px 12px; }
+.timeline-yearbar .year-link.active { outline: 2px solid #0d6efd; }
+
+/* Khi nhảy tới mốc, chừa khoảng trống đúng bằng chiều cao sticky */
+.brand-history .timeline-item { 
+  scroll-margin-top: calc(20vh + 16px); /* 16px là padding trên dưới của yearbar */
+}
+.year-item {
+    align-self: center;
+    font-weight: bold;
+}
+.brand-history .timeline-body {
+    padding: 16px;
+    align-self: center;
+}
+header.content-header {
+    text-align: center;
+}
+
+/* Mobile: giảm top để không chiếm chỗ */
+@media (max-width: 991.98px){
+  .timeline-yearbar{ top: 70px; }
+  .brand-history .timeline-item{ scroll-margin-top: 64px; }
+    .timeline-content{
+        flex-direction: column-reverse !important;
+  }
+  a.year-link.btn.btn-light.btn-sm.js-year-link {
+    font-size: 10px;
+}
+li.year-item {
+    font-size: 10px;
+}
 }

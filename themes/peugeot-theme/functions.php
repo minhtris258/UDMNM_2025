@@ -1,8 +1,11 @@
 <?php
 /* =========================
- * THEME SETUP (supports + menus)
+ * THEME SETUP (supports + menus + i18n)
  * ========================= */
 add_action('after_setup_theme', function () {
+  // i18n cho theme
+  load_theme_textdomain('peugeot-theme', get_template_directory() . '/languages');
+
   add_theme_support('post-thumbnails');
   add_theme_support('title-tag');
   add_theme_support('custom-logo', [
@@ -15,26 +18,25 @@ add_action('after_setup_theme', function () {
     'footer_menu_1'    => __('Menu footer 1', 'peugeot-theme'),
     'footer_menu_2'    => __('Menu footer 2', 'peugeot-theme'),
     'extra_right_menu' => __('Menu bên phải', 'peugeot-theme'),
-    'footer_cta'      => __('Footer CTA (4 ô trên cùng)', 'peugeot-theme'),
-    'footer_policies' => __('Footer Policies (liên kết dưới cùng bên trái)', 'peugeot-theme'),
+    'footer_cta'       => __('Footer CTA (4 ô trên cùng)', 'peugeot-theme'),
+    'footer_policies'  => __('Footer Policies (liên kết dưới cùng bên trái)', 'peugeot-theme'),
   ]);
 });
-// widget
-// === FOOTER WIDGET AREAS ===
-add_action('widgets_init', function () {
 
-  // Hàng CTA (nếu bạn muốn kéo-thả thay vì menu, nhưng mình vẫn ưu tiên dùng menu)
+/* =========================
+ * FOOTER WIDGET AREAS
+ * ========================= */
+add_action('widgets_init', function () {
   register_sidebar([
     'name'          => __('Footer CTA (tùy chọn)', 'peugeot-theme'),
     'id'            => 'footer_cta_widgets',
-    'description'   => 'Nếu cần thêm block cho hàng CTA, dùng Custom HTML/Text. (Ưu tiên menu footer_cta).',
+    'description'   => __('Nếu cần thêm block cho hàng CTA, dùng Custom HTML/Text. (Ưu tiên menu footer_cta).', 'peugeot-theme'),
     'before_widget' => '<div class="footer-cta-widget %2$s" id="%1$s">',
     'after_widget'  => '</div>',
     'before_title'  => '<h3 class="footer-cta-title">',
     'after_title'   => '</h3>',
   ]);
 
-  // 4 cột chính
   register_sidebar([
     'name' => __('Footer – Cột 1: Về Peugeot Việt Nam (text/logo/địa chỉ)', 'peugeot-theme'),
     'id'   => 'footer_col_1',
@@ -71,7 +73,6 @@ add_action('widgets_init', function () {
     'after_title'   => '</h4>',
   ]);
 
-  // Hàng dưới
   register_sidebar([
     'name' => __('Footer dưới – Trái (Policies: kéo “Navigation Menu”)', 'peugeot-theme'),
     'id'   => 'footer_bottom_left',
@@ -123,17 +124,15 @@ if (!function_exists('peugeot_print_dual_logo')) {
     }
   }
 }
-
-/* Alias để tương thích tên cũ/nhầm chính tả ở header.php */
 if (!function_exists('peugeot_theme_display_logo')) {
   function peugeot_theme_display_logo() { peugeot_print_dual_logo(); }
 }
-if (!function_exists('peugeut_theme_display_logo')) { // alias cho tên bị gõ sai
+if (!function_exists('peugeut_theme_display_logo')) {
   function peugeut_theme_display_logo() { peugeot_print_dual_logo(); }
 }
 
 /* =========================
- * ENQUEUE assets (gộp 1 chỗ)
+ * ENQUEUE assets
  * ========================= */
 add_action('wp_enqueue_scripts', function () {
   // CSS
@@ -141,17 +140,16 @@ add_action('wp_enqueue_scripts', function () {
   wp_enqueue_style('google-fonts', '//fonts.googleapis.com/css?family=Roboto+Condensed:300,400,700|Roboto:100,300,400,700', [], null);
   wp_enqueue_style('font-awesome', '//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css', [], null);
   wp_enqueue_style('peugeot-custom-css', get_template_directory_uri().'/custom.css', [], null);
-   wp_enqueue_style('peugeot-fonts', get_template_directory_uri() . '/assets/css/fonts.css');
+  wp_enqueue_style('peugeot-fonts', get_template_directory_uri() . '/assets/css/fonts.css');
 
   // JS
   wp_enqueue_script('bootstrap-js', 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js', ['jquery'], null, true);
   wp_enqueue_script('peugeot-custom-js', get_theme_file_uri('/custom.js'), [], null, true);
 
-  // JS lọc trang đại lý
+  // Trang lọc đại lý
   if (is_page_template('page-tim-dai-ly.php')) {
     wp_enqueue_style('agency-filter-css', get_template_directory_uri().'/assets/css/agency-filter.css', [], null);
-  wp_enqueue_script('agency-filter', get_template_directory_uri().'/assets/js/agency-filter.js', ['jquery'], '1.0', true);
-
+    wp_enqueue_script('agency-filter', get_template_directory_uri().'/assets/js/agency-filter.js', ['jquery'], '1.0', true);
     wp_localize_script('agency-filter', 'AGENCY_AJAX', [
       'ajax_url' => admin_url('admin-ajax.php'),
       'nonce'    => wp_create_nonce('agency_filter_nonce'),
@@ -159,25 +157,19 @@ add_action('wp_enqueue_scripts', function () {
   }
 });
 
-/* =========================
- * Tối ưu nhỏ + login logo
- * ========================= */
-add_filter('jpeg_quality', fn() => 80);
-add_action('login_enqueue_scripts', function () {
-  echo '<style>.login h1 a{background-image:url("'.esc_url(get_template_directory_uri().'/images/login-logo.png').'")!important;background-size:contain!important;width:200px!important;height:80px!important;display:block!important}</style>';
-});
-// 1) Bật ảnh đại diện + size dùng cho menu
-add_theme_support('post-thumbnails');
-add_image_size('menu-thumb', 360, 220, true); // 16:10 đẹp cho ô menu
 
-// 2) Helper: lấy ảnh cho menu item (ưu tiên ảnh bìa bài viết mà menu trỏ tới)
+
+// Ảnh đại diện + size dùng cho menu (KHÔNG khai báo lại post-thumbnails lần 2)
+add_image_size('menu-thumb', 360, 220, true);
+
+/* =========================
+ * Helpers cho mega menu
+ * ========================= */
 function pg_menu_item_thumb_url($item, $size = 'menu-thumb'){
-  // Trỏ tới bài viết / trang / CPT
   if ($item->type === 'post_type' && !empty($item->object_id)) {
     $url = get_the_post_thumbnail_url((int)$item->object_id, $size);
     if ($url) return $url;
   }
-  // Trỏ tới taxonomy có thumbnail_id (nếu có)
   if ($item->type === 'taxonomy' && !empty($item->object_id)) {
     $thumb_id = get_term_meta((int)$item->object_id, 'thumbnail_id', true);
     if ($thumb_id) {
@@ -188,10 +180,7 @@ function pg_menu_item_thumb_url($item, $size = 'menu-thumb'){
   return '';
 }
 
-// 3) Walker: cấp 0 mở mega panel, cấp 1 hiển thị ô có ảnh
 class PG_Mega_Walker extends Walker_Nav_Menu {
-
-  // Báo cho $args biết item có con hay không
   public function display_element($element, &$children_elements, $max_depth, $depth = 0, $args = [], &$output = ''){
     if (!$element) return;
     $id_field = $this->db_fields['id'];
@@ -201,13 +190,11 @@ class PG_Mega_Walker extends Walker_Nav_Menu {
     parent::display_element($element, $children_elements, $max_depth, $depth, $args, $output);
   }
 
-  // Mở danh sách con: depth 0 => mega-panel, >=1 => sub-menu thường
   public function start_lvl( &$output, $depth = 0, $args = [] ){
     $indent = str_repeat("\t", $depth);
     if ($depth === 0){
-      // Mega panel + nút đóng
       $output .= "\n{$indent}<div class=\"mega-panel\" role=\"dialog\" aria-modal=\"false\">"
-               . "<button class=\"mega-close\" aria-label=\"Đóng menu\">&times;</button>"
+               . "<button class=\"mega-close\" aria-label=\"".esc_attr__('Đóng menu', 'peugeot-theme')."\">&times;</button>"
                . "<ul class=\"mega-grid\">\n";
     } else {
       $output .= "\n{$indent}<ul class=\"sub-menu\">\n";
@@ -216,70 +203,54 @@ class PG_Mega_Walker extends Walker_Nav_Menu {
 
   public function end_lvl( &$output, $depth = 0, $args = [] ){
     $indent = str_repeat("\t", $depth);
-    if ($depth === 0){
-      $output .= "{$indent}</ul></div>\n";
-    } else {
-      $output .= "{$indent}</ul>\n";
-    }
+    $output .= ($depth === 0) ? "{$indent}</ul></div>\n" : "{$indent}</ul>\n";
   }
 
   public function start_el( &$output, $item, $depth = 0, $args = [], $id = 0 ) {
-  $title = apply_filters('the_title', $item->title, $item->ID);
+    $title = apply_filters('the_title', $item->title, $item->ID);
+    $level       = $depth + 1;
+    $depth_li    = 'depth-' . $depth;
+    $text_class  = 'text-menu-' . $level;
 
-  // ===== Depth helpers =====
-  $level       = $depth + 1;                        // 1,2,3...
-  $depth_li    = 'depth-' . $depth;                 // depth-0, depth-1...
-  $text_class  = 'text-menu-' . $level;             // text-menu-1,2,3...
+    $li_classes = ['menu-item-' . (int)$item->ID, $depth_li];
+    if ($depth === 0 && !empty($args->has_children)) {
+      $li_classes[] = 'menu-item-has-children';
+      $li_classes[] = 'has-mega';
+    }
+    $output .= '<li class="' . esc_attr(implode(' ', $li_classes)) . '">';
 
-  // ----- CLASSES CHO <li> -----
-  $li_classes = ['menu-item-' . (int)$item->ID, $depth_li];
-  if ($depth === 0 && !empty($args->has_children)) {
-    $li_classes[] = 'menu-item-has-children';
-    $li_classes[] = 'has-mega';
+    $base_link_class = ($depth === 1 ? 'mega-link' : 'menu-link') . ' ' . $text_class;
+    $atts = [
+      'href'   => !empty($item->url) ? $item->url : '',
+      'class'  => $base_link_class,
+      'target' => !empty($item->target) ? $item->target : '',
+      'rel'    => !empty($item->xfn) ? $item->xfn : '',
+      'title'  => !empty($item->attr_title) ? $item->attr_title : '',
+    ];
+    $attr = '';
+    foreach ($atts as $k => $v) if (!empty($v)) $attr .= ' '.$k.'="'.esc_attr($v).'"';
+
+    if ($depth === 1) {
+      $img = pg_menu_item_thumb_url($item, 'menu-thumb');
+      $thumbFlag = $img ? 'has-thumb' : 'no-thumb';
+      $output .= '<a'.$attr.'>';
+        $output .= '<span class="mega-thumb-wrap '.$thumbFlag.'">';
+        if ($img) {
+          $output .= '<span class="mega-thumb"><img src="'.esc_url($img).'" alt="'.esc_attr($title).'" loading="lazy" decoding="async"></span>';
+        }
+        $output .= '</span>';
+        $output .= '<span class="mega-title '.$text_class.'">'.esc_html($title).'</span>';
+      $output .= '</a>';
+    } else {
+      $output .= '<a'.$attr.'><span class="menu-text '.$text_class.'">'.esc_html($title).'</span></a>';
+    }
   }
-  $output .= '<li class="' . esc_attr(implode(' ', $li_classes)) . '">';
-
-  // ----- THUỘC TÍNH LINK -----
-  $base_link_class = ($depth === 1 ? 'mega-link' : 'menu-link') . ' ' . $text_class;
-  $atts = [
-    'href'   => !empty($item->url) ? $item->url : '',
-    'class'  => $base_link_class,
-    'target' => !empty($item->target) ? $item->target : '',
-    'rel'    => !empty($item->xfn) ? $item->xfn : '',
-    'title'  => !empty($item->attr_title) ? $item->attr_title : '',
-  ];
-  $attr = '';
-  foreach ($atts as $k => $v) if (!empty($v)) $attr .= ' '.$k.'="'.esc_attr($v).'"';
-
-  // ----- NỘI DUNG LINK -----
-  if ($depth === 1) {
-    // Ảnh bìa bài viết
-    $img = pg_menu_item_thumb_url($item, 'menu-thumb');
-    $thumbFlag = $img ? 'has-thumb' : 'no-thumb';
-
-    $output .= '<a'.$attr.'>';
-      $output .= '<span class="mega-thumb-wrap '.$thumbFlag.'">';
-      if ($img) {
-        $output .= '<span class="mega-thumb"><img src="'.esc_url($img).'" alt="'.esc_attr($title).'" loading="lazy" decoding="async"></span>';
-      }
-      $output .= '</span>';
-      $output .= '<span class="mega-title '.$text_class.'">'.esc_html($title).'</span>';
-    $output .= '</a>';
-
-  } else {
-    // Cấp 0 và >=2
-    $output .= '<a'.$attr.'><span class="menu-text '.$text_class.'">'.esc_html($title).'</span></a>';
-  }
-}
-
 
   public function end_el( &$output, $item, $depth = 0, $args = [] ){
     $output .= "</li>\n";
   }
 }
 
-
-// 4) Thêm class has-mega cho item cấp 0 có con (để CSS bật panel)
 add_filter('nav_menu_css_class', function($classes, $item, $args, $depth){
   if (isset($args->walker) && $args->walker instanceof PG_Mega_Walker && $depth === 0) {
     if (in_array('menu-item-has-children', (array)$item->classes, true)) {
@@ -289,9 +260,9 @@ add_filter('nav_menu_css_class', function($classes, $item, $args, $depth){
   return $classes;
 }, 10, 4);
 
-
-
-// Helper: lấy ID trang settings theo template (nếu cần)
+/* =========================
+ * Helper: lấy ID trang settings theo template
+ * ========================= */
 function pg_get_settings_page_id_by_template( $template_file ) {
   $q = new WP_Query([
     'post_type'      => 'page',
@@ -304,9 +275,8 @@ function pg_get_settings_page_id_by_template( $template_file ) {
   return $q->have_posts() ? (int) $q->posts[0] : 0;
 }
 
-
 /* =========================
- * AJAX filter (giữ nguyên logic bạn đang dùng)
+ * AJAX filter đại lý
  * ========================= */
 add_action('wp_ajax_filter_agencies', 'handle_filter_agencies');
 add_action('wp_ajax_nopriv_filter_agencies', 'handle_filter_agencies');
@@ -336,19 +306,16 @@ function handle_filter_agencies() {
 
   $q = new WP_Query($args);
 
-ob_start();
-
-if ($q->have_posts()) {
-  echo '<div class="agency-grid">';
-  while ($q->have_posts()) { $q->the_post(); pg_render_agency_card(get_the_ID()); }
-  echo '</div>';
-} else {
-  echo '<p>Không có bài nào.</p>';
-}
-wp_reset_postdata();
-
-$html_list = ob_get_clean();
-
+  ob_start();
+  if ($q->have_posts()) {
+    echo '<div class="agency-grid">';
+    while ($q->have_posts()) { $q->the_post(); pg_render_agency_card(get_the_ID()); }
+    echo '</div>';
+  } else {
+    echo '<p>' . esc_html__('Không có bài nào.', 'peugeot-theme') . '</p>';
+  }
+  wp_reset_postdata();
+  $html_list = ob_get_clean();
 
   $pagination = paginate_links([
     'total'=>$q->max_num_pages, 'current'=>$paged, 'type'=>'array',
@@ -366,39 +333,20 @@ $html_list = ob_get_clean();
     'current'     => (int) $paged,
   ]);
 }
+
+/* Nạp card đại lý (nếu có) */
 add_action('after_setup_theme', function () {
-  $file = get_template_directory() . '/inc/agency-card.php'; // dùng child theme nếu có
+  $file = get_template_directory() . '/inc/agency-card.php';
   if (file_exists($file)) require_once $file;
 });
-/** ========================
- * CPT
- * ======================== */
-add_action('init', function () {
-  if (!post_type_exists('lich_lai_thu')) {
-    register_post_type('lich_lai_thu', [
-      'label'      => 'Đăng ký lái thử',
-      'public'     => false,
-      'show_ui'    => true,
-      'menu_icon'  => 'dashicons-calendar-alt',
-      'supports'   => ['title'],
-    ]);
-  }
 
-  if (!post_type_exists('lien_he')) {
-    register_post_type('lien_he', [
-      'label'      => 'Liên hệ',
-      'public'     => false,
-      'show_ui'    => true,
-      'menu_icon'  => 'dashicons-email',
-      'supports'   => ['title'],
-    ]);
-  }
-});
+/* =========================
+ * (ĐÃ XOÁ) CPT nội bộ — chuyển sang MU-plugin/peugeot-forms.php
+ * ========================= */
 
-/** ========================
- * Helper: xác định context form theo template
- * return 'test_drive' | 'lien_he' | ''
- * ======================== */
+/* =========================
+ * Form helpers + validate (giữ nguyên, chỉ bọc dịch)
+ * ========================= */
 if (!function_exists('td_form_context')) {
   function td_form_context(): string {
     if (is_page_template('page-dat-lich-lai-thu.php')) return 'test_drive';
@@ -407,9 +355,6 @@ if (!function_exists('td_form_context')) {
   }
 }
 
-/** ========================
- * Enqueue assets dùng CHUNG cho 2 form
- * ======================== */
 add_action('wp_enqueue_scripts', function () {
   $ctx = td_form_context();
   if (!$ctx) return;
@@ -419,19 +364,15 @@ add_action('wp_enqueue_scripts', function () {
 
   wp_localize_script('td-form', 'TD_AJAX', [
     'url'     => admin_url('admin-ajax.php'),
-    'nonce'   => wp_create_nonce('td_validate'), // <<< đồng nhất với AJAX handler
+    'nonce'   => wp_create_nonce('td_validate'),
     'context' => $ctx,
   ]);
 });
 
-/** ========================
- * Đặt tiêu đề tự động khi lưu ACF
- * ======================== */
 add_action('acf/save_post', function ($post_id) {
   $pt = get_post_type($post_id);
   if (!in_array($pt, ['lich_lai_thu','lien_he'], true)) return;
 
-  // Dùng try-get để không lỗi khi thiếu ACF
   $get = function ($field_key) use ($post_id) {
     $v = function_exists('get_field') ? get_field($field_key, $post_id) : '';
     return is_scalar($v) ? (string)$v : '';
@@ -444,22 +385,22 @@ add_action('acf/save_post', function ($post_id) {
 
   if ($pt === 'lich_lai_thu') {
     $car_id = (int) $get('car');
-    $car    = $car_id ? get_the_title($car_id) : 'Không rõ xe';
-    $title  = sprintf('[Lái thử] %s %s – %s – %s', $salute, $name, $car, wp_date('d/m/Y H:i'));
-  } else { // lien_he
+    $car    = $car_id ? get_the_title($car_id) : esc_html__('Không rõ xe', 'peugeot-theme');
+    $title  = sprintf('[%s] %s %s – %s – %s',
+              esc_html__('Lái thử', 'peugeot-theme'),
+              $salute, $name, $car, wp_date('d/m/Y H:i'));
+  } else {
     $yeu_cau = $get('yeu_cau');
-    $title   = sprintf('[Liên hệ] %s %s – %s – %s', $salute, $name, ($yeu_cau ?: 'Không rõ yêu cầu'), wp_date('d/m/Y H:i'));
+    $title   = sprintf('[%s] %s %s – %s – %s',
+              esc_html__('Liên hệ', 'peugeot-theme'),
+              $salute, $name, ($yeu_cau ?: esc_html__('Không rõ yêu cầu', 'peugeot-theme')), wp_date('d/m/Y H:i'));
   }
 
-  // Tránh loop
   remove_action('acf/save_post', __FUNCTION__);
   wp_update_post(['ID'=>$post_id, 'post_title'=>$title]);
   add_action('acf/save_post', __FUNCTION__);
 }, 20);
 
-/** ========================
- * Helper: bộ field bắt buộc theo context
- * ======================== */
 function td_required_keys(string $ctx): array {
   if ($ctx === 'test_drive') {
     return [
@@ -472,7 +413,6 @@ function td_required_keys(string $ctx): array {
       'field_68c23a3ceb754', // email
     ];
   }
-  // lien_he
   return [
     'field_68c45ac49373b', // yeu_cau
     'field_68c45ac49715a', // dai_ly
@@ -484,19 +424,15 @@ function td_required_keys(string $ctx): array {
   ];
 }
 
-/** ========================
- * AJAX validate realtime (dùng chung)
- * ======================== */
 add_action('wp_ajax_td_validate_field',    'td_validate_field');
 add_action('wp_ajax_nopriv_td_validate_field', 'td_validate_field');
 
 function td_validate_field() {
-  // Đồng nhất với nonce phía enqueue
   check_ajax_referer('td_validate', 'nonce');
 
   $ctx   = isset($_POST['context']) ? sanitize_text_field(wp_unslash($_POST['context'])) : '';
   if (!in_array($ctx, ['test_drive','lien_he'], true)) {
-    wp_send_json_success(['ok'=>true, 'message'=>'']); // không có context thì bỏ qua
+    wp_send_json_success(['ok'=>true, 'message'=>'']);
   }
 
   $key   = isset($_POST['key'])   ? sanitize_text_field(wp_unslash($_POST['key']))   : '';
@@ -506,26 +442,22 @@ function td_validate_field() {
   $ok = true; $msg = '';
   $required = td_required_keys($ctx);
 
-  // Bắt buộc
   if (in_array($key, $required, true)) {
     if ($value === '' || $value === '0' || $value === '---') {
-      wp_send_json_success(['ok'=>false, 'message'=>'Trường này bắt buộc.']);
+      wp_send_json_success(['ok'=>false, 'message'=>__('Trường này bắt buộc.', 'peugeot-theme')]);
     }
   }
 
-  // Phone
   if (in_array($key, ['field_68c23a2eeb753','field_68c45ac4a5eca'], true)) {
     $digits = preg_replace('/\D+/', '', (string)$value);
     if (!preg_match('/^(0\d{9,10}|84\d{9,10})$/', $digits)) {
-      $ok=false; $msg='Số điện thoại không hợp lệ.';
+      $ok=false; $msg=__('Số điện thoại không hợp lệ.', 'peugeot-theme');
     }
   }
 
-  // Email
   if (in_array($key, ['field_68c23a3ceb754','field_68c45ac4a9aa1'], true)) {
-    if (!is_email($value)) { $ok=false; $msg='Email không hợp lệ.'; }
+    if (!is_email($value)) { $ok=false; $msg=__('Email không hợp lệ.', 'peugeot-theme'); }
     else {
-      // tuỳ chọn: check trùng email trong cả 2 CPT
       $dupe = new WP_Query([
         'post_type'      => ['lich_lai_thu','lien_he'],
         'post_status'    => 'any',
@@ -533,23 +465,24 @@ function td_validate_field() {
         'meta_query'     => [[ 'key'=>'email', 'value'=>$value, 'compare'=>'=' ]],
         'no_found_rows'  => true,
       ]);
-      if ($dupe->have_posts()) { $ok=false; $msg='Email này đã được gửi trước đó.'; }
+      if ($dupe->have_posts()) { $ok=false; $msg=__('Email này đã được gửi trước đó.', 'peugeot-theme'); }
       wp_reset_postdata();
     }
   }
 
   wp_send_json_success(['ok'=>$ok, 'message'=>$msg]);
 }
+
 if (!function_exists('td_render')) {
   function td_render($key, $label = null, $placeholder = null){
-    if (!function_exists('acf_get_field')) { 
-      echo '<p>ACF chưa kích hoạt.</p>'; 
-      return; 
+    if (!function_exists('acf_get_field')) {
+      echo '<p>' . esc_html__('ACF chưa kích hoạt.', 'peugeot-theme') . '</p>';
+      return;
     }
     $field = acf_get_field($key);
-    if (!$field) { 
-      echo '<p class="td-missing">Không tìm thấy field: '.esc_html($key).'</p>'; 
-      return; 
+    if (!$field) {
+      echo '<p class="td-missing">' . sprintf(esc_html__('Không tìm thấy field: %s', 'peugeot-theme'), esc_html($key)) . '</p>';
+      return;
     }
 
     if ($label !== null)       $field['label'] = $label;

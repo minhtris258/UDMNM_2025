@@ -6,18 +6,15 @@ $settings_id  = pg_get_settings_page_id_by_template('page-archive-settings-san-p
 $banner       = $settings_id ? get_field('image', $settings_id) : null;
 $text_banner  = $settings_id ? get_field('text_banner', $settings_id) : null;
 
-// LẤY LINK NÚT DÙNG CHUNG TỪ SETTINGS (ACF Link)
+// Link/nút dùng chung từ Settings (ACF Link)
+$btn_url = $btn_label = $btn_target = ''; // <-- KHỞI TẠO để tránh notice
 
 if ($settings_id && function_exists('get_field')) {
     $button_field = get_field('button', $settings_id);
-    if (!$button_field) {
-        // fallback nếu bạn đặt name là 'button'
-        $button_field = get_field('button', $settings_id);
-    }
 
     if (is_array($button_field)) {           // Return format: Link (array)
         $btn_url    = $button_field['url']    ?? '';
-        $btn_label  = $button_field['title']  ?: $btn_label;
+        $btn_label  = $button_field['title']  ?: '';
         $btn_target = $button_field['target'] ?: '_self';
     } elseif (is_string($button_field)) {    // Return format: URL (string)
         $btn_url = $button_field;
@@ -27,7 +24,7 @@ if ($settings_id && function_exists('get_field')) {
 $banner_title = is_array($text_banner) ? ($text_banner['title'] ?? '') : '';
 $banner_sub   = is_array($text_banner) ? ($text_banner['sub']   ?? '') : '';
 
-// Tiêu đề archive
+// Tiêu đề archive (loại bỏ tiền tố mặc định của WP)
 $title = strip_tags(preg_replace('/^(Category:|Tag:|Archives:|Author:|Year:)\s*/', '', get_the_archive_title()));
 ?>
 
@@ -43,8 +40,6 @@ $title = strip_tags(preg_replace('/^(Category:|Tag:|Archives:|Author:|Year:)\s*/
 
 <main id="main" class="container-fluid site-main">
 
-
-
   <?php if (have_posts()) : ?>
     <div class="archive-grid-products">
       <?php while (have_posts()) : the_post(); ?>
@@ -56,13 +51,13 @@ $title = strip_tags(preg_replace('/^(Category:|Tag:|Archives:|Author:|Year:)\s*/
           <h2 class="archive-item-product-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
 
           <?php
-            // Lấy 3 field ACF của từng post (an toàn nếu ACF tạm chưa load)
+            // Lấy 3 field ACF của từng post
             $price      = function_exists('get_field') ? (get_field('price') ?: '') : '';
             $price_sub  = function_exists('get_field') ? (get_field('price_sub') ?: '') : '';
             $price_desc = function_exists('get_field') ? (get_field('price_desc') ?: '') : '';
           ?>
           <div class="archive-excerpt product-meta">
-            
+
             <?php if ($price_sub): ?>
               <div class="product-price-sub"><?php echo esc_html($price_sub); ?></div>
             <?php endif; ?>
@@ -76,25 +71,33 @@ $title = strip_tags(preg_replace('/^(Category:|Tag:|Archives:|Author:|Year:)\s*/
             <?php endif; ?>
 
             <?php if (!$price && !$price_sub && !$price_desc): ?>
-              <div class="fallback-excerpt"><?php echo wp_trim_words(get_the_excerpt(), 20, '…'); ?></div>
+              <div class="fallback-excerpt">
+                <?php
+                  /* translators: %s: ellipsis */
+                  echo wp_kses_post( wp_trim_words(get_the_excerpt(), 20, esc_html__('…', 'peugeot-theme')) );
+                ?>
+              </div>
             <?php endif; ?>
           </div>
 
           <div class="product-btns">
-  <a class="read-more-product" href="<?php the_permalink(); ?>">XEM THÊM</a>
-  <?php if (!empty($btn_url)): ?>
-    <a class="read-more-product" href="<?php echo esc_url($btn_url); ?>" target="<?php echo esc_attr($btn_target); ?>">
-      <?php echo esc_html($btn_label); ?>
-    </a>
-  <?php endif; ?>
-</div>
+            <a class="read-more-product" href="<?php the_permalink(); ?>">
+              <?php echo esc_html__('Xem thêm', 'peugeot-theme'); ?>
+            </a>
+
+            <?php if (!empty($btn_url)): ?>
+              <a class="read-more-product" href="<?php echo esc_url($btn_url); ?>" target="<?php echo esc_attr($btn_target); ?>">
+                <?php echo $btn_label ? esc_html($btn_label) : esc_html__('Đặt lịch lái thử', 'peugeot-theme'); ?>
+              </a>
+            <?php endif; ?>
+          </div>
         </article>
       <?php endwhile; ?>
     </div>
 
     <div class="pagination"><?php echo paginate_links(); ?></div>
   <?php else: ?>
-    <p>Không có bài viết nào.</p>
+    <p><?php echo esc_html__('Không có sản phẩm nào.', 'peugeot-theme'); ?></p>
   <?php endif; ?>
 </main>
 

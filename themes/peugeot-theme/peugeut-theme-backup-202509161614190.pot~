@@ -1,0 +1,64 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Peugeut Theme\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-09-16 11:08+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: \n"
+"Language: \n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Loco https://localise.biz/\n"
+"X-Loco-Version: 2.8.0; wp-6.8.2; php-8.2.12\n"
+"X-Domain: peugeut-theme"
+
+#. Name of the template
+#: page-archive-settings-san-pham.php:2
+msgid "Archive Settings – Sản phẩm"
+msgstr ""
+
+#. Name of the template
+#: page-archive-settings-tin-tuc.php:2
+msgid "Archive Settings – Tin tức"
+msgstr ""
+
+#. URI of the theme
+msgid "https://github.com/minhtris258/peugeut-theme"
+msgstr ""
+
+#. Name of the template
+#: page-lien-he.php:2
+msgid "Liên hệ"
+msgstr ""
+
+#. Name of the template
+#: page-lich-su-thuong-hieu.php:2
+msgid "Lịch sử thương hiệu (ACF Group 14 mốc)"
+msgstr ""
+
+#. Author of the theme
+msgid "minhtris258"
+msgstr ""
+
+#. Name of the theme
+msgid "Peugeut Theme"
+msgstr ""
+
+#. Name of the template
+#: home.php:2
+msgid "trang chủ"
+msgstr ""
+
+#. Name of the template
+#: page-tim-dai-ly.php:2
+msgid "Trang Tìm Đại Lý"
+msgstr ""
+
+#. Name of the template
+#: page-dat-lich-lai-thu.php:2
+msgid "Đặt lịch lái thử"
+msgstr ""

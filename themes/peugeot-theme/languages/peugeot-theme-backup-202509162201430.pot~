@@ -1,0 +1,490 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Peugeot Theme\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-09-16 21:59+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: \n"
+"Language: \n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Loco https://localise.biz/\n"
+"X-Loco-Version: 2.8.0; wp-6.8.2; php-8.2.12\n"
+"X-Domain: peugeot-theme"
+
+#: functions.php:479
+msgid "ACF chưa kích hoạt."
+msgstr ""
+
+#. Name of the template
+#: page-archive-settings-san-pham.php:2 page-archive-settings-san-pham.php:9
+msgid "Archive Settings – Sản phẩm"
+msgstr ""
+
+#. Name of the template
+#: page-archive-settings-tin-tuc.php:2 page-archive-settings-tin-tuc.php:9
+msgid "Archive Settings – Tin tức"
+msgstr ""
+
+#: page-lien-he.php:113
+msgid "Chi tiết/Ghi chú"
+msgstr ""
+
+#: page-lien-he.php:56
+msgid "Chi tiết/Ghi chú:"
+msgstr ""
+
+#: front-page.php:465
+#, php-format
+msgid "Chưa có bài viết nào trong chuyên mục %s."
+msgstr ""
+
+#: page-dat-lich-lai-thu.php:115 page-lien-he.php:119
+msgid "CHỌN CỬA HÀNG / ĐẠI LÝ"
+msgstr ""
+
+#: page-dat-lich-lai-thu.php:109 page-lien-he.php:110
+msgid "Chọn dòng xe"
+msgstr ""
+
+#: page-tim-dai-ly.php:122
+msgid "Chọn Tỉnh/Thành phố"
+msgstr ""
+
+#: page-dat-lich-lai-thu.php:56 page-dat-lich-lai-thu.php:118
+#: page-lien-he.php:57 page-lien-he.php:122
+msgid "Chọn đại lý"
+msgstr ""
+
+#: page-dat-lich-lai-thu.php:145 page-lien-he.php:149
+msgid "CUNG CẤP THÔNG TIN"
+msgstr ""
+
+#: page-tim-dai-ly.php:147
+msgid "Có %d Đại lý / Chi Nhánh / Workshop"
+msgstr ""
+
+#: page-dat-lich-lai-thu.php:93 page-lien-he.php:94
+msgid "Cảm ơn bạn! Yêu cầu đã được ghi nhận."
+msgstr ""
+
+#: page-dat-lich-lai-thu.php:57 page-lien-he.php:58
+msgid "Danh xưng"
+msgstr ""
+
+#: footer.php:51
+msgid "Dành cho chủ xe Peugeot"
+msgstr ""
+
+#: inc/agency-card.php:83
+msgid "DẪN ĐƯỜNG"
+msgstr ""
+
+#: page-dat-lich-lai-thu.php:61 page-lien-he.php:62
+msgid "Email"
+msgstr ""
+
+#: functions.php:459
+msgid "Email không hợp lệ."
+msgstr ""
+
+#: functions.php:468
+msgid "Email này đã được gửi trước đó."
+msgstr ""
+
+#: page-dat-lich-lai-thu.php:137 page-lien-he.php:141
+msgid "email@domain.com"
+msgstr ""
+
+#: footer.php:111
+msgid "Facebook"
+msgstr ""
+
+#: functions.php:21
+msgid "Footer CTA (4 ô trên cùng)"
+msgstr ""
+
+#: functions.php:31
+msgid "Footer CTA (tùy chọn)"
+msgstr ""
+
+#: functions.php:84
+msgid "Footer dưới – Giữa (Logo)"
+msgstr ""
+
+#: functions.php:91
+msgid "Footer dưới – Phải (Hotline + Social – dùng Text/HTML)"
+msgstr ""
+
+#: functions.php:77
+msgid "Footer dưới – Trái (Policies: kéo “Navigation Menu”)"
+msgstr ""
+
+#: functions.php:22
+msgid "Footer Policies (liên kết dưới cùng bên trái)"
+msgstr ""
+
+#: functions.php:41
+msgid "Footer – Cột 1: Về Peugeot Việt Nam (text/logo/địa chỉ)"
+msgstr ""
+
+#: functions.php:50
+msgid "Footer – Cột 2: Truy cập nhanh (kéo widget “Navigation Menu”)"
+msgstr ""
+
+#: functions.php:59
+msgid "Footer – Cột 3: Dành cho chủ xe (kéo widget “Navigation Menu”)"
+msgstr ""
+
+#: functions.php:68
+msgid "Footer – Cột 4: Tìm hiểu thêm (kéo widget “Navigation Menu”)"
+msgstr ""
+
+#: page-dat-lich-lai-thu.php:150 page-lien-he.php:154
+msgid "Giữ liên lạc nhé! (Tùy chọn)"
+msgstr ""
+
+#: inc/agency-card.php:71
+msgid "Hotline CSKH:"
+msgstr ""
+
+#: inc/agency-card.php:77
+msgid "Hotline Dịch vụ:"
+msgstr ""
+
+#: inc/agency-card.php:74
+msgid "Hotline Kinh doanh:"
+msgstr ""
+
+#: footer.php:108
+#, php-format
+msgid "HOTLINE: %s"
+msgstr ""
+
+#. URI of the theme
+msgid "https://github.com/minhtris258/peugeut-theme"
+msgstr ""
+
+#: page-dat-lich-lai-thu.php:106
+msgid "HÃY CHỌN MẪU PEUGEOT PHÙ HỢP VỚI BẠN NHẤT"
+msgstr ""
+
+#: page-dat-lich-lai-thu.php:59 page-lien-he.php:60
+msgid "Họ"
+msgstr ""
+
+#: footer.php:112
+msgid "Instagram"
+msgstr ""
+
+#: functions.php:315 page-tim-dai-ly.php:171
+msgid "Không có bài nào."
+msgstr ""
+
+#: archive-tin-tuc.php:87
+msgid "Không có bài viết nào."
+msgstr ""
+
+#: page-lich-su-thuong-hieu.php:102
+msgid "Không có dữ liệu timeline."
+msgstr ""
+
+#: archive-san-pham.php:100
+msgid "Không có sản phẩm nào."
+msgstr ""
+
+#: functions.php:388
+msgid "Không rõ xe"
+msgstr ""
+
+#: functions.php:396
+msgid "Không rõ yêu cầu"
+msgstr ""
+
+#: functions.php:484
+#, php-format
+msgid "Không tìm thấy field: %s"
+msgstr ""
+
+#: page-dat-lich-lai-thu.php:40 page-lien-he.php:39
+msgid "Không tạo được bài mới!"
+msgstr ""
+
+#: footer.php:44
+msgid "Kéo widget “Navigation Menu” (trỏ tới 1 menu link)."
+msgstr ""
+
+#: footer.php:52 footer.php:60
+msgid "Kéo widget “Navigation Menu”."
+msgstr ""
+
+#: footer.php:36
+msgid ""
+"Kéo widget “Text/Custom HTML” vào khu vực này để thêm mô tả, địa chỉ, giấy "
+"phép…"
+msgstr ""
+
+#: footer.php:114
+msgid "LinkedIn"
+msgstr ""
+
+#. Name of the template
+#: functions.php:395 page-lien-he.php:2
+msgid "Liên hệ"
+msgstr ""
+
+#: functions.php:104
+msgid "Logo thứ 2 (khi cuộn / header đen)"
+msgstr ""
+
+#: functions.php:390
+msgid "Lái thử"
+msgstr ""
+
+#. Name of the template
+#: page-lich-su-thuong-hieu.php:2
+msgid "Lịch sử thương hiệu (ACF Group 14 mốc)"
+msgstr ""
+
+#: functions.php:20
+msgid "Menu bên phải"
+msgstr ""
+
+#: functions.php:17
+msgid "Menu chính"
+msgstr ""
+
+#: functions.php:18
+msgid "Menu footer 1"
+msgstr ""
+
+#: functions.php:19
+msgid "Menu footer 2"
+msgstr ""
+
+#. Author of the theme
+msgid "minhtris258"
+msgstr ""
+
+#: page-tim-dai-ly.php:101
+msgid "Miền"
+msgstr ""
+
+#: inc/agency-card.php:58
+msgid "Miền:"
+msgstr ""
+
+#: page-lich-su-thuong-hieu.php:64
+msgid "Mốc"
+msgstr ""
+
+#: page-lien-he.php:107
+msgid "NHẬP YÊU CẦU CỦA BẠN"
+msgstr ""
+
+#: page-archive-settings-san-pham.php:10 page-archive-settings-tin-tuc.php:10
+msgid "Nhập banner, tiêu đề, mô tả… (ACF)."
+msgstr ""
+
+#: page-dat-lich-lai-thu.php:135 page-lien-he.php:139
+msgid "Nhập họ"
+msgstr ""
+
+#: page-dat-lich-lai-thu.php:136 page-lien-he.php:140
+msgid "Nhập số điện thoại"
+msgstr ""
+
+#: page-dat-lich-lai-thu.php:134 page-lien-he.php:138
+msgid "Nhập tên"
+msgstr ""
+
+#: page-tim-dai-ly.php:95
+msgid "Nhập từ khoá tìm kiếm"
+msgstr ""
+
+#: functions.php:33
+msgid ""
+"Nếu cần thêm block cho hàng CTA, dùng Custom HTML/Text. (Ưu tiên menu "
+"footer_cta)."
+msgstr ""
+
+#. Name of the theme
+msgid "Peugeot Theme"
+msgstr ""
+
+#: page-tim-dai-ly.php:140
+msgid "Reset"
+msgstr ""
+
+#: page-dat-lich-lai-thu.php:60 page-lien-he.php:61
+msgid "Số điện thoại"
+msgstr ""
+
+#: functions.php:454
+msgid "Số điện thoại không hợp lệ."
+msgstr ""
+
+#: page-lich-su-thuong-hieu.php:58
+msgid "Thanh năm"
+msgstr ""
+
+#. keep <span> tags
+#: footer.php:138
+#, php-format
+msgid ""
+"Thiết kế &amp; phát triển bởi <span class=\"fw-bold text-primary\">%s</span>"
+msgstr ""
+
+#: page-dat-lich-lai-thu.php:149 page-lien-he.php:153
+msgid "Thông tin cá nhân của bạn sẽ được xử lý theo Chính sách Bảo mật."
+msgstr ""
+
+#: page-tim-dai-ly.php:103
+msgid "Toàn quốc"
+msgstr ""
+
+#. Name of the template
+#: home.php:2
+msgid "trang chủ"
+msgstr ""
+
+#. Name of the template
+#: page-tim-dai-ly.php:2
+msgid "Trang Tìm Đại Lý"
+msgstr ""
+
+#: footer.php:43
+msgid "Truy cập nhanh"
+msgstr ""
+
+#: functions.php:447
+msgid "Trường này bắt buộc."
+msgstr ""
+
+#: page-dat-lich-lai-thu.php:58 page-lien-he.php:59
+msgid "Tên"
+msgstr ""
+
+#: footer.php:59
+msgid "Tìm hiểu thêm"
+msgstr ""
+
+#: page-dat-lich-lai-thu.php:157 page-lien-he.php:161
+msgid ""
+"Tôi có quyền rút lại sự đồng ý của mình bất cứ lúc nào (để biết thêm chi "
+"tiết, vui lòng xem tại đây). Việc rút lại sự đồng ý sẽ không ảnh hưởng đến "
+"tính hợp pháp của việc xử lý dựa trên sự đồng ý trước khi rút lại."
+msgstr ""
+
+#: page-dat-lich-lai-thu.php:62 page-lien-he.php:63
+msgid ""
+"Tôi muốn nhận thêm thông tin về các sản phẩm và dịch vụ của Peugeot Việt Nam "
+"bằng cách"
+msgstr ""
+
+#: page-tim-dai-ly.php:77
+msgid "TẤT CẢ"
+msgstr ""
+
+#: archive-tin-tuc.php:39
+msgid "Tất cả"
+msgstr ""
+
+#: page-tim-dai-ly.php:120
+msgid "Tỉnh/Thành"
+msgstr ""
+
+#: inc/agency-card.php:62
+msgid "Tỉnh/Thành:"
+msgstr ""
+
+#: page-tim-dai-ly.php:92
+msgid "Từ khoá"
+msgstr ""
+
+#: front-page.php:104
+msgid "Video YouTube"
+msgstr ""
+
+#: page-dat-lich-lai-thu.php:126 page-lien-he.php:130
+msgid "VUI LÒNG CUNG CẤP THÔNG TIN CỦA BẠN"
+msgstr ""
+
+#: page-dat-lich-lai-thu.php:130 page-lien-he.php:134
+msgid "Vui lòng cho chúng tôi biết thông tin sau để liên hệ với bạn:"
+msgstr ""
+
+#: page-dat-lich-lai-thu.php:55 page-lien-he.php:55
+msgid "Vui lòng chọn dòng xe bạn quan tâm:"
+msgstr ""
+
+#: page-dat-lich-lai-thu.php:155 page-lien-he.php:159
+msgid ""
+"và bằng cách chọn ít nhất một trong các kênh này, tôi đồng ý rằng Peugeot "
+"Việt Nam xử lý dữ liệu cá nhân của tôi cho các mục đích tiếp thị, nhận dạng "
+"và xác minh, như được mô tả trong Chính sách Cho phép sử dụng Thông tin Cá "
+"nhân."
+msgstr ""
+
+#: footer.php:35
+msgid "Về Peugeot Việt Nam"
+msgstr ""
+
+#: page-lich-su-thuong-hieu.php:88
+msgid "Về đầu trang"
+msgstr ""
+
+#: front-page.php:217
+#, php-format
+msgid "Xem chi tiết %s"
+msgstr ""
+
+#: archive-tin-tuc.php:76
+msgid "XEM THÊM"
+msgstr ""
+
+#: archive-san-pham.php:85
+msgid "Xem thêm"
+msgstr ""
+
+#: front-page.php:232
+msgid "Xem tất cả"
+msgstr ""
+
+#: page-lien-he.php:163
+msgid "XÁC NHẬN YÊU CẦU LIÊN HỆ"
+msgstr ""
+
+#: page-dat-lich-lai-thu.php:159
+msgid "XÁC NHẬN YÊU CẦU LÁI THỬ"
+msgstr ""
+
+#: footer.php:113
+msgid "YouTube"
+msgstr ""
+
+#: functions.php:197
+msgid "Đóng menu"
+msgstr ""
+
+#. Name of the template
+#: archive-san-pham.php:90 page-dat-lich-lai-thu.php:2
+msgid "Đặt lịch lái thử"
+msgstr ""
+
+#: inc/agency-card.php:68
+msgid "Địa chỉ:"
+msgstr ""
+
+#: front-page.php:408
+msgid "Đọc tiếp"
+msgstr ""
+
+#. %s: ellipsis
+#: archive-san-pham.php:77 archive-tin-tuc.php:72 front-page.php:406
+msgid "…"
+msgstr ""
