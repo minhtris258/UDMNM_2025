@@ -47,7 +47,11 @@
             ]);
             ?>
         </nav>
-                    
+           </nav>
+<div id="pgMegaPanel" style="position:absolute;left:0;right:0;top:100%;background:#ffe8a1;padding:24px;z-index:99999;display:none">
+  <strong>MEGA TEST</strong> — thấy dòng này là markup OK.
+</div>
+         
 
 
         <!-- Menu mobile overlay -->
