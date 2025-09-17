@@ -2528,15 +2528,31 @@ body.menu-lock {
 }
 
 .archive-tabs .tab {
+    position: relative;
+    color: black;
+    transition: color 0.3s;
     padding: 8px 16px;
-    border-bottom: 2px solid transparent;
+    text-decoration: none;
+    font-weight: bold;
+}
+.archive-tabs .tab::after {
+    content: '';
+    position: absolute;
+    left: 0; bottom: 0;
+    width: 0;
+    height: 2px;
+    background: #005BAC;
+    transition: width 0.3s;
+}
+.archive-tabs .tab:hover::after,
+.archive-tabs .tab.active::after {
+    width: 100%;
+}
+.archive-tabs .tab:hover,
+.archive-tabs .tab.active {
+    color: #005BAC;
 }
 
-.archive-tabs .tab.active {
-    border-color: #005BAC;
-    font-weight: bold;
-    text-decoration: none;
-}
 
 .archive-grid {
     display: grid;
@@ -2851,3 +2867,4 @@ li.year-item {
 .pg-mega-hero-btn{display:inline-block;padding:14px 22px;background:#0a67ff;color:#fff;font-weight:700;border-radius:6px;text-decoration:none}
 .pg-mega-hero-btn:hover{filter:brightness(1.05)}
 @media (max-width:991.98px){.pg-mega-wrapper{flex-direction:column}.pg-mega-right{min-height:40vh}}
+
