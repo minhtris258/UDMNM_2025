@@ -942,10 +942,11 @@ p.text-gray-600.mb-6 {
     border-radius: 4px;
     cursor: pointer;
     transition: background .3s;
+    text-decoration: none;
 }
 
 .peugeot-slider-btn:hover {
-    background: #0f5fd1;
+    background: #000000;
 }
 
 
@@ -982,7 +983,7 @@ p.text-gray-600.mb-6 {
 /* Khung ảnh có chiều cao hợp lý theo màn hình, không phụ thuộc ảnh */
 .peugeot-slider4 .image-col {
     position: relative;
-    min-height: clamp(260px, 42vw, 520px);
+    min-height: clamp(190px, 42vw, 520px);
     /* mobile -> desktop */
 }
 
@@ -2717,6 +2718,7 @@ img.attachment-small.size-small.wp-post-image {
     color: #005BAC;
     text-transform: uppercase;
     text-decoration: none;
+        padding: 20px 20px 0px 20px;
 }
 
 .xem-tat-ca-wrap a {
@@ -2841,3 +2843,11 @@ li.year-item {
     font-size: 10px;
 }
 }
+.pg-mega-wrapper{display:flex;min-height:calc(100vh - 60px)}
+.pg-mega-left{flex:1 1 55%;padding:24px;overflow:auto;background:#fff}
+.pg-mega-right{flex:1 1 45%;position:relative;min-height:60vh;background:#f3f4f6}
+.pg-mega-hero{position:absolute;inset:0;background-size:cover;background-position:center;display:flex;flex-direction:column;justify-content:flex-end;align-items:flex-start;padding:24px}
+.pg-mega-hero-title{color:#fff;font-weight:800;font-size:28px;margin:0 0 12px;text-transform:uppercase;letter-spacing:.04em;text-shadow:0 2px 10px rgba(0,0,0,.35)}
+.pg-mega-hero-btn{display:inline-block;padding:14px 22px;background:#0a67ff;color:#fff;font-weight:700;border-radius:6px;text-decoration:none}
+.pg-mega-hero-btn:hover{filter:brightness(1.05)}
+@media (max-width:991.98px){.pg-mega-wrapper{flex-direction:column}.pg-mega-right{min-height:40vh}}

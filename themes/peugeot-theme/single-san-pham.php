@@ -139,12 +139,9 @@ for ($i = 1; $i <= 3; $i++) {
                 <div class="peugeot-slider4-text"><?php echo wp_kses_post($slide['content2']); ?></div>
               <?php endif; ?>
               <div class="peugeot-slider3-buttons">
-                  
-                            <a class="peugeot-btn" href="<?php echo esc_url($tim_dai_ly['url']); ?>" target="<?php echo esc_attr($tim_dai_ly['target']); ?>">
-                    <?php echo esc_html($tim_dai_ly['title']); ?>
-                </a>
-                           <a class="peugeot-btn" href="<?php echo esc_url($dk_lai_thu['url']); ?>" target="<?php echo esc_attr($dk_lai_thu['target']); ?>">
-                    <?php echo esc_html($dk_lai_thu['title']); ?>
+
+                            <a class="peugeot-btn" href="<?php echo esc_url($lien_he['url']); ?>" target="<?php echo esc_attr($lien_he['target']); ?>">
+                    <?php echo esc_html($lien_he['title']); ?>
                 </a>
                         </div>
             </div>
@@ -581,7 +578,7 @@ for ($i = 1; $i <= 4; $i++) {
       </div>
     </div>
     
-    <!-- Cột ảnh (55%) -->
+    <!-- Cột ảnh (60%) -->
      <div class="peugeot-slider-col image-col">
       <?php foreach ($slides as $idx => $slide): ?>
         <div class="peugeot-slider4-slide<?php echo $idx === 0 ? ' active' : ''; ?>" data-slide="<?php echo $idx; ?>">
@@ -659,9 +656,9 @@ if (is_array($options)) {
               <div class="pb-actions">
                 <p><?php echo esc_html($options['description']); ?></p>
                 <div class="peugeot-slider3-buttons">
-                  
-                            <a class="peugeot-btn" href="<?php echo esc_url($tim_dai_ly['url']); ?>" target="<?php echo esc_attr($tim_dai_ly['target']); ?>">
-                    <?php echo esc_html($tim_dai_ly['title']); ?>
+
+                            <a class="peugeot-btn" href="<?php echo esc_url($lien_he['url']); ?>" target="<?php echo esc_attr($lien_he['target']); ?>">
+                    <?php echo esc_html($lien_he['title']); ?>
                 </a>
                            <a class="peugeot-btn" href="<?php echo esc_url($dk_lai_thu['url']); ?>" target="<?php echo esc_attr($dk_lai_thu['target']); ?>">
                     <?php echo esc_html($dk_lai_thu['title']); ?>
