@@ -181,6 +181,167 @@ function pg_menu_item_thumb_url($item, $size = 'menu-thumb'){
 }
 
 class PG_Mega_Walker extends Walker_Nav_Menu {
+  private $current_top_item = null;
+  private $current_mega_context = [
+    'wrapper_class' => 'pg-mega-wrapper',
+    'right_html'    => '',
+    'has_right'     => false,
+  ];
+
+  private function normalize_acf_link($value){
+    if (empty($value)) return null;
+
+    if (is_array($value)) {
+      $url = isset($value['url']) ? trim((string)$value['url']) : '';
+      if ($url === '') return null;
+
+      $title  = isset($value['title']) && $value['title'] !== '' ? (string)$value['title'] : __('Xem thêm', 'peugeot-theme');
+      $target = isset($value['target']) ? trim((string)$value['target']) : '';
+      $rel    = isset($value['rel']) ? trim((string)$value['rel']) : '';
+
+      if ($target === '_blank' && stripos($rel, 'noopener') === false) {
+        $rel = trim($rel . ' noopener noreferrer');
+      }
+
+      return [
+        'url'    => $url,
+        'title'  => $title,
+        'target' => $target,
+        'rel'    => $rel,
+      ];
+    }
+
+    if (is_string($value)) {
+      $url = trim($value);
+      if ($url === '') return null;
+
+      return [
+        'url'    => $url,
+        'title'  => __('Xem thêm', 'peugeot-theme'),
+        'target' => '',
+        'rel'    => '',
+      ];
+    }
+
+    return null;
+  }
+
+  private function resolve_image_url($image){
+    if (empty($image)) return '';
+
+    if (is_array($image)) {
+      if (!empty($image['ID'])) {
+        $url = wp_get_attachment_image_url((int)$image['ID'], 'full');
+        if ($url) return $url;
+      }
+      if (!empty($image['id'])) {
+        $url = wp_get_attachment_image_url((int)$image['id'], 'full');
+        if ($url) return $url;
+      }
+      if (!empty($image['url'])) {
+        return (string)$image['url'];
+      }
+    }
+
+    if (is_numeric($image)) {
+      $url = wp_get_attachment_image_url((int)$image, 'full');
+      if ($url) return $url;
+    }
+
+    if (is_string($image)) {
+      return trim($image);
+    }
+
+    return '';
+  }
+
+  private function prepare_mega_panel_context($item){
+    $context = [
+      'wrapper_class' => 'pg-mega-wrapper pg-mega-wrapper--no-hero',
+      'right_html'    => '',
+      'has_right'     => false,
+    ];
+
+    if (!$item instanceof \WP_Post) {
+      return apply_filters('pg/mega_panel/context', $context, $item);
+    }
+
+    if (!function_exists('get_field')) {
+      return apply_filters('pg/mega_panel/context', $context, $item);
+    }
+
+    $group = get_field('mega_panel', $item);
+    if (!is_array($group)) {
+      $group = get_field('mega_panel', 'nav_menu_item_' . $item->ID);
+    }
+
+    if (!is_array($group)) {
+      return apply_filters('pg/mega_panel/context', $context, $item);
+    }
+
+    $image_url = $this->resolve_image_url($group['mega_panel_image'] ?? '');
+
+    $slots = [];
+    for ($i = 1; $i <= 4; $i++) {
+      $key = 'mega_panel_slot' . $i;
+      if (!empty($group[$key]) && is_string($group[$key])) {
+        $slot = trim($group[$key]);
+        if ($slot !== '') $slots[] = $slot;
+      }
+    }
+
+    $links = [];
+    foreach (['mega_panel_link', 'mega_panel_link2'] as $link_key) {
+      if (!isset($group[$link_key])) continue;
+      $normalized = $this->normalize_acf_link($group[$link_key]);
+      if ($normalized) $links[] = $normalized;
+    }
+
+    $has_content = ($image_url !== '' || !empty($slots) || !empty($links));
+
+    if (!$has_content) {
+      return apply_filters('pg/mega_panel/context', $context, $item);
+    }
+
+    $style = $image_url !== '' ? ' style="background-image:url(' . esc_url($image_url) . ');"' : '';
+    $html  = '<aside class="pg-mega-right">';
+    $html .= '<div class="pg-mega-hero"' . $style . '>';
+
+    if (!empty($slots)) {
+      $title = array_shift($slots);
+      if ($title !== '') {
+        $html .= '<h3 class="pg-mega-hero-title">' . esc_html($title) . '</h3>';
+      }
+      foreach ($slots as $slot_text) {
+        if ($slot_text === '') continue;
+        $html .= '<p class="pg-mega-hero-text">' . esc_html($slot_text) . '</p>';
+      }
+    }
+
+    if (!empty($links)) {
+      $html .= '<div class="pg-mega-hero-actions">';
+      foreach ($links as $link) {
+        $attrs = ' href="' . esc_url($link['url']) . '"';
+        if (!empty($link['target'])) {
+          $attrs .= ' target="' . esc_attr($link['target']) . '"';
+        }
+        if (!empty($link['rel'])) {
+          $attrs .= ' rel="' . esc_attr($link['rel']) . '"';
+        }
+        $html .= '<a class="pg-mega-hero-btn"' . $attrs . '>' . esc_html($link['title']) . '</a>';
+      }
+      $html .= '</div>';
+    }
+
+    $html .= '</div></aside>';
+
+    $context['wrapper_class'] = 'pg-mega-wrapper';
+    $context['right_html']    = $html;
+    $context['has_right']     = true;
+
+    return apply_filters('pg/mega_panel/context', $context, $item);
+  }
+
   public function display_element($element, &$children_elements, $max_depth, $depth = 0, $args = [], &$output = ''){
     if (!$element) return;
     $id_field = $this->db_fields['id'];
@@ -193,8 +354,13 @@ class PG_Mega_Walker extends Walker_Nav_Menu {
   public function start_lvl( &$output, $depth = 0, $args = [] ){
     $indent = str_repeat("\t", $depth);
     if ($depth === 0){
+      $this->current_mega_context = $this->prepare_mega_panel_context($this->current_top_item);
+      $wrapper_class = isset($this->current_mega_context['wrapper_class']) ? $this->current_mega_context['wrapper_class'] : 'pg-mega-wrapper';
+
       $output .= "\n{$indent}<div class=\"mega-panel\" role=\"dialog\" aria-modal=\"false\">"
                . "<button class=\"mega-close\" aria-label=\"".esc_attr__('Đóng menu', 'peugeot-theme')."\">&times;</button>"
+               . "<div class=\"" . esc_attr($wrapper_class) . "\">"
+               . "<div class=\"pg-mega-left\">"
                . "<ul class=\"mega-grid\">\n";
     } else {
       $output .= "\n{$indent}<ul class=\"sub-menu\">\n";
@@ -203,7 +369,20 @@ class PG_Mega_Walker extends Walker_Nav_Menu {
 
   public function end_lvl( &$output, $depth = 0, $args = [] ){
     $indent = str_repeat("\t", $depth);
-    $output .= ($depth === 0) ? "{$indent}</ul></div>\n" : "{$indent}</ul>\n";
+    if ($depth === 0) {
+      $output .= "{$indent}</ul></div>";
+      if (!empty($this->current_mega_context['right_html']) && !empty($this->current_mega_context['has_right'])) {
+        $output .= $this->current_mega_context['right_html'];
+      }
+      $output .= "</div></div>\n";
+      $this->current_mega_context = [
+        'wrapper_class' => 'pg-mega-wrapper',
+        'right_html'    => '',
+        'has_right'     => false,
+      ];
+    } else {
+      $output .= "{$indent}</ul>\n";
+    }
   }
 
   public function start_el( &$output, $item, $depth = 0, $args = [], $id = 0 ) {
@@ -213,6 +392,9 @@ class PG_Mega_Walker extends Walker_Nav_Menu {
     $text_class  = 'text-menu-' . $level;
 
     $li_classes = ['menu-item-' . (int)$item->ID, $depth_li];
+    if ($depth === 0) {
+      $this->current_top_item = $item;
+    }
     if ($depth === 0 && !empty($args->has_children)) {
       $li_classes[] = 'menu-item-has-children';
       $li_classes[] = 'has-mega';
@@ -248,6 +430,9 @@ class PG_Mega_Walker extends Walker_Nav_Menu {
 
   public function end_el( &$output, $item, $depth = 0, $args = [] ){
     $output .= "</li>\n";
+    if ($depth === 0) {
+      $this->current_top_item = null;
+    }
   }
 }
 
