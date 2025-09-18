@@ -681,3 +681,18 @@ if (!function_exists('td_render')) {
   }
   
 }
+// Xoá generator meta (hiển thị version WP)
+remove_action('wp_head', 'wp_generator');
+
+// Xoá version trong link CSS/JS
+function remove_wp_version_strings($src) {
+    if (strpos($src, 'ver=')) {
+        $src = remove_query_arg('ver', $src);
+    }
+    return $src;
+}
+add_filter('style_loader_src', 'remove_wp_version_strings', 9999);
+add_filter('script_loader_src', 'remove_wp_version_strings', 9999);
+
+// Ẩn phiên bản trong RSS
+add_filter('the_generator', '__return_empty_string');

@@ -46,14 +46,7 @@
                 'fallback_cb'    => false,
             ]);
             ?>
-        </nav>
-           </nav>
-<div id="pgMegaPanel" style="position:absolute;left:0;right:0;top:100%;background:#ffe8a1;padding:24px;z-index:99999;display:none">
-  <strong>MEGA TEST</strong> — thấy dòng này là markup OK.
-</div>
-         
-
-
+        </nav>              
         <!-- Menu mobile overlay -->
         <div class="peugeot-mobile-menu-overlay" id="mobileMenuOverlay">
             <button class="close-mobile-menu" id="closeMobileMenu">&times;</button>
