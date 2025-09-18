@@ -141,7 +141,7 @@ add_action('wp_enqueue_scripts', function () {
   wp_enqueue_style('peugeot-fonts', get_template_directory_uri() . '/assets/css/fonts.css');
 
   // JS
-  wp_enqueue_script('bootstrap-js', 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js', ['jquery'], null, true);
+  wp_enqueue_script('bootstrap-js', 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js', [], null, true);
   wp_enqueue_script('peugeot-custom-js', get_theme_file_uri('/custom.js'), [], null, true);
 
   // Trang lọc đại lý
