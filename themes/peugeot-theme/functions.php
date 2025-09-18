@@ -124,9 +124,7 @@ if (!function_exists('peugeot_print_dual_logo')) {
     }
   }
 }
-if (!function_exists('peugeot_theme_display_logo')) {
-  function peugeot_theme_display_logo() { peugeot_print_dual_logo(); }
-}
+
 if (!function_exists('peugeut_theme_display_logo')) {
   function peugeut_theme_display_logo() { peugeot_print_dual_logo(); }
 }
@@ -156,6 +154,7 @@ add_action('wp_enqueue_scripts', function () {
     ]);
   }
 });
+require_once get_template_directory() . '/inc/youtube-privacy-embed.php';
 
 
 

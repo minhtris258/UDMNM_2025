@@ -239,11 +239,20 @@ if ($gioi_thieu) : ?>
 
   <?php if (!empty($gioi_thieu['video_url'])): ?>
     <div class="video-wrapper" style="max-width:1200px;margin:0 auto;">
-      <iframe width="100%" height="700"
-        src="<?php echo esc_url($gioi_thieu['video_url']); ?>"
-        title="YouTube video" frameborder="0" allowfullscreen></iframe>
+      <?php
+        // Dùng helper đã include từ inc/youtube-privacy-embed.php
+        echo pg_youtube_privacy_iframe($gioi_thieu['video_url'], [
+          'width'    => 1200,
+          'height'   => 700,
+          'lazy'     => true,   // lazy-load iframe
+          'autoplay' => false,  // đổi true nếu muốn tự phát
+        ]);
+      ?>
     </div>
   <?php endif; ?>
+</section>
+
+
 
   <?php
   // ==== GALLERY 1-4 ẢNH + DESC ====
@@ -428,7 +437,7 @@ if ($tinh_nang) : ?>
         );
       } else {
         $img_html = sprintf(
-          '<img src="150px" alt="150px" class="thumb-150" loading="lazy">',
+        '<img src="%s" alt="%s" class="thumb-150" loading="lazy" width="150" height="150">',
           esc_url($img_url_fallback ?? ''),
           esc_attr($img_alt_fallback ?? '')
         );
@@ -712,7 +721,7 @@ for ($i = 1; $i <= 4; $i++) {
 
   // Nếu trống dùng fallback (có thể bỏ)
   if ($img_url === '' || !filter_var($img_url, FILTER_VALIDATE_URL)) {
-    $img_url = $fallback_img;
+    continue; // bỏ ảnh trống hoặc không phải URL
   }
 
   // GIẢM KÍCH THƯỚC: set imwidth=300 (thay vì 1920)

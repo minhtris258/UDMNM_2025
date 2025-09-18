@@ -82,31 +82,36 @@ for ($i = 1; $i <= 3; $i++) {
 $content2 = get_field('content2');
 
 if ($content2) : ?>
-    <section class="video-section text-center py-5">
-        <?php if (!empty($content2['title'])): ?>
-            <h1 class="text-xl font-weight-bold"><?php echo esc_html($content2['title']); ?></h1>
-        <?php endif; ?>
+  <section class="video-section text-center py-5">
+    <?php if (!empty($content2['title'])): ?>
+      <h1 class="text-xl font-weight-bold"><?php echo esc_html($content2['title']); ?></h1>
+    <?php endif; ?>
 
-        <?php if (!empty($content2['subtitle'])): ?>
-            <h1 class="text-3xl text-primary font-extrabold my-2 py-3 font-weight-bold">
-                <?php echo esc_html($content2['subtitle']); ?>
-            </h1>
-        <?php endif; ?>
+    <?php if (!empty($content2['subtitle'])): ?>
+      <h1 class="text-3xl text-primary font-extrabold my-2 py-3 font-weight-bold">
+        <?php echo esc_html($content2['subtitle']); ?>
+      </h1>
+    <?php endif; ?>
 
-        <?php if (!empty($content2['description'])): ?>
-            <p class="text-gray-600 mb-6"><?php echo esc_html($content2['description']); ?></p>
-        <?php endif; ?>
+    <?php if (!empty($content2['description'])): ?>
+      <p class="text-gray-600 mb-6"><?php echo esc_html($content2['description']); ?></p>
+    <?php endif; ?>
 
-        <?php if (!empty($content2['youtube_url'])): ?>
-            <div class="video-wrapper py-3" style="max-width:1200px;margin:0 auto;">
-                <iframe width="100%" height="700" 
-                        src="<?php echo esc_url($content2['youtube_url']); ?>" 
-                        title="<?php echo esc_attr__('Video YouTube', 'peugeot-theme'); ?>" frameborder="0" allowfullscreen>
-                </iframe>
-            </div>
-        <?php endif; ?>
-    </section>
+    <?php if (!empty($content2['youtube_url'])): ?>
+      <div class="video-wrapper py-3" style="max-width:1200px;margin:0 auto;">
+        <?php
+          echo pg_youtube_privacy_iframe($content2['youtube_url'], [
+            'width'   => 1200,
+            'height'  => 700,
+            'lazy'    => true,   // bật lazy-load
+            'autoplay'=> false,  // đổi true nếu muốn tự phát
+          ]);
+        ?>
+      </div>
+    <?php endif; ?>
+  </section>
 <?php endif; ?>
+
 
 <?php
 $content3 = get_field('content3');
