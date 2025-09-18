@@ -2,9 +2,9 @@ name: Deploy theme to VPS
 
 on:
   push:
-    branches: [ "main" ]           # đổi nếu bạn dùng branch khác
+    branches: [ "main" ]               # đổi nếu bạn dùng branch khác
     paths:
-      - 'themes/**'                # chỉ chạy khi có thay đổi trong themes
+      - 'themes/**'                    # chỉ chạy khi có thay đổi trong themes
   workflow_dispatch: {}
 
 jobs:
@@ -26,10 +26,13 @@ jobs:
           ssh-keyscan -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
           chmod 600 ~/.ssh/known_hosts
 
-      - name: Rsync only themes
+      - name: Rsync only themes (with sudo on remote)
         run: |
-          rsync -az --delete --exclude '.git' --exclude '.github' --exclude 'node_modules' \
+          rsync -az --delete \
+            --omit-dir-times --no-perms --no-owner --no-group \
+            --exclude '.git' --exclude '.github' --exclude 'node_modules' \
             -e "ssh -p ${{ secrets.SSH_PORT }}" \
+            --rsync-path="sudo rsync" \
             themes/ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.TARGET_DIR }}/wp-content/themes/
 
       - name: Fix permissions & reload PHP
