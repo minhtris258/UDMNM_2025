@@ -1,10 +1,8 @@
-name: Deploy theme to VPS
+name: Deploy site to VPS
 
 on:
   push:
-    branches: [ "main" ]               # đổi nếu bạn dùng branch khác
-    paths:
-      - 'themes/**'                    # chỉ chạy khi có thay đổi trong themes
+    branches: [ "main" ]            # deploy mỗi lần push lên main
   workflow_dispatch: {}
 
 jobs:
@@ -14,6 +12,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
 
       - name: Setup SSH agent
         uses: webfactory/ssh-agent@v0.8.0
@@ -26,20 +26,46 @@ jobs:
           ssh-keyscan -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
           chmod 600 ~/.ssh/known_hosts
 
-      - name: Rsync only themes (with sudo on remote)
+      # ====== RSYNC TOÀN DỰ ÁN ======
+      - name: Rsync whole project (with sudo on remote)
         run: |
+          # Thư mục đích (ví dụ: /var/www/minhtris.id.vn/peugeot)
+          TARGET="${{ secrets.TARGET_DIR }}"
+
           rsync -az --delete \
             --omit-dir-times --no-perms --no-owner --no-group \
-            --exclude '.git' --exclude '.github' --exclude 'node_modules' \
+            --exclude '.git' \
+            --exclude '.github' \
+            --exclude 'node_modules' \
+            --exclude 'vendor' \
+            --exclude '.env' \
+            --exclude '.DS_Store' \
+            --exclude 'Thumbs.db' \
+            # BỎ DẤU # DƯỚI NẾU BẠN MUỐN ĐẨY CẢ uploads
+            --exclude 'wp-content/uploads' \
             -e "ssh -p ${{ secrets.SSH_PORT }}" \
             --rsync-path="sudo rsync" \
-            themes/ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.TARGET_DIR }}/wp-content/themes/
+            ./ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${TARGET}/
 
       - name: Fix permissions & reload PHP
         run: |
           ssh -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'EOF'
-          sudo chown -R www-data:www-data /var/www/minhtris.id.vn/peugeot/wp-content/themes
-          sudo find /var/www/minhtris.id.vn/peugeot/wp-content/themes -type d -exec chmod 755 {} \;
-          sudo find /var/www/minhtris.id.vn/peugeot/wp-content/themes -type f -exec chmod 644 {} \;
-          sudo systemctl reload php8.1-fpm || true
+          TARGET="${{ secrets.TARGET_DIR }}"
+          # Quyền cơ bản
+          sudo chown -R www-data:www-data "$TARGET"
+          sudo find "$TARGET" -type d -exec chmod 755 {} \;
+          sudo find "$TARGET" -type f -exec chmod 644 {} \;
+
+          # Thư mục cần quyền ghi (nếu có)
+          if [ -d "$TARGET/wp-content/uploads" ]; then
+            sudo chown -R www-data:www-data "$TARGET/wp-content/uploads"
+            sudo find "$TARGET/wp-content/uploads" -type d -exec chmod 775 {} \;
+            sudo find "$TARGET/wp-content/uploads" -type f -exec chmod 664 {} \;
+          fi
+
+          # Reload PHP-FPM (đổi phiên bản nếu khác)
+          sudo systemctl reload php8.1-fpm || sudo systemctl reload php8.2-fpm || true
+
+          # Reload web server (optional)
+          sudo systemctl reload nginx || sudo systemctl reload apache2 || true
           EOF
