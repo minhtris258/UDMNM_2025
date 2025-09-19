@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Template part for displaying archive of "Tin tức"
  *
@@ -22,7 +23,7 @@ $title = strip_tags($title);
 <?php if (!empty($banner['url'])): ?>
   <div class="archive-banner">
     <img src="<?php echo esc_url($banner['url']); ?>"
-         alt="<?php echo esc_attr($banner['alt'] ?? ''); ?>" />
+      alt="<?php echo esc_attr($banner['alt'] ?? ''); ?>" />
     <div class="archive-banner-overlay">
       <h1 class="archive-title">
         <?php echo esc_html($banner_title ?: $title); ?>
@@ -39,7 +40,7 @@ $title = strip_tags($title);
   <!-- Tabs filter -->
   <div class="archive-tabs">
     <a href="<?php echo esc_url(get_post_type_archive_link('tin-tuc')); ?>"
-       class="tab <?php if (!is_tax('tin-tuc-cate')) echo 'active'; ?>">
+      class="tab <?php if (!is_tax('tin-tuc-cate')) echo 'active'; ?>">
       <?php echo esc_html__('Tất cả', 'peugeot-theme'); ?>
     </a>
     <?php
@@ -51,8 +52,8 @@ $title = strip_tags($title);
       foreach ($terms as $term) {
         $is_active = is_tax('tin-tuc-cate', $term->slug) ? 'active' : '';
         echo '<a href="' . esc_url(get_term_link($term)) . '" class="tab ' . esc_attr($is_active) . '">'
-           . esc_html($term->name)
-           . '</a>';
+          . esc_html($term->name)
+          . '</a>';
       }
     }
     ?>
@@ -73,7 +74,7 @@ $title = strip_tags($title);
           </h2>
 
           <div class="archive-excerpt">
-            <?php echo esc_html( wp_trim_words(get_the_excerpt(), 20, esc_html__('…', 'peugeot-theme')) ); ?>
+            <?php echo esc_html(wp_trim_words(get_the_excerpt(), 20, esc_html__('…', 'peugeot-theme'))); ?>
           </div>
 
           <a class="read-more" href="<?php the_permalink(); ?>">
@@ -92,4 +93,3 @@ $title = strip_tags($title);
   <?php endif; ?>
 
 </main>
-

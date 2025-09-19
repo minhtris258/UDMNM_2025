@@ -10,15 +10,15 @@ $text_banner  = $settings_id ? get_field('text_banner', $settings_id) : null;
 $btn_url = $btn_label = $btn_target = ''; // <-- KHỞI TẠO để tránh notice
 
 if ($settings_id && function_exists('get_field')) {
-    $button_field = get_field('button', $settings_id);
+  $button_field = get_field('button', $settings_id);
 
-    if (is_array($button_field)) {           // Return format: Link (array)
-        $btn_url    = $button_field['url']    ?? '';
-        $btn_label  = $button_field['title']  ?: '';
-        $btn_target = $button_field['target'] ?: '_self';
-    } elseif (is_string($button_field)) {    // Return format: URL (string)
-        $btn_url = $button_field;
-    }
+  if (is_array($button_field)) {           // Return format: Link (array)
+    $btn_url    = $button_field['url']    ?? '';
+    $btn_label  = $button_field['title']  ?: '';
+    $btn_target = $button_field['target'] ?: '_self';
+  } elseif (is_string($button_field)) {    // Return format: URL (string)
+    $btn_url = $button_field;
+  }
 }
 
 $banner_title = is_array($text_banner) ? ($text_banner['title'] ?? '') : '';
@@ -51,10 +51,10 @@ $title = strip_tags(preg_replace('/^(Category:|Tag:|Archives:|Author:|Year:)\s*/
           <h2 class="archive-item-product-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
 
           <?php
-            // Lấy 3 field ACF của từng post
-            $price      = function_exists('get_field') ? (get_field('price') ?: '') : '';
-            $price_sub  = function_exists('get_field') ? (get_field('price_sub') ?: '') : '';
-            $price_desc = function_exists('get_field') ? (get_field('price_desc') ?: '') : '';
+          // Lấy 3 field ACF của từng post
+          $price      = function_exists('get_field') ? (get_field('price') ?: '') : '';
+          $price_sub  = function_exists('get_field') ? (get_field('price_sub') ?: '') : '';
+          $price_desc = function_exists('get_field') ? (get_field('price_desc') ?: '') : '';
           ?>
           <div class="archive-excerpt product-meta">
 
@@ -73,8 +73,8 @@ $title = strip_tags(preg_replace('/^(Category:|Tag:|Archives:|Author:|Year:)\s*/
             <?php if (!$price && !$price_sub && !$price_desc): ?>
               <div class="fallback-excerpt">
                 <?php
-                  /* translators: %s: ellipsis */
-                  echo wp_kses_post( wp_trim_words(get_the_excerpt(), 20, esc_html__('…', 'peugeot-theme')) );
+                /* translators: %s: ellipsis */
+                echo wp_kses_post(wp_trim_words(get_the_excerpt(), 20, esc_html__('…', 'peugeot-theme')));
                 ?>
               </div>
             <?php endif; ?>

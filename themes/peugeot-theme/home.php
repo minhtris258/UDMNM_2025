@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Template Name: trang chủ
  * Description: Trang chủ của theme Peugeot
@@ -6,12 +7,12 @@
 get_header();
 ?>
 
-<?php 
+<?php
 $slider = get_field('slider_images');
 if ($slider) : ?>
     <div class="peugeot-slider">
         <div class="peugeot-slider-wrapper">
-            <?php 
+            <?php
             foreach ($slider as $img) {
                 if (!empty($img)) {
                     if (is_array($img) && isset($img['url'])) {
@@ -50,13 +51,13 @@ for ($i = 1; $i <= 3; $i++) {
 </section>
 <div class="peugeot-slider" id="peugeot-slider">
     <?php foreach ($slides as $idx => $slide): ?>
-    <div class="peugeot-slider-slide<?php echo $idx === 0 ? ' active' : ''; ?>">
-        <img src="<?php echo esc_url($slide['image']); ?>" alt="<?php echo esc_attr($slide['title']); ?>" class="peugeot-slider-img" />
-        <div class="peugeot-slider-content">
-            <?php echo wp_kses_post($slide['content']); ?>
-            <button class="peugeot-slider-btn">ĐẶT LỊCH LÁI THỬ</button>
+        <div class="peugeot-slider-slide<?php echo $idx === 0 ? ' active' : ''; ?>">
+            <img src="<?php echo esc_url($slide['image']); ?>" alt="<?php echo esc_attr($slide['title']); ?>" class="peugeot-slider-img" />
+            <div class="peugeot-slider-content">
+                <?php echo wp_kses_post($slide['content']); ?>
+                <button class="peugeot-slider-btn">ĐẶT LỊCH LÁI THỬ</button>
+            </div>
         </div>
-    </div>
     <?php endforeach; ?>
 
     <button class="peugeot-slider-arrow left">&#10094;</button>
@@ -69,7 +70,7 @@ for ($i = 1; $i <= 3; $i++) {
         <?php endforeach; ?>
     </div>
 </div>
-<?php 
+<?php
 $content2 = get_field('content2');
 
 if ($content2) : ?>
@@ -90,9 +91,9 @@ if ($content2) : ?>
 
         <?php if (!empty($content2['youtube_url'])): ?>
             <div class="video-wrapper" style="max-width:800px;margin:0 auto;">
-                <iframe width="100%" height="450" 
-                        src="<?php echo esc_url($content2['youtube_url']); ?>" 
-                        title="YouTube video" frameborder="0" allowfullscreen>
+                <iframe width="100%" height="450"
+                    src="<?php echo esc_url($content2['youtube_url']); ?>"
+                    title="YouTube video" frameborder="0" allowfullscreen>
                 </iframe>
             </div>
         <?php endif; ?>
