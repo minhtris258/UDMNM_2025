@@ -44,6 +44,8 @@
                 'container'      => false,
                 'menu_class'     => 'extra-menu-list d-flex gap-3 mb-0 ms-auto',
                 'fallback_cb'    => false,
+                'link_before'    => '<span class="sr-only">', // thêm tên ẩn
+                'link_after'     => '</span>',
             ]);
             ?>
         </nav>              
@@ -62,6 +64,8 @@
                 'container'      => false,
                 'menu_class'     => 'peugeot-mobile-menu-list',
                 'fallback_cb'    => false,
+                'link_before'    => '<span class="sr-only">', // thêm tên ẩn
+                 'link_after'     => '</span>',
             ]);
             ?>
         </div>
