@@ -418,7 +418,8 @@ img.custom-logo {
 }
 
 .peugeot-mobile-menu-list li {
-    margin-bottom: 24px
+    display: grid;
+    padding: 30px 10px 10px 10px;
 }
 
 .peugeot-mobile-menu-list a {
@@ -1585,7 +1586,19 @@ li::marker {
 }
 
 span.menu-text.text-menu-3 {
-    color: #000
+    color: #787b80;
+    font-size: 1rem;
+    font-weight: 400;
+    padding: 10px;
+}
+.depth-2{
+    display: block;
+    text-decoration: none;
+    border-radius: 12px;
+    transition: transform .15s, box-shadow .15s, background-color .15s;
+}
+.depth-2:hover {
+    background: #f7f8fa;
 }
 
 @media (max-width:768px) {
@@ -2154,7 +2167,7 @@ li.menu-item.menu-item-type-custom.menu-item-object-custom.menu-item a {
     transition: transform .15s, box-shadow .15s, background-color .15s
 }
 
-.mega-link:hover {
+.mega-link:hover{
     background: #f7f8fa
 }
 
@@ -2176,10 +2189,10 @@ li.menu-item.menu-item-type-custom.menu-item-object-custom.menu-item a {
 }
 
 .mega-title {
-    font-weight: 800;
-    font-size: 16px;
-    color: #111;
-    line-height: 1.3
+   font-size: 1.125rem;
+    line-height: 1.5rem;
+    font-weight: 700;
+    color: #000;
 }
 
 .peugeot-main-nav .peugeot-menu-list>li.menu-item-has-children>a::after {
@@ -2214,7 +2227,7 @@ li.menu-item.menu-item-type-custom.menu-item-object-custom.menu-item a {
 a.menu-link {
     color: #fff;
     font-weight: 700;
-    font-size: 13px;
+    font-size: 11px;
     text-transform: uppercase;
     text-decoration: none;
     letter-spacing: .04em;
