@@ -190,13 +190,20 @@
 }
 
 .btn-direction {
-  align-self: flex-start;
-  background: #0a67c8;
-  color: #fff;
-  border-radius: 6px;
-  padding: 12px 24px;
-  font-weight: 700;
-  text-decoration: none
+    align-self: flex-start;
+    background: #0a67c8;
+    color: #fff;
+    /* border-radius: 6px; */
+    padding: 12px 24px;
+    font-weight: 700;
+    font-size: 13px;
+    text-decoration: none;
+    width: 50%;
+    text-align: center;
+}
+.btn-direction:hover {
+    background: #000000;
+    text-decoration: none;
 }
 
 @media (max-width:992px) {
