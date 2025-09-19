@@ -894,7 +894,7 @@ p.text-gray-600.mb-6 {
 }
 
 .peugeot-slider3-nav-item.active {
-    color: #1476ff;
+    color: black;
     border-bottom-color: #1476ff;
     opacity: 1;
     font-weight: bold;

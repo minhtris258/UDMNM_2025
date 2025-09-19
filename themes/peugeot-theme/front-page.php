@@ -453,53 +453,95 @@ if ($n > 0) :
 <?php 
 $content5 = get_field('content5');
 if ($content5): 
+    // Helper lấy ID ảnh từ ACF (array|int|null)
+    $get_img_id = function($img){
+        if (empty($img)) return 0;
+        if (is_numeric($img)) return (int) $img;         // ACF return = ID
+        if (is_array($img) && !empty($img['ID'])) return (int) $img['ID']; // ACF return = Array
+        return 0;
+    };
+
+    $left_id  = $get_img_id($content5['left_image']  ?? null);
+    $right_id = $get_img_id($content5['right_image'] ?? null);
+
+    // Texts & buttons
+    $left_title  = $content5['left_title']  ?? '';
+    $left_desc   = $content5['left_desc']   ?? '';
+    $left_btn    = $content5['left_button'] ?? null;
+
+    $right_title = $content5['right_title'] ?? '';
+    $right_desc  = $content5['right_desc']  ?? '';
+    $right_btn   = $content5['right_button'] ?? null;
 ?>
 <div class="peugeot-register container">
-   
-    <div class="peugeot-register-boxes">
-        <!-- Box trái -->
-        <div class="peugeot-register-box">
-            <?php if (!empty($content5['left_image'])): ?>
-                <img src="<?php echo esc_url($content5['left_image']['url']); ?>" alt="" class="peugeot-baogia-img">
-            <?php endif; ?>
-              <div class="peugeot-box-title">
-            <h3><?php echo esc_html($content5['left_title']); ?></h3>
-            </div>
-            <div class="peugeot-box-desc">
-            <p><?php echo esc_html($content5['left_desc']); ?></p>
-            </div>
-
-            <?php if (!empty($content5['left_button'])): 
-                $btn = $content5['left_button']; ?>
-                <a class="peugeot-btn" href="<?php echo esc_url($btn['url']); ?>" target="<?php echo esc_attr($btn['target']); ?>">
-                    <?php echo esc_html($btn['title']); ?>
-                </a>
-            <?php endif; ?>
-        </div>
-
-        <!-- Box phải -->
-        <div class="peugeot-register-box">
-            <?php if (!empty($content5['right_image'])): ?>
-                <img src="<?php echo esc_url($content5['right_image']['url']); ?>" alt=""  class="peugeot-baogia-img">
-            <?php endif; ?>
-              <div class="peugeot-box-title">
-            <h3><?php echo esc_html($content5['right_title']); ?></h3>
-            </div>
-            <div class="peugeot-box-desc">
-              <p><?php echo esc_html($content5['right_desc']); ?></p>
-            </div>
-
-            <?php if (!empty($content5['right_button'])): 
-                $btn = $content5['right_button']; ?>
-                <a class="peugeot-btn" href="<?php echo esc_url($btn['url']); ?>" target="<?php echo esc_attr($btn['target']); ?>">
-                    <?php echo esc_html($btn['title']); ?>
-                </a>
-            <?php endif; ?>
-        </div>
+  <div class="peugeot-register-boxes">
+    <!-- Box trái -->
+    <div class="peugeot-register-box">
+      <?php
+      if ($left_id) {
+        echo wp_get_attachment_image(
+          $left_id,
+          'baogia-card',
+          false,
+          [
+            'class'         => 'peugeot-baogia-img',
+            'loading'       => 'lazy',
+            'decoding'      => 'async',
+            'fetchpriority' => 'low',   // đổi 'high' nếu là ảnh LCP duy nhất
+          ]
+        );
+      }
+      ?>
+      <div class="peugeot-box-title">
+        <h3><?php echo esc_html($left_title); ?></h3>
+      </div>
+      <div class="peugeot-box-desc">
+        <p><?php echo esc_html($left_desc); ?></p>
+      </div>
+      <?php if (!empty($left_btn['url'])): ?>
+        <a class="peugeot-btn"
+           href="<?php echo esc_url($left_btn['url']); ?>"
+           target="<?php echo esc_attr($left_btn['target'] ?? '_self'); ?>">
+          <?php echo esc_html($left_btn['title'] ?? ''); ?>
+        </a>
+      <?php endif; ?>
     </div>
-</div>
 
+    <!-- Box phải -->
+    <div class="peugeot-register-box">
+      <?php
+      if ($right_id) {
+        echo wp_get_attachment_image(
+          $right_id,
+          'baogia-card',
+          false,
+          [
+            'class'         => 'peugeot-baogia-img',
+            'loading'       => 'lazy',
+            'decoding'      => 'async',
+            'fetchpriority' => 'low',
+          ]
+        );
+      }
+      ?>
+      <div class="peugeot-box-title">
+        <h3><?php echo esc_html($right_title); ?></h3>
+      </div>
+      <div class="peugeot-box-desc">
+        <p><?php echo esc_html($right_desc); ?></p>
+      </div>
+      <?php if (!empty($right_btn['url'])): ?>
+        <a class="peugeot-btn"
+           href="<?php echo esc_url($right_btn['url']); ?>"
+           target="<?php echo esc_attr($right_btn['target'] ?? '_self'); ?>">
+          <?php echo esc_html($right_btn['title'] ?? ''); ?>
+        </a>
+      <?php endif; ?>
+    </div>
+  </div>
+</div>
 <?php endif; ?>
+
 
 <?php
 // Lấy 5 bài mới nhất từ category 'tin-tuc'
