@@ -29,76 +29,77 @@ $title = strip_tags(preg_replace('/^(Category:|Tag:|Archives:|Author:|Year:)\s*/
 ?>
 
 <?php if (!empty($banner['url'])): ?>
-  <div class="archive-banner">
+<div class="archive-banner">
     <img src="<?php echo esc_url($banner['url']); ?>" alt="<?php echo esc_attr($banner['alt'] ?? ''); ?>" />
     <div class="archive-banner-overlay">
-      <h1 class="archive-title"><?php echo esc_html($banner_title ?: $title); ?></h1>
-      <?php if ($banner_sub): ?><p class="archive-sub"><?php echo esc_html($banner_sub); ?></p><?php endif; ?>
+        <h1 class="archive-title"><?php echo esc_html($banner_title ?: $title); ?></h1>
+        <?php if ($banner_sub): ?><p class="archive-sub"><?php echo esc_html($banner_sub); ?></p><?php endif; ?>
     </div>
-  </div>
+</div>
 <?php endif; ?>
 
 <main id="main" class="container-fluid site-main">
 
-  <?php if (have_posts()) : ?>
+    <?php if (have_posts()) : ?>
     <div class="archive-grid-products">
-      <?php while (have_posts()) : the_post(); ?>
+        <?php while (have_posts()) : the_post(); ?>
         <article id="post-<?php the_ID(); ?>" <?php post_class('archive-item-product'); ?>>
-          <a href="<?php the_permalink(); ?>" class="archive-thumb">
-            <?php if (has_post_thumbnail()) the_post_thumbnail('small'); ?>
-          </a>
+            <a href="<?php the_permalink(); ?>" class="archive-thumb">
+                <?php if (has_post_thumbnail()) the_post_thumbnail('small'); ?>
+            </a>
 
-          <h2 class="archive-item-product-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
+            <h2 class="archive-item-product-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
 
-          <?php
+            <?php
           // Lấy 3 field ACF của từng post
           $price      = function_exists('get_field') ? (get_field('price') ?: '') : '';
           $price_sub  = function_exists('get_field') ? (get_field('price_sub') ?: '') : '';
           $price_desc = function_exists('get_field') ? (get_field('price_desc') ?: '') : '';
           ?>
-          <div class="archive-excerpt product-meta">
+            <div class="archive-excerpt product-meta">
 
-            <?php if ($price_sub): ?>
-              <div class="product-price-sub"><?php echo esc_html($price_sub); ?></div>
-            <?php endif; ?>
+                <?php if ($price_sub): ?>
+                <div class="product-price-sub"><?php echo esc_html($price_sub); ?></div>
+                <?php endif; ?>
 
-            <?php if ($price): ?>
-              <div class="product-price"><?php echo esc_html($price); ?></div>
-            <?php endif; ?>
+                <?php if ($price): ?>
+                <div class="product-price"><?php echo esc_html($price); ?></div>
+                <?php endif; ?>
 
-            <?php if ($price_desc): ?>
-              <div class="product-price-desc"><?php echo nl2br(esc_html($price_desc)); ?></div>
-            <?php endif; ?>
+                <?php if ($price_desc): ?>
+                <div class="product-price-desc"><?php echo nl2br(esc_html($price_desc)); ?></div>
+                <?php endif; ?>
 
-            <?php if (!$price && !$price_sub && !$price_desc): ?>
-              <div class="fallback-excerpt">
-                <?php
+                <?php if (!$price && !$price_sub && !$price_desc): ?>
+                <div class="fallback-excerpt">
+                    <?php
                 /* translators: %s: ellipsis */
                 echo wp_kses_post(wp_trim_words(get_the_excerpt(), 20, esc_html__('…', 'peugeot-theme')));
                 ?>
-              </div>
-            <?php endif; ?>
-          </div>
+                </div>
+                <?php endif; ?>
+            </div>
 
-          <div class="product-btns">
-            <a class="read-more-product" href="<?php the_permalink(); ?>">
-              <?php echo esc_html__('Xem thêm', 'peugeot-theme'); ?>
-            </a>
+            <div class="product-btns">
+                <a class="read-more-product" href="<?php the_permalink(); ?>">
+                    <?php echo esc_html__('Xem thêm', 'peugeot-theme'); ?>
+                </a>
 
-            <?php if (!empty($btn_url)): ?>
-              <a class="read-more-product" href="<?php echo esc_url($btn_url); ?>" target="<?php echo esc_attr($btn_target); ?>">
-                <?php echo $btn_label ? esc_html($btn_label) : esc_html__('Đặt lịch lái thử', 'peugeot-theme'); ?>
-              </a>
-            <?php endif; ?>
-          </div>
+                <?php if (!empty($btn_url)): ?>
+                <a class="read-more-product" href="<?php echo esc_url($btn_url); ?>"
+                    target="<?php echo esc_attr($btn_target); ?>">
+                    <?php echo $btn_label ? esc_html($btn_label) : esc_html__('Đặt lịch lái thử', 'peugeot-theme'); ?>
+                </a>
+                <?php endif; ?>
+            </div>
         </article>
-      <?php endwhile; ?>
+        <?php endwhile; ?>
     </div>
 
     <div class="pagination"><?php echo paginate_links(); ?></div>
-  <?php else: ?>
+    <?php else: ?>
     <p><?php echo esc_html__('Không có sản phẩm nào.', 'peugeot-theme'); ?></p>
-  <?php endif; ?>
+    <?php endif; ?>
 </main>
 
 <?php get_footer(); ?>

@@ -48,43 +48,52 @@ if (!function_exists('pg_render_agency_card')) {
     $map_href   = $map_url ?: ($dia_chi ? 'https://www.google.com/maps/search/?api=1&query='.rawurlencode($dia_chi) : '');
 
     ?>
-    <article class="agency-card">
-      <?php echo $thumb_html; ?>
-      <div class="agency-meta">
+<article class="agency-card">
+    <?php echo $thumb_html; ?>
+    <div class="agency-meta">
         <h3 class="agency-title"><?php echo esc_html(get_the_title($post_id)); ?></h3>
 
         <div class="agency-tax">
-          <?php if ($mien_text): ?>
-            <div><strong><?php echo esc_html__('Miền:', 'peugeot-theme'); ?></strong> <?php echo esc_html($mien_text); ?></div>
-          <?php endif; ?>
+            <?php if ($mien_text): ?>
+            <div><strong><?php echo esc_html__('Miền:', 'peugeot-theme'); ?></strong>
+                <?php echo esc_html($mien_text); ?></div>
+            <?php endif; ?>
 
-          <?php if ($tinh_text): ?>
-            <div><strong><?php echo esc_html__('Tỉnh/Thành:', 'peugeot-theme'); ?></strong> <?php echo esc_html($tinh_text); ?></div>
-          <?php endif; ?>
+            <?php if ($tinh_text): ?>
+            <div><strong><?php echo esc_html__('Tỉnh/Thành:', 'peugeot-theme'); ?></strong>
+                <?php echo esc_html($tinh_text); ?></div>
+            <?php endif; ?>
         </div>
 
         <div class="agency-info">
-          <?php if ($dia_chi): ?>
-            <div><strong><?php echo esc_html__('Địa chỉ:', 'peugeot-theme'); ?></strong> <?php echo nl2br(esc_html($dia_chi)); ?></div>
-          <?php endif; ?>
-          <?php if ($cskh): ?>
-            <div><strong><?php echo esc_html__('Hotline CSKH:', 'peugeot-theme'); ?></strong> <a href="tel:<?php echo esc_attr(preg_replace('/\D+/','',$cskh)); ?>"><?php echo esc_html($cskh); ?></a></div>
-          <?php endif; ?>
-          <?php if ($kd): ?>
-            <div><strong><?php echo esc_html__('Hotline Kinh doanh:', 'peugeot-theme'); ?></strong> <a href="tel:<?php echo esc_attr(preg_replace('/\D+/','',$kd)); ?>"><?php echo esc_html($kd); ?></a></div>
-          <?php endif; ?>
-          <?php if ($dv): ?>
-            <div><strong><?php echo esc_html__('Hotline Dịch vụ:', 'peugeot-theme'); ?></strong> <a href="tel:<?php echo esc_attr(preg_replace('/\D+/','',$dv)); ?>"><?php echo esc_html($dv); ?></a></div>
-          <?php endif; ?>
+            <?php if ($dia_chi): ?>
+            <div><strong><?php echo esc_html__('Địa chỉ:', 'peugeot-theme'); ?></strong>
+                <?php echo nl2br(esc_html($dia_chi)); ?></div>
+            <?php endif; ?>
+            <?php if ($cskh): ?>
+            <div><strong><?php echo esc_html__('Hotline CSKH:', 'peugeot-theme'); ?></strong> <a
+                    href="tel:<?php echo esc_attr(preg_replace('/\D+/','',$cskh)); ?>"><?php echo esc_html($cskh); ?></a>
+            </div>
+            <?php endif; ?>
+            <?php if ($kd): ?>
+            <div><strong><?php echo esc_html__('Hotline Kinh doanh:', 'peugeot-theme'); ?></strong> <a
+                    href="tel:<?php echo esc_attr(preg_replace('/\D+/','',$kd)); ?>"><?php echo esc_html($kd); ?></a>
+            </div>
+            <?php endif; ?>
+            <?php if ($dv): ?>
+            <div><strong><?php echo esc_html__('Hotline Dịch vụ:', 'peugeot-theme'); ?></strong> <a
+                    href="tel:<?php echo esc_attr(preg_replace('/\D+/','',$dv)); ?>"><?php echo esc_html($dv); ?></a>
+            </div>
+            <?php endif; ?>
         </div>
 
         <?php if ($map_href): ?>
-          <a class="btn-direction" target="_blank" rel="noopener" href="<?php echo esc_url($map_href); ?>">
+        <a class="btn-direction" target="_blank" rel="noopener" href="<?php echo esc_url($map_href); ?>">
             <?php echo esc_html__('DẪN ĐƯỜNG', 'peugeot-theme'); ?>
-          </a>
+        </a>
         <?php endif; ?>
-      </div>
-    </article>
-    <?php
+    </div>
+</article>
+<?php
   }
 }
