@@ -1287,6 +1287,8 @@ h2.peugeot-product-colors-title1 {
 }
 
 .peugeot-baogia-img {
+     height: auto;            /* hoặc set chiều cao cố định + object-fit */
+  aspect-ratio: 16 / 9;    /* giữ tỷ lệ khung, chống layout shift */
     object-fit: cover;
     display: block;
     margin-bottom: 15px;
