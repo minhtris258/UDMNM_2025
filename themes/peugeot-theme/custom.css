@@ -1005,12 +1005,8 @@ p.text-gray-600.mb-6 {
 
 /* NGỪNG ép chiều cao ảnh = 100%; để ảnh tự giữ tỉ lệ */
 .peugeot-slider4 .peugeot-slider4-slide img {
-    /* width: auto; */
-    /* height: auto; */
     max-width: 100%;
-    /* max-height: 100%; */
     object-fit: contain;
-    /* không cắt ảnh */
     display: block;
 }
 
@@ -1214,9 +1210,7 @@ h2.peugeot-product-colors-title1 {
 }
 
 .peugeot-product-main img {
-
     max-width: 1000px;
-    width: 100%;
     transition: transform 0.4s ease, opacity 0.4s ease;
 }
 
@@ -1293,9 +1287,6 @@ h2.peugeot-product-colors-title1 {
 }
 
 .peugeot-baogia-img {
-    max-width: 650px;
-    width: 100%;
-    height: auto;
     object-fit: cover;
     display: block;
     margin-bottom: 15px;

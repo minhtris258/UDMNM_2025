@@ -135,7 +135,6 @@ if (!function_exists('peugeut_theme_display_logo')) {
 add_action('wp_enqueue_scripts', function () {
   // CSS
   wp_enqueue_style('bootstrap', 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css', [], null);
-  wp_enqueue_style('google-fonts', '//fonts.googleapis.com/css?family=Roboto+Condensed:300,400,700|Roboto:100,300,400,700', [], null);
   wp_enqueue_style('font-awesome', '//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css', [], null);
   wp_enqueue_style('peugeot-custom-css', get_template_directory_uri().'/custom.css', [], null);
   wp_enqueue_style('peugeot-fonts', get_template_directory_uri() . '/assets/css/fonts.css');
